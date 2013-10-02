@@ -10,3 +10,4 @@ build
 libs
 build.properties
 *.apk
+dist

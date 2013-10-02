@@ -5,35 +5,138 @@
 
 
 // open a single window
+var TiDrawerLayout = require('com.tripvi.drawerlayout');
+
 var win = Ti.UI.createWindow({
-	backgroundColor:'white'
+	backgroundColor: 'white',
+	navBarHidden: true,
 });
-var label = Ti.UI.createLabel();
-win.add(label);
-win.open();
 
-// TODO: write your module tests here
-var drawerlayout = require('com.tripvi.drawerlayout');
-Ti.API.info("module is => " + drawerlayout);
+var menuTable = Ti.UI.createTableView({
+	data: [
+		{ title: "menu A" },
+		{ title: "menu B" },
+		{ title: "menu C" },
+		{ title: "menu D" },
+		{ title: "menu E" },
+		{ title: "menu F" },
+		{ title: "menu A" },
+		{ title: "menu B" },
+		{ title: "menu C" },
+		{ title: "menu D" },
+		{ title: "menu E" },
+		{ title: "menu F" },
+		{ title: "menu A" },
+		{ title: "menu B" },
+		{ title: "menu C" },
+		{ title: "menu D" },
+		{ title: "menu E" },
+		{ title: "menu F" },
+		{ title: "menu A" },
+		{ title: "menu B" },
+		{ title: "menu C" },
+		{ title: "menu D" },
+		{ title: "menu E" },
+		{ title: "menu F" },
+		{ title: "menu A" },
+		{ title: "menu B" },
+		{ title: "menu C" },
+		{ title: "menu D" },
+		{ title: "menu E" },
+		{ title: "menu F" },
+		{ title: "menu A" },
+		{ title: "menu B" },
+		{ title: "menu C" },
+		{ title: "menu D" },
+		{ title: "menu E" },
+		{ title: "menu F" },
+	],
+	backgroundColor: "#ddd",
+});
 
-label.text = drawerlayout.example();
+var contentView = Ti.UI.createScrollView({
+	backgroundColor: "#fff",
+	layout: "vertical",
+});
 
-Ti.API.info("module exampleProp is => " + drawerlayout.exampleProp);
-drawerlayout.exampleProp = "This is a test value";
+var title = Ti.UI.createLabel({
+	top: "25dp",
+	text: "Main Content View",
+	font: {
+		fontSize: 24,
+	},
+	color: "#000",
+});
+contentView.add(title);
 
-if (Ti.Platform.name == "android") {
-	var proxy = drawerlayout.createExample({
-		message: "Creating an example Proxy",
-		backgroundColor: "red",
-		width: 100,
-		height: 100,
-		top: 100,
-		left: 150
+var changeDrawerWidthButton = Ti.UI.createButton({
+	top: "25dp",
+	title: "drawer width: 120",
+});
+changeDrawerWidthButton.addEventListener("click", function(e) {
+	drawer.leftDrawerWidth = "120dp";
+});
+contentView.add(changeDrawerWidthButton);
+
+var changeViewButton = Ti.UI.createButton({
+	top: "125dp",
+	title: "replace content view",
+});
+changeViewButton.addEventListener("click", function(e) {
+	var rv = Ti.UI.createLabel({
+		top: "100dp",
+		text: "Changed VIEW",
+		font: {
+			fontSize: 24,
+			fontWeight: 'bold',
+		},
+		color: "#000",
 	});
+	drawer.centerView = rv;
+});
+contentView.add(changeViewButton);
 
-	proxy.printMessage("Hello world!");
-	proxy.message = "Hi world!.  It's me again.";
-	proxy.printMessage("Hello world!");
-	win.add(proxy);
-}
 
+
+var drawer = TiDrawerLayout.createDrawer({
+	leftView: menuTable,
+	centerView: contentView,
+	leftDrawerWidth: "240dp",
+	top: "50dp",
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL,
+});
+
+var actionBar = Ti.UI.createView({
+	top: 0,
+	height: "50dp",
+	backgroundColor: "#333",
+});
+
+var menuButton = Ti.UI.createButton({
+	left: "15dp",
+	title: "menu",
+});
+actionBar.add(menuButton);
+
+menuButton.addEventListener("click", function(e) {
+	drawer.toggleLeftWindow();
+});
+
+var menuTitle = Ti.UI.createLabel({
+	color: "#fff",
+	font: {
+		fontSize: 20,
+		fontWeight: "bold",
+	},
+	text: "Drawer Example",
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+});
+actionBar.add(menuTitle);
+
+
+
+
+win.add(actionBar);
+win.add(drawer);
+win.open();
