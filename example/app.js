@@ -106,6 +106,15 @@ var drawer = TiDrawerLayout.createDrawer({
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
 });
+drawer.addEventListener('open', function(e) {
+	menuTitle.text = "open";
+});
+drawer.addEventListener('close', function(e) {
+	menuTitle.text = "close";
+});
+drawer.addEventListener('drawerslide', function(e) {
+	menuTitle.text = "slide: " + e.offset.toFixed(2);
+});
 
 var actionBar = Ti.UI.createView({
 	top: 0,
