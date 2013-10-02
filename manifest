@@ -1,13 +1,9 @@
-#
-# this is your module manifest and used by Titanium
-# during compilation, packaging, distribution, etc.
-#
-version: 0.1
+version: 1.0.0
 apiversion: 2
-description: My module
-author: Tripvi Inc.
-license: Specify your license
-copyright: Copyright (c) 2013 by Your Company
+description: TiUIView adaptor for DrawerLayout
+author: metacortex
+license: MIT license
+copyright: Copyright (c) 2013 by Tripvi Inc.
 
 
 # these should not be edited
