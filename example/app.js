@@ -106,10 +106,10 @@ var drawer = TiDrawerLayout.createDrawer({
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
 });
-drawer.addEventListener('open', function(e) {
+drawer.addEventListener('draweropen', function(e) {
 	menuTitle.text = "open";
 });
-drawer.addEventListener('close', function(e) {
+drawer.addEventListener('drawerclose', function(e) {
 	menuTitle.text = "close";
 });
 drawer.addEventListener('drawerslide', function(e) {
@@ -144,6 +144,12 @@ var menuTitle = Ti.UI.createLabel({
 actionBar.add(menuTitle);
 
 
+win.addEventListener('open', function(e) {
+	console.log("OPEN");
+});
+win.addEventListener('close', function(e) {
+	console.log("CLOSE");
+});
 
 
 win.add(actionBar);

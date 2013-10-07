@@ -82,17 +82,17 @@ public class Drawer extends TiUIView {
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
-				if (proxy.hasListeners("open")) {
+				if (proxy.hasListeners("draweropen")) {
 					KrollDict options = new KrollDict();
-					proxy.fireEvent("open", options);
+					proxy.fireEvent("draweropen", options);
 				}
 			}
 
 			@Override
 			public void onDrawerClosed(View drawerView) {
-				if (proxy.hasListeners("close")) {
+				if (proxy.hasListeners("drawerclose")) {
 					KrollDict options = new KrollDict();
-					proxy.fireEvent("close", options);
+					proxy.fireEvent("drawerclose", options);
 				}
 			}
 
