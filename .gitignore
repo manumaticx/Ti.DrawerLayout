@@ -2,6 +2,7 @@
 tmp
 bin
 build
+*.zip
 .apt_generated
 .project
 .classpath
