@@ -154,7 +154,7 @@ public class Drawer extends TiUIView {
 		if (d.containsKey(PROPERTY_LEFT_VIEW_WIDTH)) {
 			menuWidth = getDevicePixels(d.get(PROPERTY_LEFT_VIEW_WIDTH));
 			
-			Log.e(TAG, "set menuWidth = " + d.get(PROPERTY_LEFT_VIEW_WIDTH) + " in pixel: " + menuWidth);
+			Log.d(TAG, "set menuWidth = " + d.get(PROPERTY_LEFT_VIEW_WIDTH) + " in pixel: " + menuWidth);
 			
 			menu.getLayoutParams().width = menuWidth;
 		}
