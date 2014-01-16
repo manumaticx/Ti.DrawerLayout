@@ -22,3 +22,72 @@ the file size of android-support-v4.jar is 554kb
 
 support library would be found in your android sdk path:
 {install path}/android/extras/android/support/v4/android-support-v4.jar
+
+
+
+
+## Usage (Alloy)
+
+### index.xml
+```
+</Alloy>
+    <Window id="mainWindow" platform="android" navBarHidden="true">
+    	<!-- add header bar here -->
+    </Window>
+</Alloy>
+```
+
+### menu.xml
+```
+<Alloy>
+	<TableView id="menuTable">
+		<TableViewRow>Item 1</TableViewRow>
+		<TableViewRow>Item 2</TableViewRow>
+	</TableView>
+</Alloy>
+```
+### main.xml
+```
+<Alloy>
+	<View>
+		<!-- main page content here -->
+	</View>
+</Alloy>
+```
+
+### index.js
+```
+// Android only
+if (OS_ANDROID) {
+	// Load module
+	var TiDrawerLayout = require('com.tripvi.drawerlayout');
+	
+	// define menu and main content view
+	var menuTable = Alloy.createController('menu').getView();
+	var contentView = Alloy.createController('main').getView();
+	
+	var drawer = TiDrawerLayout.createDrawer({
+	        leftView: menuTable,
+	        centerView: contentView,
+	        leftDrawerWidth: "240dp",
+	        width: Ti.UI.FILL,
+	        height: Ti.UI.FILL
+	});
+
+	drawer.addEventListener('draweropen', function(e) {
+	        // drawer is open
+	});
+
+	drawer.addEventListener('drawerclose', function(e) {
+	        // drawer is closed
+	});
+	
+	drawer.addEventListener('drawerslide', function(e) {
+			// drawer is sliding
+	        // slide offset: e.offset
+	});
+	
+	$.mainWindow.add(drawer);
+	$.mainWindow.open();
+}
+```
