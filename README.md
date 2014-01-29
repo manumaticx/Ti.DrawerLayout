@@ -7,6 +7,9 @@ titanium module: android drawer layout
 사용법은 example/app.js를 참조바람
 
 
+#### demo app: https://github.com/ricardoalcocer/Ti.DrawerLayout-Demo-Alloy-App
+
+
 Trouble Shooting: android support library version
 =================================================
 
