@@ -79,11 +79,11 @@ changeDrawerWidthButton.addEventListener("click", function(e) {
 contentView.add(changeDrawerWidthButton);
 
 var changeViewButton = Ti.UI.createButton({
-	top: "125dp",
+	top: "75dp",
 	title: "replace content view",
 });
 changeViewButton.addEventListener("click", function(e) {
-	var rv = Ti.UI.createLabel({
+	var cv = Ti.UI.createLabel({
 		top: "100dp",
 		text: "Changed VIEW",
 		font: {
@@ -92,9 +92,33 @@ changeViewButton.addEventListener("click", function(e) {
 		},
 		color: "#000",
 	});
-	drawer.centerView = rv;
+	drawer.centerView = cv;
 });
 contentView.add(changeViewButton);
+
+var enableRightDrawerButton = Ti.UI.createButton({
+	top: "125dp",
+	title: "enable right drawer",
+});
+enableRightDrawerButton.addEventListener("click", function(e) {
+	var rv = Ti.UI.createView({
+		backgroundColor: "#def"
+	});
+	
+	var caption = Ti.UI.createLabel({
+		text: "Filter",
+		font: {
+			fontSize: 24,
+			fontWeight: 'bold',
+		},
+		color: "#000",
+	});
+	rv.add(caption);
+	
+	drawer.rightView = rv;
+	drawer.rightDrawerWidth = "80dp";
+});
+contentView.add(enableRightDrawerButton);
 
 
 
@@ -107,7 +131,7 @@ var drawer = TiDrawerLayout.createDrawer({
 	height: Ti.UI.FILL,
 });
 drawer.addEventListener('draweropen', function(e) {
-	menuTitle.text = "open";
+	menuTitle.text = "open " + e.drawer;
 });
 drawer.addEventListener('drawerclose', function(e) {
 	menuTitle.text = "close";
@@ -142,14 +166,6 @@ var menuTitle = Ti.UI.createLabel({
 	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
 });
 actionBar.add(menuTitle);
-
-
-win.addEventListener('open', function(e) {
-	console.log("OPEN");
-});
-win.addEventListener('close', function(e) {
-	console.log("CLOSE");
-});
 
 
 win.add(actionBar);

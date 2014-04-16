@@ -64,6 +64,18 @@ public class DrawerProxy extends TiViewProxy {
 				handleCloseLeftView();
 				return true;
 			}
+			case MSG_TOGGLE_RIGHT_VIEW: {
+				handleToggleRightView();
+				return true;
+			}
+			case MSG_OPEN_RIGHT_VIEW: {
+				handleOpenRightView();
+				return true;
+			}
+			case MSG_CLOSE_RIGHT_VIEW: {
+				handleCloseRightView();
+				return true;
+			}
 			default : {
 				return super.handleMessage(msg);
 			}
@@ -78,6 +90,15 @@ public class DrawerProxy extends TiViewProxy {
 	}
 	private void handleCloseLeftView() {
 		drawer.closeLeftDrawer();
+	}
+	private void handleToggleRightView() {
+		drawer.toggleRightDrawer();
+	}
+	private void handleOpenRightView() {
+		drawer.openRightDrawer();
+	}
+	private void handleCloseRightView() {
+		drawer.closeRightDrawer();
 	}
 
 
@@ -111,6 +132,36 @@ public class DrawerProxy extends TiViewProxy {
 		message.sendToTarget();
 	}
 	
+	@Kroll.method
+	public void toggleRightWindow(@Kroll.argument(optional = true) Object obj) {
+		if (TiApplication.isUIThread()) {
+			handleToggleRightView();
+			return;
+		}
+		Message message = getMainHandler().obtainMessage(MSG_TOGGLE_RIGHT_VIEW);
+		message.sendToTarget();
+	}
+
+	@Kroll.method
+	public void openRightWindow() {
+		if (TiApplication.isUIThread()) {
+			handleOpenRightView();
+			return;
+		}
+		Message message = getMainHandler().obtainMessage(MSG_OPEN_RIGHT_VIEW);
+		message.sendToTarget();
+	}
+
+	@Kroll.method
+	public void closeRightWindow() {
+		if (TiApplication.isUIThread()) {
+			handleCloseRightView();
+			return;
+		}
+		Message message = getMainHandler().obtainMessage(MSG_CLOSE_RIGHT_VIEW);
+		message.sendToTarget();
+	}
+
 
 	@Kroll.method @Kroll.setProperty
 	public void setLeftDrawerWidth(Object arg) {
@@ -120,6 +171,16 @@ public class DrawerProxy extends TiViewProxy {
 	@Kroll.method @Kroll.setProperty
 	public void setLeftView(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_LEFT_VIEW, arg);
+	}
+	
+	@Kroll.method @Kroll.setProperty
+	public void setRightDrawerWidth(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_RIGHT_VIEW_WIDTH, arg);
+	}
+	
+	@Kroll.method @Kroll.setProperty
+	public void setRightView(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_RIGHT_VIEW, arg);
 	}
 	
 	@Kroll.method @Kroll.setProperty

@@ -10,8 +10,53 @@ titanium module: android drawer layout
 #### demo app: https://github.com/ricardoalcocer/Ti.DrawerLayout-Demo-Alloy-App
 
 
-Trouble Shooting: android support library version
-=================================================
+
+##Right Drawer Support (>=1.0.2)
+
+Set 'rightView' and 'rightDrawerWidth' of drawer view.
+
+
+```
+var drawer = TiDrawerLayout.createDrawer({
+    leftView: menuTable,
+    centerView: contentView,
+	rightView: filterView,
+    leftDrawerWidth: "240dp",
+	rightDrawerWidth: "120dp",
+    width: Ti.UI.FILL,
+    height: Ti.UI.FILL
+});
+```
+
+
+Assign these properties at any time. Right drawer will be created when it is needed. This behavior has been applied to left drawer too.
+
+```
+var drawer = TiDrawerLayout.createDrawer({
+    leftView: menuTable,
+    centerView: contentView,
+    leftDrawerWidth: "240dp",
+});
+
+drawer.rightView = filterView;
+drawer.rightDrawerWidth = "120dp";
+```
+
+
+Event will be fired with 'drawer' parameter.
+
+```
+drawer.addEventListener('draweropen', function(e) {
+	if (e.drawer == "left") {
+        // left drawer is open
+	} else if (e.drawer == "right") {
+        // right drawer is open
+	}
+});
+```
+
+
+##Trouble Shooting: android support library version
 
 Check android support library v4 version in the titanium sdk installation,
 and replace android support v4 library jar file to the latest version.
@@ -25,8 +70,8 @@ the current (2014/april/15) file size of android-support-v4.jar is 648kb
 support library would be found in your android sdk path:
 {install path}/android/extras/android/support/v4/android-support-v4.jar
 
-Building module on Titanium Studio
-==================================
+
+##Building module on Titanium Studio
 
 - Clone repository
 - Create .project folder

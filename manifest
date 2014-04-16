@@ -1,5 +1,5 @@
-version: 1.0.1
-apiversion: 2
+version: 1.0.2
+apiversion: 3
 description: TiUIView adaptor for DrawerLayout
 author: metacortex
 license: MIT license
