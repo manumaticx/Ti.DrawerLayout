@@ -33,13 +33,13 @@ Building module on Titanium Studio
 - Create .apt_generated
 - Create build/.apt_generated
 - Create .classpath file using .classpath.example as template and:
-	- replace <ANDROID_SDK_PATH> by your Android SDK folder
-	- replace <APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES> by appropriated path (ex: /Users/dirlei/Library/Application Support)
-	- replace <TITANIUM_SDK_VERSION> by your desired Ti SDK version (ex: 3.2.2.GA)
+	- replace {ANDROID_SDK_PATH} by your Android SDK folder
+	- replace {APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES} by appropriated path (ex: /Users/dirlei/Library/Application Support)
+	- replace {TITANIUM_SDK_VERSION} by your desired Ti SDK version (ex: 3.2.2.GA)
 - Create build.properties using build.properties.example as template and:
-	- replace <ANDROID_SDK_PATH> by your Android SDK folder
-	- replace <APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES> by appropriated path (ex: /Users/dirlei/Library/Application Support)
-	- replace <TITANIUM_SDK_VERSION> by your desired Ti SDK version (ex: 3.2.2.GA)
+	- replace {ANDROID_SDK_PATH} by your Android SDK folder
+	- replace {APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES} by appropriated path (ex: /Users/dirlei/Library/Application Support)
+	- replace {TITANIUM_SDK_VERSION} by your desired Ti SDK version (ex: 3.2.2.GA)
 - Import project on Titanium Studio (File/Import/Existing Projects into Workspace, select folder where you cloned repository, Finish)
 - Build module (select module project, right click, Publish/Package)
 
