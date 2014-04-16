@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="build/.apt_generated"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="{ANDROID_SDK_PATH}/platforms/android-19/android.jar"/>
+	<classpathentry kind="lib" path="{ANDROID_SDK_PATH}/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="{APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES}/Titanium/mobilesdk/osx/<TITANIUM_SDK_VERSION}/android/titanium.jar"/>
+	<classpathentry kind="lib" path="{APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES}/Titanium/mobilesdk/osx/<TITANIUM_SDK_VERSION}/android/kroll-common.jar"/>
+	<classpathentry kind="lib" path="{APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES}/Titanium/mobilesdk/osx/<TITANIUM_SDK_VERSION}/android/kroll-apt.jar"/>
+	<classpathentry kind="lib" path="{APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES}/Titanium/mobilesdk/osx/<TITANIUM_SDK_VERSION}/android/modules/titanium-ui.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
