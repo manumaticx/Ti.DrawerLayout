@@ -19,14 +19,29 @@ and replace android support v4 library jar file to the latest version.
 for osx
 ~/Library/Application Support/Titanium/mobilesdk/osx/3.2.0.GA/android
 
-the file size of android-support-v4.jar is 554kb
-(old version is 340kb)
+the current (2014/april/15) file size of android-support-v4.jar is 648kb
 
 
 support library would be found in your android sdk path:
 {install path}/android/extras/android/support/v4/android-support-v4.jar
 
+Building module on Titanium Studio
+==================================
 
+- Clone repository
+- Create .project folder
+- Create .apt_generated
+- Create build/.apt_generated
+- Create .classpath file using .classpath.example as template and:
+	- replace <ANDROID_SDK_PATH> by your Android SDK folder
+	- replace <APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES> by appropriated path (ex: /Users/dirlei/Library/Application Support)
+	- replace <TITANIUM_SDK_VERSION> by your desired Ti SDK version (ex: 3.2.2.GA)
+- Create build.properties using build.properties.example as template and:
+	- replace <ANDROID_SDK_PATH> by your Android SDK folder
+	- replace <APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES> by appropriated path (ex: /Users/dirlei/Library/Application Support)
+	- replace <TITANIUM_SDK_VERSION> by your desired Ti SDK version (ex: 3.2.2.GA)
+- Import project on Titanium Studio (File/Import/Existing Projects into Workspace, select folder where you cloned repository, Finish)
+- Build module (select module project, right click, Publish/Package)
 
 
 ## Usage (Alloy)
