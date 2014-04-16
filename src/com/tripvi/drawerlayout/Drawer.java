@@ -2,21 +2,21 @@ package com.tripvi.drawerlayout;
 
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
-import org.appcelerator.kroll.annotations.Kroll;
-import org.appcelerator.titanium.TiC;
+//import org.appcelerator.kroll.annotations.Kroll;
+//import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.TiDimension;
-import org.appcelerator.titanium.util.Log;
+import android.util.Log;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.proxy.TiViewProxy;
-import org.appcelerator.titanium.view.TiCompositeLayout;
-import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
+//import org.appcelerator.titanium.view.TiCompositeLayout;
+//import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
 
 import ti.modules.titanium.ui.WindowProxy;
 
 import android.app.Activity;
 
-import android.graphics.Color;
+//import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.view.Gravity;
