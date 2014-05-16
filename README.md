@@ -20,6 +20,7 @@ ActionBar homeIcon click event is handled outside of module, because Activity sh
 	}
 ```
 
+Require Titanium Mobile SDK >= 3.3.0
 
 
 ##Right Drawer Support (>=1.0.2)
