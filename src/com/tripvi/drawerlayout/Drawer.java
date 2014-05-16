@@ -262,6 +262,7 @@ public class Drawer extends TiUIView {
 		
 		FragmentManager fragmentManager = proxy.getActivity().getFragmentManager();
 		fragmentManager.beginTransaction().replace(id_content_frame, fragment).commit();
+		// fragmentManager.beginTransaction().replace(id_content_frame, fragment).commitAllowingStateLoss();
 		
 		this.centerView = viewProxy;
 	}
