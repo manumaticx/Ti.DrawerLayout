@@ -9,7 +9,6 @@ var TiDrawerLayout = require('com.tripvi.drawerlayout');
 
 var win = Ti.UI.createWindow({
 	backgroundColor: 'white',
-	navBarHidden: true,
 });
 
 var menuTable = Ti.UI.createTableView({
@@ -53,6 +52,14 @@ var menuTable = Ti.UI.createTableView({
 	],
 	backgroundColor: "#ddd",
 });
+menuTable.addEventListener("click", function(ev) {
+	var cv = Ti.UI.createView({
+		backgroundColor: 'orange',
+	});
+	drawer.centerView = cv;
+	win.title = "ROW " + ev.index;
+	drawer.closeLeftWindow();
+});
 
 var contentView = Ti.UI.createScrollView({
 	backgroundColor: "#fff",
@@ -78,23 +85,23 @@ changeDrawerWidthButton.addEventListener("click", function(e) {
 });
 contentView.add(changeDrawerWidthButton);
 
-var changeViewButton = Ti.UI.createButton({
+var openNewWindowButton = Ti.UI.createButton({
 	top: "75dp",
-	title: "replace content view",
+	title: "open new window",
 });
-changeViewButton.addEventListener("click", function(e) {
-	var cv = Ti.UI.createLabel({
-		top: "100dp",
-		text: "Changed VIEW",
-		font: {
-			fontSize: 24,
-			fontWeight: 'bold',
-		},
-		color: "#000",
+openNewWindowButton.addEventListener("click", function(e) {
+	var w = Ti.UI.createWindow({
+		backgroundColor: 'orange',
+		title: "COOL"
 	});
-	drawer.centerView = cv;
+	w.addEventListener('open', function() {
+		w.activity.actionBar.logo = "";
+		w.activity.actionBar.displayHomeAsUp = true;
+		w.activity.actionBar.subtitle = "hello actionBar";
+	});
+	w.open();
 });
-contentView.add(changeViewButton);
+contentView.add(openNewWindowButton);
 
 var enableRightDrawerButton = Ti.UI.createButton({
 	top: "125dp",
@@ -121,53 +128,28 @@ enableRightDrawerButton.addEventListener("click", function(e) {
 contentView.add(enableRightDrawerButton);
 
 
-
 var drawer = TiDrawerLayout.createDrawer({
 	leftView: menuTable,
 	centerView: contentView,
-	leftDrawerWidth: "240dp",
-	top: "50dp",
+	leftDrawerWidth: "280dp",
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
 });
 drawer.addEventListener('draweropen', function(e) {
-	menuTitle.text = "open " + e.drawer;
+	win.title = "open " + e.drawer;
 });
 drawer.addEventListener('drawerclose', function(e) {
-	menuTitle.text = "close";
+	win.title = "close";
 });
 drawer.addEventListener('drawerslide', function(e) {
-	menuTitle.text = "slide: " + e.offset.toFixed(2);
+	win.title = "slide: " + e.offset.toFixed(2);
 });
 
-var actionBar = Ti.UI.createView({
-	top: 0,
-	height: "50dp",
-	backgroundColor: "#333",
+win.addEventListener("open", function() {
+	win.activity.actionBar.onHomeIconItemSelected = function() {
+		drawer.toggleLeftWindow();
+	}
 });
 
-var menuButton = Ti.UI.createButton({
-	left: "15dp",
-	title: "menu",
-});
-actionBar.add(menuButton);
-
-menuButton.addEventListener("click", function(e) {
-	drawer.toggleLeftWindow();
-});
-
-var menuTitle = Ti.UI.createLabel({
-	color: "#fff",
-	font: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	text: "Drawer Example",
-	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-});
-actionBar.add(menuTitle);
-
-
-win.add(actionBar);
 win.add(drawer);
 win.open();

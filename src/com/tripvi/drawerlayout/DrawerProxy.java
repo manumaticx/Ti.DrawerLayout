@@ -187,5 +187,5 @@ public class DrawerProxy extends TiViewProxy {
 	public void setCenterView(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_CENTER_VIEW, arg);
 	}
-
+	
 }

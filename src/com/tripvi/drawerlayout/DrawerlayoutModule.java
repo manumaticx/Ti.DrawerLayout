@@ -36,4 +36,3 @@ public class DrawerlayoutModule extends KrollModule
 	}
 
 }
-
