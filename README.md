@@ -10,6 +10,17 @@ titanium module: android drawer layout
 #### demo app: https://github.com/ricardoalcocer/Ti.DrawerLayout-Demo-Alloy-App
 
 
+##Native ActionBar Support (>=1.1.0)
+
+ActionBar homeIcon click event is handled outside of module, because Activity should be sub-classed to override onOptionsItemSelected().
+
+```
+	win.activity.actionBar.onHomeIconItemSelected = function() {
+		drawer.toggleLeftWindow();
+	}
+```
+
+
 
 ##Right Drawer Support (>=1.0.2)
 
