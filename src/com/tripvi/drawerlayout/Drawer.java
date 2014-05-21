@@ -17,16 +17,15 @@ import org.appcelerator.titanium.view.TiUIView;
 
 import ti.modules.titanium.ui.WindowProxy;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
@@ -89,7 +88,7 @@ public class Drawer extends TiUIView {
 		}
 		
 		
-		Activity activity = proxy.getActivity();
+		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
 		
 		// DrawerLayout을 생성한다.
 		LayoutInflater inflater = LayoutInflater.from(activity);
@@ -100,8 +99,8 @@ public class Drawer extends TiUIView {
 		
 		
         // enable ActionBar app icon to behave as action to toggle nav drawer
-		activity.getActionBar().setDisplayHomeAsUpEnabled(true);
-		activity.getActionBar().setHomeButtonEnabled(true);
+		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		activity.getSupportActionBar().setHomeButtonEnabled(true);
 		
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -260,7 +259,7 @@ public class Drawer extends TiUIView {
 		View contentView = viewProxy.getOrCreateView().getOuterView();
 		Fragment fragment = new ContentWrapperFragment(contentView);
 		
-		FragmentManager fragmentManager = proxy.getActivity().getFragmentManager();
+		FragmentManager fragmentManager = ((ActionBarActivity)proxy.getActivity()).getSupportFragmentManager();
 		fragmentManager.beginTransaction().replace(id_content_frame, fragment).commit();
 		// fragmentManager.beginTransaction().replace(id_content_frame, fragment).commitAllowingStateLoss();
 		
@@ -382,7 +381,7 @@ public class Drawer extends TiUIView {
 			TiViewProxy newProxy = null;
 			int index = 0;
 			if (this.rightView != null) {
-				index = this.menu.indexOfChild(this.rightView.getOrCreateView().getNativeView());
+				index = this.filter.indexOfChild(this.rightView.getOrCreateView().getNativeView());
 			}
 			if (newValue != null && newValue instanceof TiViewProxy) {
 				if (newValue instanceof WindowProxy)
