@@ -100,7 +100,7 @@ public class Drawer extends TiUIView {
 		
         // enable ActionBar app icon to behave as action to toggle nav drawer
 		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		activity.getSupportActionBar().setHomeButtonEnabled(false);
+		activity.getSupportActionBar().setHomeButtonEnabled(true);
 		
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -381,7 +381,7 @@ public class Drawer extends TiUIView {
 			TiViewProxy newProxy = null;
 			int index = 0;
 			if (this.rightView != null) {
-				index = this.menu.indexOfChild(this.rightView.getOrCreateView().getNativeView());
+				index = this.filter.indexOfChild(this.rightView.getOrCreateView().getNativeView());
 			}
 			if (newValue != null && newValue instanceof TiViewProxy) {
 				if (newValue instanceof WindowProxy)
