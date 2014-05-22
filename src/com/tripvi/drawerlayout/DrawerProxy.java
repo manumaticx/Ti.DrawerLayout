@@ -187,5 +187,10 @@ public class DrawerProxy extends TiViewProxy {
 	public void setCenterView(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_CENTER_VIEW, arg);
 	}
+    
+    @Kroll.method @Kroll.setProperty
+    public void setDrawerIndicatorEnabled(Object arg) {
+        setPropertyAndFire(Drawer.PROPERTY_DRAWER_INDICATOR_ENABLED, arg);
+    }
 	
 }

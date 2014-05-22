@@ -134,6 +134,7 @@ var drawer = TiDrawerLayout.createDrawer({
 	leftDrawerWidth: "280dp",
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
+    // drawerIndicatorEnabled: false
 });
 drawer.addEventListener('draweropen', function(e) {
 	win.title = "open " + e.drawer;
