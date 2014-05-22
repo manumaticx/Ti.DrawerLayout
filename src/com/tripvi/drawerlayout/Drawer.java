@@ -61,6 +61,7 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_RIGHT_VIEW = "rightView";
 	public static final String PROPERTY_LEFT_VIEW_WIDTH = "leftDrawerWidth";
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
+    public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
 	
 	private static final String TAG = "TripviDrawer";
 	
@@ -346,6 +347,11 @@ public class Drawer extends TiUIView {
 			
 			filter.getLayoutParams().width = filterWidth;
 		}
+        if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
+            boolean b = TiConvert.toBoolean(d, PROPERTY_DRAWER_INDICATOR_ENABLED);
+            
+            mDrawerToggle.setDrawerIndicatorEnabled(b);
+        }
 		
 		super.processProperties(d);
 	}
@@ -423,6 +429,10 @@ public class Drawer extends TiUIView {
 			filterLayout.gravity = Gravity.RIGHT;
 			this.filter.setLayoutParams(filterLayout);
 		}
+        else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
+            boolean b = (Boolean)newValue;
+            mDrawerToggle.setDrawerIndicatorEnabled(b);
+        }
 		else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
