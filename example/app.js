@@ -129,8 +129,8 @@ contentView.add(enableRightDrawerButton);
 
 
 var drawer = TiDrawerLayout.createDrawer({
-	leftView: menuTable,
-	centerView: contentView,
+	leftWindow: menuTable,
+	centerWindow: contentView,
 	leftDrawerWidth: "280dp",
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
