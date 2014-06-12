@@ -12,15 +12,10 @@ import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 
 import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.kroll.common.Log;
 
 @Kroll.module(name="Drawerlayout", id="com.tripvi.drawerlayout")
 public class DrawerlayoutModule extends KrollModule
 {
-
-	// Standard Debugging variables
-	private static final String TAG = "DrawerlayoutModule";
-
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 	

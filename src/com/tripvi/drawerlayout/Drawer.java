@@ -1,32 +1,20 @@
 package com.tripvi.drawerlayout;
 
-import java.lang.CharSequence;
-
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
-import org.appcelerator.titanium.TiApplication;
-import org.appcelerator.titanium.TiBlob;
 import org.appcelerator.titanium.TiDimension;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
-import org.appcelerator.titanium.util.TiFileHelper;
 import org.appcelerator.titanium.util.TiRHelper;
 import org.appcelerator.titanium.util.TiRHelper.ResourceNotFoundException;
-import org.appcelerator.titanium.util.TiUrl;
 import org.appcelerator.titanium.view.TiUIView;
 
 import ti.modules.titanium.ui.WindowProxy;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.support.v7.app.ActionBarActivity;
