@@ -68,7 +68,7 @@ drawer.addEventListener('draweropen', function(e) {
 ```
 
 
-##Trouble Shooting: android support library version
+##Trouble Shooting: android support library version (only for Ti < 3.3)
 
 Check android support library v4 version in the titanium sdk installation,
 and replace android support v4 library jar file to the latest version.
@@ -82,6 +82,8 @@ the current (2014/april/15) file size of android-support-v4.jar is 648kb
 support library would be found in your android sdk path:
 {install path}/android/extras/android/support/v4/android-support-v4.jar
 
+PS: Titanium SDK >= 3.3 already use the new android-support-v4.jar
+
 
 ##Building module on Titanium Studio
 
@@ -92,11 +94,11 @@ support library would be found in your android sdk path:
 - Create .classpath file using .classpath.example as template and:
 	- replace {ANDROID_SDK_PATH} by your Android SDK folder
 	- replace {APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES} by appropriated path (ex: /Users/dirlei/Library/Application Support)
-	- replace {TITANIUM_SDK_VERSION} by your desired Ti SDK version (ex: 3.2.2.GA)
+	- replace {TITANIUM_SDK_VERSION} by your desired Ti SDK version (ex: 3.3.0.RC)
 - Create build.properties using build.properties.example as template and:
 	- replace {ANDROID_SDK_PATH} by your Android SDK folder
 	- replace {APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES} by appropriated path (ex: /Users/dirlei/Library/Application Support)
-	- replace {TITANIUM_SDK_VERSION} by your desired Ti SDK version (ex: 3.2.2.GA)
+	- replace {TITANIUM_SDK_VERSION} by your desired Ti SDK version (ex: 3.3.0.RC)
 - Import project on Titanium Studio (File/Import/Existing Projects into Workspace, select folder where you cloned repository, Finish)
 - Build module (select module project, right click, Publish/Package)
 
