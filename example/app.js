@@ -149,7 +149,7 @@ drawer.addEventListener('drawerslide', function(e) {
 win.addEventListener("open", function() {
 	win.activity.actionBar.onHomeIconItemSelected = function() {
 		drawer.toggleLeftWindow();
-	}
+	};
 });
 
 win.add(drawer);
