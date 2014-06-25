@@ -18,8 +18,7 @@ public class ContentWrapperFragment extends Fragment {
 	
 	View mContentView;
 	
-	public ContentWrapperFragment(View cv) {
-		mContentView = cv;
+	public ContentWrapperFragment() {
 	}
 	
 	@Override
@@ -36,7 +35,13 @@ public class ContentWrapperFragment extends Fragment {
 		
 		View view = inflater.inflate(layout_content_fragment, container, false);
 		FrameLayout v = (FrameLayout) view.findViewById(id_content_frame);
-		v.addView(mContentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		if (mContentView != null){
+			v.addView(mContentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		}
 		return view;
+	}
+	
+	public void setContentView(View cv){
+		mContentView = cv;
 	}
 }

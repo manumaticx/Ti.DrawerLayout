@@ -11,7 +11,6 @@ import org.appcelerator.titanium.view.TiUIView;
 
 import ti.modules.titanium.ui.WindowProxy;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
@@ -246,7 +245,8 @@ public class Drawer extends TiUIView {
 		
 		// update the main content by replacing fragments
 		View contentView = viewProxy.getOrCreateView().getOuterView();
-		Fragment fragment = new ContentWrapperFragment(contentView);
+		ContentWrapperFragment fragment = new ContentWrapperFragment();
+		fragment.setContentView(contentView);
 		
 		FragmentManager fragmentManager = ((ActionBarActivity)proxy.getActivity()).getSupportFragmentManager();
 		fragmentManager.beginTransaction().replace(id_content_frame, fragment).commit();
