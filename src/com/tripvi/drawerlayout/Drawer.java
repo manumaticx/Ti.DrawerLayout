@@ -374,7 +374,9 @@ public class Drawer extends TiUIView {
         if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
             boolean b = TiConvert.toBoolean(d, PROPERTY_DRAWER_INDICATOR_ENABLED);
             
-            mDrawerToggle.setDrawerIndicatorEnabled(b);
+            if (mDrawerToggle != null){
+            	mDrawerToggle.setDrawerIndicatorEnabled(b);
+            }
         }
 		
 		super.processProperties(d);
