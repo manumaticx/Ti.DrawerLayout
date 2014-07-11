@@ -7,6 +7,7 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.util.TiRHelper;
 import org.appcelerator.titanium.util.TiRHelper.ResourceNotFoundException;
+import org.appcelerator.titanium.util.TiUIHelper;
 import org.appcelerator.titanium.view.TiUIView;
 
 import ti.modules.titanium.ui.WindowProxy;
@@ -37,6 +38,8 @@ public class Drawer extends TiUIView {
 	private int filterWidth;
 	private boolean hasMenu = false;
 	private boolean hasFilter = false;
+	private boolean useCustomDrawer = false;
+	private int drawable_custom_drawer;
 	
 	private TiViewProxy leftView;
 	private TiViewProxy rightView;
@@ -53,6 +56,7 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_LEFT_VIEW_WIDTH = "leftDrawerWidth";
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
     public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
+    public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
 	
 	private static final String TAG = "TripviDrawer";
 	
@@ -127,13 +131,21 @@ public class Drawer extends TiUIView {
 		
 		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
 		
+		int drawer_drawable;
+
+		if (useCustomDrawer){
+			drawer_drawable = drawable_custom_drawer;
+		}else{
+			drawer_drawable = drawable_ic_drawer;
+		}		
+		
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		activity.getSupportActionBar().setHomeButtonEnabled(true);
 		
 		// ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(activity, layout, drawable_ic_drawer, string_drawer_open, string_drawer_close) {
+		mDrawerToggle = new ActionBarDrawerToggle(activity, layout, drawer_drawable, string_drawer_open, string_drawer_close) {
 			@Override
 			public void onDrawerClosed(View drawerView) {
 				if (drawerView.equals(menu)){
@@ -283,6 +295,13 @@ public class Drawer extends TiUIView {
 	
 	@Override
 	public void processProperties(KrollDict d) {
+		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
+			String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
+			drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(null, imageUrl));
+			if (drawable_custom_drawer != 0){
+				useCustomDrawer = true;
+			}
+		}
 		if (d.containsKey(PROPERTY_LEFT_VIEW)) {
 			Object leftView = d.get(PROPERTY_LEFT_VIEW);
 			if (leftView != null && leftView instanceof TiViewProxy) {
