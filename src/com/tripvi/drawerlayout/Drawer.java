@@ -88,82 +88,7 @@ public class Drawer extends TiUIView {
 		
 		// TiUIView
 		setNativeView(layout);
-		
-		
-        // enable ActionBar app icon to behave as action to toggle nav drawer
-		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		activity.getSupportActionBar().setHomeButtonEnabled(true);
-		
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(activity, layout, drawable_ic_drawer, string_drawer_open, string_drawer_close) {
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				super.onDrawerClosed(drawerView);
-				
-				if (proxy.hasListeners("drawerclose")) {
-					KrollDict options = new KrollDict();
-					if (drawerView == menu) {
-						options.put("drawer", "left");
-					} else if (drawerView == filter) {
-						options.put("drawer", "right");
-					}
-					proxy.fireEvent("drawerclose", options);
-				}
-			}
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				
-				if (proxy.hasListeners("draweropen")) {
-					KrollDict options = new KrollDict();
-					if (drawerView == menu) {
-						options.put("drawer", "left");
-					} else if (drawerView == filter) {
-						options.put("drawer", "right");
-					}
-					proxy.fireEvent("draweropen", options);
-				}
-			}
-			@Override
-			public void onDrawerSlide(View drawerView, float slideOffset) {
-				super.onDrawerSlide(drawerView, slideOffset);
-				
-				if (proxy.hasListeners("drawerslide")) {
-					KrollDict options = new KrollDict();
-					options.put("offset", slideOffset);
-					if (drawerView == menu) {
-						options.put("drawer", "left");
-					} else if (drawerView == filter) {
-						options.put("drawer", "right");
-					}
-					proxy.fireEvent("drawerslide", options);
-				}
-			}
-			@Override
-			public void onDrawerStateChanged(int newState) {
-				super.onDrawerStateChanged(newState);
-				
-				if (proxy.hasListeners("change")) {
-					KrollDict options = new KrollDict();
-					options.put("state", newState);
-					options.put("idle", (newState == 0 ? 1 : 0));
-					options.put("dragging", (newState == 1 ? 1 : 0));
-					options.put("settling", (newState == 2 ? 1 : 0));
-					proxy.fireEvent("change", options);
-				}
-			}
-		};
-		// Set the drawer toggle as the DrawerListener
-		layout.setDrawerListener(mDrawerToggle);
-		
-		// onPostCreate 대신에
-		layout.post(new Runnable() {
-			@Override
-			public void run() {
-				mDrawerToggle.syncState();
-			}
-		});
+
 	}
 	
 	
@@ -198,7 +123,76 @@ public class Drawer extends TiUIView {
 		layout.closeDrawer(Gravity.RIGHT);
 	}
 	
-	
+	private void initDrawerToggle() {
+		
+		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
+		
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		activity.getSupportActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+        // between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(activity, layout, drawable_ic_drawer, string_drawer_open, string_drawer_close) {
+			@Override
+			public void onDrawerClosed(View drawerView) {
+				if (drawerView.equals(menu)){
+					super.onDrawerClosed(drawerView);
+					if (proxy.hasListeners("drawerclose")) {
+						KrollDict options = new KrollDict();
+						options.put("drawer", "left");
+						proxy.fireEvent("drawerclose", options);
+					}
+				}
+			}
+			@Override
+			public void onDrawerOpened(View drawerView) {
+				if (drawerView.equals(menu)){
+					super.onDrawerOpened(drawerView);
+					if (proxy.hasListeners("draweropen")) {
+						KrollDict options = new KrollDict();
+						options.put("drawer", "left");
+						proxy.fireEvent("draweropen", options);
+					}
+				}
+			}
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+				if (drawerView.equals(menu)){
+					super.onDrawerSlide(drawerView, slideOffset);
+					if (proxy.hasListeners("drawerslide")) {
+						KrollDict options = new KrollDict();
+						options.put("offset", slideOffset);
+						options.put("drawer", "left");
+						proxy.fireEvent("drawerslide", options);
+					}
+				}
+			}
+			@Override
+			public void onDrawerStateChanged(int newState) {
+				super.onDrawerStateChanged(newState);
+				
+				if (proxy.hasListeners("change")) {
+					KrollDict options = new KrollDict();
+					options.put("state", newState);
+					options.put("idle", (newState == 0 ? 1 : 0));
+					options.put("dragging", (newState == 1 ? 1 : 0));
+					options.put("settling", (newState == 2 ? 1 : 0));
+					proxy.fireEvent("change", options);
+				}
+			}
+		};
+		// Set the drawer toggle as the DrawerListener
+		layout.setDrawerListener(mDrawerToggle);
+		
+		// onPostCreate 대신에
+		layout.post(new Runnable() {
+			@Override
+			public void run() {
+				mDrawerToggle.syncState();
+			}
+		});
+	}
 	
 	/**
 	* drawer가 필요할때 그때그때 추가
@@ -217,6 +211,8 @@ public class Drawer extends TiUIView {
 		layout.addView(menu);
 		
 		hasMenu = true;
+		
+		initDrawerToggle();
 	}
 	private void initRightDrawer() {
 		if (hasFilter) return;
