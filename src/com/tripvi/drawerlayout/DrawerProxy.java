@@ -151,7 +151,26 @@ public class DrawerProxy extends TiViewProxy {
 		Message message = getMainHandler().obtainMessage(MSG_CLOSE_RIGHT_VIEW);
 		message.sendToTarget();
 	}
-
+	
+	@Kroll.method @Kroll.getProperty
+	public boolean getIsLeftDrawerOpen() {
+		return drawer.isLeftDrawerOpen();
+	}
+	
+	@Kroll.method @Kroll.getProperty
+	public boolean getIsRightDrawerOpen() {
+		return drawer.isRightDrawerOpen();
+	}
+	
+	@Kroll.method @Kroll.getProperty
+	public boolean getIsLeftDrawerVisible() {
+		return drawer.isLeftDrawerVisible();
+	}
+	
+	@Kroll.method @Kroll.getProperty
+	public boolean getIsRightDrawerVisible() {
+		return drawer.isRightDrawerVisible();
+	}
 
 	@Kroll.method @Kroll.setProperty
 	public void setLeftDrawerWidth(Object arg) {

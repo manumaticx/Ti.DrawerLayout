@@ -123,6 +123,22 @@ public class Drawer extends TiUIView {
 		layout.closeDrawer(Gravity.RIGHT);
 	}
 	
+	public boolean isLeftDrawerOpen() {
+		return layout.isDrawerOpen(Gravity.LEFT);
+	}
+	
+	public boolean isRightDrawerOpen() {
+		return layout.isDrawerOpen(Gravity.RIGHT);
+	}
+	
+	public boolean isLeftDrawerVisible() {
+		return layout.isDrawerVisible(Gravity.LEFT);
+	}
+	
+	public boolean isRightDrawerVisible() {
+		return layout.isDrawerVisible(Gravity.RIGHT);
+	}
+	
 	private void initDrawerToggle() {
 		
 		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
