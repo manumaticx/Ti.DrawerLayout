@@ -128,7 +128,7 @@ PS: Titanium SDK >= 3.3 already use the new android-support-v4.jar
 
 ### index.xml
 ```
-</Alloy>
+<Alloy>
     <Window id="mainWindow" platform="android" navBarHidden="true">
     	<!-- add header bar here -->
     </Window>
