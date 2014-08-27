@@ -1,34 +1,57 @@
 Ti.DrawerLayout
 ===============
 
-titanium module: android drawer layout
+Appcelerator Titanium module adding native Android drawer layout support
 
 
 사용법은 example/app.js를 참조바람
 
 
-#### demo app: https://github.com/ricardoalcocer/Ti.DrawerLayout-Demo-Alloy-App
+## Quick Start
 
+### Get it [![gitTio](http://gitt.io/badge.png)](http://gitt.io/component/com.tripvi.drawerlayout)
+Download the latest distribution ZIP-file from [Releases](https://github.com/Tripvi/Ti.DrawerLayout/releases) and consult the [Titanium Documentation](http://docs.appcelerator.com/titanium/latest/#!/guide/Using_a_Module) on how install it, or simply use the [gitTio CLI](http://gitt.io/cli):
 
-##Native ActionBar Support (>=1.1.0)
+`$ gittio install com.tripvi.drawerlayout`
 
-ActionBar homeIcon click event is handled outside of module, because Activity should be sub-classed to override onOptionsItemSelected().
+## Example
 
+Ricardo Alcocer has created a demo app: https://github.com/ricardoalcocer/Ti.DrawerLayout-Demo-Alloy-App
+
+## Features
+
+### Drawer indicator ('Hamburger') 
+**Titanium SDK >= 3.3.0**
+
+From Titanium SDK 3.3.0 and up it is possible to enable the hamburger button next to the app icon in the actionbar. Just add `drawerIndicatorEnabled` to the configuration object when creating the drawer:
+
+```javascript
+var drawer = TiDrawerLayout.createDrawer({
+    ...
+    drawerIndicatorEnabled: true
+});
 ```
-	win.activity.actionBar.onHomeIconItemSelected = function() {
-		drawer.toggleLeftWindow();
-	}
+
+### Native ActionBar  
+**version >= 1.1.0**
+
+The ActionBar home Icon `click` event is handled outside of the module, because the Activity should be sub-classed to override onOptionsItemSelected(). To open the left drawer add the following code in the `open` eventlistener function of your Window:
+
+```javascript
+win.activity.actionBar.onHomeIconItemSelected = function() {
+	drawer.toggleLeftWindow();
+}
 ```
 
-Require Titanium Mobile SDK >= 3.3.0
+Requires Titanium Mobile SDK >= 3.3.0
 
 
-##Right Drawer Support (>=1.0.2)
+### Left and right drawer  
+**version >=1.0.2**
 
-Set 'rightView' and 'rightDrawerWidth' of drawer view.
+Both left and right drawers are supported. To enable right drawer support, set 'rightView' and 'rightDrawerWidth' of drawer view:
 
-
-```
+```javascript
 var drawer = TiDrawerLayout.createDrawer({
     leftView: menuTable,
     centerView: contentView,
@@ -40,10 +63,9 @@ var drawer = TiDrawerLayout.createDrawer({
 });
 ```
 
+You can assign these properties at any time. Right drawer will only be created when it is needed. (Same applies to left drawer support).
 
-Assign these properties at any time. Right drawer will be created when it is needed. This behavior has been applied to left drawer too.
-
-```
+```javascript
 var drawer = TiDrawerLayout.createDrawer({
     leftView: menuTable,
     centerView: contentView,
@@ -54,10 +76,9 @@ drawer.rightView = filterView;
 drawer.rightDrawerWidth = "120dp";
 ```
 
+The `draweropen` event specifies which drawer has been opened:
 
-Event will be fired with 'drawer' parameter.
-
-```
+```javascript
 drawer.addEventListener('draweropen', function(e) {
 	if (e.drawer == "left") {
         // left drawer is open
@@ -68,7 +89,7 @@ drawer.addEventListener('draweropen', function(e) {
 ```
 
 
-##Trouble Shooting: android support library version (only for Ti < 3.3)
+## Troubleshooting: Android support library version (only for Ti SDK < 3.3.0)
 
 Check android support library v4 version in the titanium sdk installation,
 and replace android support v4 library jar file to the latest version.
@@ -85,7 +106,7 @@ support library would be found in your android sdk path:
 PS: Titanium SDK >= 3.3 already use the new android-support-v4.jar
 
 
-##Building module on Titanium Studio
+##Building module in Titanium Studio
 
 - Clone repository
 - Create .project folder
