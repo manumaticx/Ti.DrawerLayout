@@ -2,7 +2,6 @@
 tmp
 bin
 build
-*.zip
 .apt_generated
 .project
 .classpath
@@ -10,4 +9,3 @@ build
 libs
 build.properties
 *.apk
-dist
