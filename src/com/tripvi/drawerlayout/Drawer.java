@@ -143,15 +143,19 @@ public class Drawer extends TiUIView {
 		
 		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
 		
+        if(activity.getSupportActionBar() == null) {
+            return;
+        }
+        
 		int drawer_drawable;
 
 		if (useCustomDrawer){
 			drawer_drawable = drawable_custom_drawer;
 		}else{
 			drawer_drawable = drawable_ic_drawer;
-		}		
-		
-		// enable ActionBar app icon to behave as action to toggle nav drawer
+		}
+        
+        // enable ActionBar app icon to behave as action to toggle nav drawer
 		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		activity.getSupportActionBar().setHomeButtonEnabled(true);
 		
