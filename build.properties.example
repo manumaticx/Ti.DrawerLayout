@@ -1,3 +1,0 @@
-titanium.platform={APPLICATION_SUPPORT_PATH_WHERE_TITANIUM_LIVES}/Titanium/mobilesdk/osx/{TITANIUM_SDK_VERSION}/android
-android.platform={ANDROID_SDK_PATH}/platforms/android-19
-google.apis={ANDROID_SDK_PATH}/add-ons/addon-google_apis-google-19
