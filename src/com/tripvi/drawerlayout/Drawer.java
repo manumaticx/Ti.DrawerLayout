@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 
@@ -71,7 +72,6 @@ public class Drawer extends TiUIView {
 			drawable_ic_drawer = TiRHelper.getResource("drawable.ic_drawer");
 			string_drawer_open = TiRHelper.getResource("string.drawer_open");
 			string_drawer_close = TiRHelper.getResource("string.drawer_close");
-			layout_content_fragment = TiRHelper.getResource("layout.content_fragment");
 			layout_drawer_main = TiRHelper.getResource("layout.drawer_main");
 			id_content_frame = TiRHelper.getResource("id.content_frame");
 		}
@@ -278,7 +278,6 @@ public class Drawer extends TiUIView {
 		
 		FragmentManager fragmentManager = ((ActionBarActivity)proxy.getActivity()).getSupportFragmentManager();
 		fragmentManager.beginTransaction().replace(id_content_frame, fragment).commit();
-		// fragmentManager.beginTransaction().replace(id_content_frame, fragment).commitAllowingStateLoss();
 		
 		this.centerView = viewProxy;
 	}
@@ -301,7 +300,7 @@ public class Drawer extends TiUIView {
 				//
 				this.leftView = (TiViewProxy)leftView;
 				this.initLeftDrawer();
-				this.menu.addView(this.leftView.getOrCreateView().getOuterView());
+				this.menu.addView(getNativeView(this.leftView));
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for leftView");
 			}
@@ -314,7 +313,7 @@ public class Drawer extends TiUIView {
 				//
 				this.leftView = (TiViewProxy)leftView;
 				this.initLeftDrawer();
-				this.menu.addView(this.leftView.getOrCreateView().getOuterView());
+				this.menu.addView(getNativeView(this.leftView));
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for leftView");
 			}
@@ -327,7 +326,7 @@ public class Drawer extends TiUIView {
 				//
 				this.rightView = (TiViewProxy)rightView;
 				this.initRightDrawer();
-				this.filter.addView(this.rightView.getOrCreateView().getOuterView());
+				this.filter.addView(getNativeView(this.rightView));
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for rightView");
 			}
@@ -340,7 +339,7 @@ public class Drawer extends TiUIView {
 				//
 				this.rightView = (TiViewProxy)rightView;
 				this.initRightDrawer();
-				this.filter.addView(this.rightView.getOrCreateView().getOuterView());
+				this.filter.addView(getNativeView(this.rightView));
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for rightView");
 			}
@@ -479,6 +478,15 @@ public class Drawer extends TiUIView {
 	*/
 	public int getDevicePixels(Object value) {
 		return TiConvert.toTiDimension(TiConvert.toString(value), TiDimension.TYPE_WIDTH).getAsPixels(layout);
+	}
+	
+	private View getNativeView(TiViewProxy viewProxy){
+		View nativeView = viewProxy.getOrCreateView().getOuterView();
+		ViewGroup parentViewGroup = (ViewGroup) nativeView.getParent();
+        if (parentViewGroup != null) {
+            parentViewGroup.removeAllViews();
+        }
+        return nativeView;
 	}
 	
 	// private Drawable getDrawableFromUrl(String url)
