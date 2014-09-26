@@ -7,29 +7,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class ContentWrapperFragment extends Fragment {
-	
-	private static final String TAG = "TripviContentFragment";
-	
+
 	View mContentView;
-	
+
 	public ContentWrapperFragment() {
 	}
-	
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		return mContentView;
 	}
-	
+
 	@Override
-	public void onDestroyView(){
+	public void onDestroyView() {
 		super.onDestroy();
-		
-		if (mContentView != null){
-			((ViewGroup)mContentView.getParent()).removeView(mContentView);
+
+		if (mContentView != null) {
+			((ViewGroup) mContentView.getParent()).removeView(mContentView);
 		}
 	}
-	
-	public void setContentView(View cv){
+
+	public void setContentView(View cv) {
 		mContentView = cv;
 	}
 }

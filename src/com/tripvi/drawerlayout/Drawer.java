@@ -23,12 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-
 public class Drawer extends TiUIView {
-	
+
 	private DrawerLayout layout;
 	private ActionBarDrawerToggle mDrawerToggle;
-	
+
 	private FrameLayout menu; /* left drawer */
 	private FrameLayout filter; /* right drawer */
 	private int menuWidth;
@@ -37,12 +36,11 @@ public class Drawer extends TiUIView {
 	private boolean hasFilter = false;
 	private boolean useCustomDrawer = false;
 	private int drawable_custom_drawer;
-	
+
 	private TiViewProxy leftView;
 	private TiViewProxy rightView;
 	private TiViewProxy centerView;
-	
-	
+
 	// Static Properties
 	public static final String PROPERTY_LEFT_VIEW = "leftView";
 	public static final String PROPERTY_CENTER_VIEW = "centerView";
@@ -52,50 +50,45 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_RIGHT_WINDOW = "rightWindow";
 	public static final String PROPERTY_LEFT_VIEW_WIDTH = "leftDrawerWidth";
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
-    public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
-    public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
-	
+	public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
+	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
+
 	private static final String TAG = "TripviDrawer";
-	
+
 	int drawable_ic_drawer = 0;
 	int string_drawer_open = 0;
 	int string_drawer_close = 0;
-	int layout_content_fragment = 0;
 	int layout_drawer_main = 0;
 	int id_content_frame = 0;
-	
-	
+
 	public Drawer(final DrawerProxy proxy) {
 		super(proxy);
-		
+
 		try {
 			drawable_ic_drawer = TiRHelper.getResource("drawable.ic_drawer");
 			string_drawer_open = TiRHelper.getResource("string.drawer_open");
 			string_drawer_close = TiRHelper.getResource("string.drawer_close");
 			layout_drawer_main = TiRHelper.getResource("layout.drawer_main");
 			id_content_frame = TiRHelper.getResource("id.content_frame");
-		}
-		catch (ResourceNotFoundException e) {
+		} catch (ResourceNotFoundException e) {
 			Log.e(TAG, "XML resources could not be found!!!");
 		}
-		
-		
+
 		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
-		
+
 		// DrawerLayout을 생성한다.
 		LayoutInflater inflater = LayoutInflater.from(activity);
-		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null, false);
-		
+		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
+				false);
+
 		// TiUIView
 		setNativeView(layout);
 
 	}
-	
-	
-	
+
 	/**
-	* Open/Close/Toggle drawers
-	*/
+	 * Open/Close/Toggle drawers
+	 */
 	public void toggleLeftDrawer() {
 		if (layout.isDrawerOpen(Gravity.LEFT)) {
 			closeLeftDrawer();
@@ -103,12 +96,15 @@ public class Drawer extends TiUIView {
 			openLeftDrawer();
 		}
 	}
+
 	public void openLeftDrawer() {
 		layout.openDrawer(Gravity.LEFT);
 	}
+
 	public void closeLeftDrawer() {
 		layout.closeDrawer(Gravity.LEFT);
 	}
+
 	public void toggleRightDrawer() {
 		if (layout.isDrawerOpen(Gravity.RIGHT)) {
 			closeRightDrawer();
@@ -116,55 +112,58 @@ public class Drawer extends TiUIView {
 			openRightDrawer();
 		}
 	}
+
 	public void openRightDrawer() {
 		layout.openDrawer(Gravity.RIGHT);
 	}
+
 	public void closeRightDrawer() {
 		layout.closeDrawer(Gravity.RIGHT);
 	}
-	
+
 	public boolean isLeftDrawerOpen() {
 		return layout.isDrawerOpen(Gravity.LEFT);
 	}
-	
+
 	public boolean isRightDrawerOpen() {
 		return layout.isDrawerOpen(Gravity.RIGHT);
 	}
-	
+
 	public boolean isLeftDrawerVisible() {
 		return layout.isDrawerVisible(Gravity.LEFT);
 	}
-	
+
 	public boolean isRightDrawerVisible() {
 		return layout.isDrawerVisible(Gravity.RIGHT);
 	}
-	
+
 	private void initDrawerToggle() {
-		
+
 		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
-		
-        if(activity.getSupportActionBar() == null) {
-            return;
-        }
-        
+
+		if (activity.getSupportActionBar() == null) {
+			return;
+		}
+
 		int drawer_drawable;
 
-		if (useCustomDrawer){
+		if (useCustomDrawer) {
 			drawer_drawable = drawable_custom_drawer;
-		}else{
+		} else {
 			drawer_drawable = drawable_ic_drawer;
 		}
-        
-        // enable ActionBar app icon to behave as action to toggle nav drawer
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
 		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		activity.getSupportActionBar().setHomeButtonEnabled(true);
-		
+
 		// ActionBarDrawerToggle ties together the the proper interactions
-        // between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(activity, layout, drawer_drawable, string_drawer_open, string_drawer_close) {
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(activity, layout,
+				drawer_drawable, string_drawer_open, string_drawer_close) {
 			@Override
 			public void onDrawerClosed(View drawerView) {
-				if (drawerView.equals(menu)){
+				if (drawerView.equals(menu)) {
 					super.onDrawerClosed(drawerView);
 					if (proxy.hasListeners("drawerclose")) {
 						KrollDict options = new KrollDict();
@@ -173,9 +172,10 @@ public class Drawer extends TiUIView {
 					}
 				}
 			}
+
 			@Override
 			public void onDrawerOpened(View drawerView) {
-				if (drawerView.equals(menu)){
+				if (drawerView.equals(menu)) {
 					super.onDrawerOpened(drawerView);
 					if (proxy.hasListeners("draweropen")) {
 						KrollDict options = new KrollDict();
@@ -184,9 +184,10 @@ public class Drawer extends TiUIView {
 					}
 				}
 			}
+
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset) {
-				if (drawerView.equals(menu)){
+				if (drawerView.equals(menu)) {
 					super.onDrawerSlide(drawerView, slideOffset);
 					if (proxy.hasListeners("drawerslide")) {
 						KrollDict options = new KrollDict();
@@ -196,10 +197,11 @@ public class Drawer extends TiUIView {
 					}
 				}
 			}
+
 			@Override
 			public void onDrawerStateChanged(int newState) {
 				super.onDrawerStateChanged(newState);
-				
+
 				if (proxy.hasListeners("change")) {
 					KrollDict options = new KrollDict();
 					options.put("state", newState);
@@ -212,7 +214,7 @@ public class Drawer extends TiUIView {
 		};
 		// Set the drawer toggle as the DrawerListener
 		layout.setDrawerListener(mDrawerToggle);
-		
+
 		// onPostCreate 대신에
 		layout.post(new Runnable() {
 			@Override
@@ -221,47 +223,51 @@ public class Drawer extends TiUIView {
 			}
 		});
 	}
-	
+
 	/**
-	* drawer가 필요할때 그때그때 추가
-	*/
+	 * drawer가 필요할때 그때그때 추가
+	 */
 	private void initLeftDrawer() {
-		if (hasMenu) return;
-		
+		if (hasMenu)
+			return;
+
 		Log.d(TAG, "initializing left drawer");
-		
+
 		// menu: left drawer
 		menu = new FrameLayout(proxy.getActivity());
-		LayoutParams menuLayout = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+		LayoutParams menuLayout = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT);
 		menuLayout.gravity = Gravity.LEFT;
 		menu.setLayoutParams(menuLayout);
-		
+
 		layout.addView(menu);
-		
+
 		hasMenu = true;
-		
+
 		initDrawerToggle();
 	}
+
 	private void initRightDrawer() {
-		if (hasFilter) return;
-		
+		if (hasFilter)
+			return;
+
 		Log.d(TAG, "initializing right drawer");
-		
+
 		// filter: right drawer
 		filter = new FrameLayout(proxy.getActivity());
-		LayoutParams filterLayout = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+		LayoutParams filterLayout = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT);
 		filterLayout.gravity = Gravity.RIGHT;
 		filter.setLayoutParams(filterLayout);
-		
+
 		layout.addView(filter);
-		
+
 		hasFilter = true;
 	}
-	
-	
+
 	/**
-	* centerView 변경
-	*/
+	 * centerView 변경
+	 */
 	private void replaceCenterView(TiViewProxy viewProxy) {
 		if (viewProxy == this.centerView) {
 			Log.d(TAG, "centerView was not changed");
@@ -270,25 +276,27 @@ public class Drawer extends TiUIView {
 		if (viewProxy == null) {
 			return;
 		}
-		
+
 		// update the main content by replacing fragments
 		View contentView = viewProxy.getOrCreateView().getOuterView();
 		ContentWrapperFragment fragment = new ContentWrapperFragment();
 		fragment.setContentView(contentView);
-		
-		FragmentManager fragmentManager = ((ActionBarActivity)proxy.getActivity()).getSupportFragmentManager();
-		fragmentManager.beginTransaction().replace(id_content_frame, fragment).commit();
-		
+
+		FragmentManager fragmentManager = ((ActionBarActivity) proxy
+				.getActivity()).getSupportFragmentManager();
+		fragmentManager.beginTransaction().replace(id_content_frame, fragment)
+				.commit();
+
 		this.centerView = viewProxy;
 	}
-	
-	
+
 	@Override
 	public void processProperties(KrollDict d) {
 		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
 			String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
-			drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(null, imageUrl));
-			if (drawable_custom_drawer != 0){
+			drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(
+					null, imageUrl));
+			if (drawable_custom_drawer != 0) {
 				useCustomDrawer = true;
 			}
 		}
@@ -296,9 +304,10 @@ public class Drawer extends TiUIView {
 			Object leftView = d.get(PROPERTY_LEFT_VIEW);
 			if (leftView != null && leftView instanceof TiViewProxy) {
 				if (leftView instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot add window as a child view of other window");
+					throw new IllegalStateException(
+							"[ERROR] Cannot add window as a child view of other window");
 				//
-				this.leftView = (TiViewProxy)leftView;
+				this.leftView = (TiViewProxy) leftView;
 				this.initLeftDrawer();
 				this.menu.addView(getNativeView(this.leftView));
 			} else {
@@ -309,9 +318,10 @@ public class Drawer extends TiUIView {
 			Object leftView = d.get(PROPERTY_LEFT_WINDOW);
 			if (leftView != null && leftView instanceof TiViewProxy) {
 				if (leftView instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot add window as a child view of other window");
+					throw new IllegalStateException(
+							"[ERROR] Cannot add window as a child view of other window");
 				//
-				this.leftView = (TiViewProxy)leftView;
+				this.leftView = (TiViewProxy) leftView;
 				this.initLeftDrawer();
 				this.menu.addView(getNativeView(this.leftView));
 			} else {
@@ -322,9 +332,10 @@ public class Drawer extends TiUIView {
 			Object rightView = d.get(PROPERTY_RIGHT_VIEW);
 			if (rightView != null && rightView instanceof TiViewProxy) {
 				if (rightView instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot add window as a child view of other window");
+					throw new IllegalStateException(
+							"[ERROR] Cannot add window as a child view of other window");
 				//
-				this.rightView = (TiViewProxy)rightView;
+				this.rightView = (TiViewProxy) rightView;
 				this.initRightDrawer();
 				this.filter.addView(getNativeView(this.rightView));
 			} else {
@@ -335,9 +346,10 @@ public class Drawer extends TiUIView {
 			Object rightView = d.get(PROPERTY_RIGHT_WINDOW);
 			if (rightView != null && rightView instanceof TiViewProxy) {
 				if (rightView instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot add window as a child view of other window");
+					throw new IllegalStateException(
+							"[ERROR] Cannot add window as a child view of other window");
 				//
-				this.rightView = (TiViewProxy)rightView;
+				this.rightView = (TiViewProxy) rightView;
 				this.initRightDrawer();
 				this.filter.addView(getNativeView(this.rightView));
 			} else {
@@ -348,9 +360,10 @@ public class Drawer extends TiUIView {
 			Object centerView = d.get(PROPERTY_CENTER_VIEW);
 			if (centerView != null && centerView instanceof TiViewProxy) {
 				if (centerView instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot use window as a child view of other window");
+					throw new IllegalStateException(
+							"[ERROR] Cannot use window as a child view of other window");
 				//
-				replaceCenterView((TiViewProxy)centerView);
+				replaceCenterView((TiViewProxy) centerView);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for centerView");
 			}
@@ -359,141 +372,158 @@ public class Drawer extends TiUIView {
 			Object centerView = d.get(PROPERTY_CENTER_WINDOW);
 			if (centerView != null && centerView instanceof TiViewProxy) {
 				if (centerView instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot use window as a child view of other window");
+					throw new IllegalStateException(
+							"[ERROR] Cannot use window as a child view of other window");
 				//
-				replaceCenterView((TiViewProxy)centerView);
+				replaceCenterView((TiViewProxy) centerView);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for centerView");
 			}
 		}
 		if (d.containsKey(PROPERTY_LEFT_VIEW_WIDTH)) {
 			menuWidth = getDevicePixels(d.get(PROPERTY_LEFT_VIEW_WIDTH));
-			
-			Log.d(TAG, "set menuWidth = " + d.get(PROPERTY_LEFT_VIEW_WIDTH) + " in pixel: " + menuWidth);
-			
+
+			Log.d(TAG, "set menuWidth = " + d.get(PROPERTY_LEFT_VIEW_WIDTH)
+					+ " in pixel: " + menuWidth);
+
 			menu.getLayoutParams().width = menuWidth;
 		}
 		if (d.containsKey(PROPERTY_RIGHT_VIEW_WIDTH)) {
 			filterWidth = getDevicePixels(d.get(PROPERTY_RIGHT_VIEW_WIDTH));
-			
-			Log.d(TAG, "set filterWidth = " + d.get(PROPERTY_RIGHT_VIEW_WIDTH) + " in pixel: " + filterWidth);
-			
+
+			Log.d(TAG, "set filterWidth = " + d.get(PROPERTY_RIGHT_VIEW_WIDTH)
+					+ " in pixel: " + filterWidth);
+
 			filter.getLayoutParams().width = filterWidth;
 		}
-        if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
-            boolean b = TiConvert.toBoolean(d, PROPERTY_DRAWER_INDICATOR_ENABLED);
-            
-            if (mDrawerToggle != null){
-            	mDrawerToggle.setDrawerIndicatorEnabled(b);
-            }
-        }
-		
+		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
+			boolean b = TiConvert.toBoolean(d,
+					PROPERTY_DRAWER_INDICATOR_ENABLED);
+
+			if (mDrawerToggle != null) {
+				mDrawerToggle.setDrawerIndicatorEnabled(b);
+			}
+		}
+
 		super.processProperties(d);
 	}
-	
+
 	@Override
-	public void propertyChanged(String key, Object oldValue, Object newValue, KrollProxy proxy) {
-		
-		Log.d(TAG, "propertyChanged  Property: " + key + " old: " + oldValue + " new: " + newValue);
-		
+	public void propertyChanged(String key, Object oldValue, Object newValue,
+			KrollProxy proxy) {
+
+		Log.d(TAG, "propertyChanged  Property: " + key + " old: " + oldValue
+				+ " new: " + newValue);
+
 		if (key.equals(PROPERTY_LEFT_VIEW) || key.equals(PROPERTY_LEFT_WINDOW)) {
-			if (newValue == this.leftView) return;
+			if (newValue == this.leftView)
+				return;
 			TiViewProxy newProxy = null;
 			int index = 0;
 			if (this.leftView != null) {
-				index = this.menu.indexOfChild(this.leftView.getOrCreateView().getNativeView());
+				index = this.menu.indexOfChild(this.leftView.getOrCreateView()
+						.getNativeView());
 			}
 			if (newValue != null && newValue instanceof TiViewProxy) {
 				if (newValue instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot add window as a child view of other window");
-				newProxy = (TiViewProxy)newValue;
+					throw new IllegalStateException(
+							"[ERROR] Cannot add window as a child view of other window");
+				newProxy = (TiViewProxy) newValue;
 				initLeftDrawer();
-				this.menu.addView(newProxy.getOrCreateView().getOuterView(), index);
+				this.menu.addView(newProxy.getOrCreateView().getOuterView(),
+						index);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for leftView");
 			}
 			if (this.leftView != null) {
-				this.menu.removeView(this.leftView.getOrCreateView().getNativeView());
+				this.menu.removeView(this.leftView.getOrCreateView()
+						.getNativeView());
 			}
 			this.leftView = newProxy;
-		}
-		else if (key.equals(PROPERTY_RIGHT_VIEW) || key.equals(PROPERTY_RIGHT_WINDOW)) {
-			if (newValue == this.rightView) return;
+		} else if (key.equals(PROPERTY_RIGHT_VIEW)
+				|| key.equals(PROPERTY_RIGHT_WINDOW)) {
+			if (newValue == this.rightView)
+				return;
 			TiViewProxy newProxy = null;
 			int index = 0;
 			if (this.rightView != null) {
-				index = this.filter.indexOfChild(this.rightView.getOrCreateView().getNativeView());
+				index = this.filter.indexOfChild(this.rightView
+						.getOrCreateView().getNativeView());
 			}
 			if (newValue != null && newValue instanceof TiViewProxy) {
 				if (newValue instanceof WindowProxy)
-					throw new IllegalStateException("[ERROR] Cannot add window as a child view of other window");
-				newProxy = (TiViewProxy)newValue;
+					throw new IllegalStateException(
+							"[ERROR] Cannot add window as a child view of other window");
+				newProxy = (TiViewProxy) newValue;
 				initRightDrawer();
-				this.filter.addView(newProxy.getOrCreateView().getOuterView(), index);
+				this.filter.addView(newProxy.getOrCreateView().getOuterView(),
+						index);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for rightView");
 			}
 			if (this.rightView != null) {
-				this.filter.removeView(this.rightView.getOrCreateView().getNativeView());
+				this.filter.removeView(this.rightView.getOrCreateView()
+						.getNativeView());
 			}
 			this.rightView = newProxy;
-		}
-		else if (key.equals(PROPERTY_CENTER_VIEW) || key.equals(PROPERTY_CENTER_WINDOW)) {
+		} else if (key.equals(PROPERTY_CENTER_VIEW)
+				|| key.equals(PROPERTY_CENTER_WINDOW)) {
 			TiViewProxy newProxy = (TiViewProxy) newValue;
 			replaceCenterView(newProxy);
-		}
-		else if (key.equals(PROPERTY_LEFT_VIEW_WIDTH)) {
+		} else if (key.equals(PROPERTY_LEFT_VIEW_WIDTH)) {
 			menuWidth = getDevicePixels(newValue);
-			
-			Log.d(TAG, "change menuWidth = " + newValue + " in pixel: " + menuWidth);
-			
+
+			Log.d(TAG, "change menuWidth = " + newValue + " in pixel: "
+					+ menuWidth);
+
 			initLeftDrawer();
-			
-			LayoutParams menuLayout = new LayoutParams(menuWidth, LayoutParams.MATCH_PARENT);
+
+			LayoutParams menuLayout = new LayoutParams(menuWidth,
+					LayoutParams.MATCH_PARENT);
 			menuLayout.gravity = Gravity.LEFT;
 			this.menu.setLayoutParams(menuLayout);
-		}
-		else if (key.equals(PROPERTY_RIGHT_VIEW_WIDTH)) {
+		} else if (key.equals(PROPERTY_RIGHT_VIEW_WIDTH)) {
 			filterWidth = getDevicePixels(newValue);
-			
-			Log.d(TAG, "change filterWidth = " + newValue + " in pixel: " + filterWidth);
-			
+
+			Log.d(TAG, "change filterWidth = " + newValue + " in pixel: "
+					+ filterWidth);
+
 			initRightDrawer();
-			
-			LayoutParams filterLayout = new LayoutParams(filterWidth, LayoutParams.MATCH_PARENT);
+
+			LayoutParams filterLayout = new LayoutParams(filterWidth,
+					LayoutParams.MATCH_PARENT);
 			filterLayout.gravity = Gravity.RIGHT;
 			this.filter.setLayoutParams(filterLayout);
-		}
-        else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
-            boolean b = (Boolean)newValue;
-            mDrawerToggle.setDrawerIndicatorEnabled(b);
-        }
-		else {
+		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
+			boolean b = (Boolean) newValue;
+			mDrawerToggle.setDrawerIndicatorEnabled(b);
+		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
 	}
-	
+
 	/**
-	* Helpers
-	*/
+	 * Helpers
+	 */
 	public int getDevicePixels(Object value) {
-		return TiConvert.toTiDimension(TiConvert.toString(value), TiDimension.TYPE_WIDTH).getAsPixels(layout);
+		return TiConvert.toTiDimension(TiConvert.toString(value),
+				TiDimension.TYPE_WIDTH).getAsPixels(layout);
 	}
-	
-	private View getNativeView(TiViewProxy viewProxy){
+
+	private View getNativeView(TiViewProxy viewProxy) {
 		View nativeView = viewProxy.getOrCreateView().getOuterView();
 		ViewGroup parentViewGroup = (ViewGroup) nativeView.getParent();
-        if (parentViewGroup != null) {
-            parentViewGroup.removeAllViews();
-        }
-        return nativeView;
+		if (parentViewGroup != null) {
+			parentViewGroup.removeAllViews();
+		}
+		return nativeView;
 	}
-	
+
 	// private Drawable getDrawableFromUrl(String url)
 	// {
-	// 	TiUrl imageUrl = new TiUrl((String) url);
-	// 	TiFileHelper tfh = new TiFileHelper(TiApplication.getInstance());
-	// 	return tfh.loadDrawable(imageUrl.resolve(), false);
+	// TiUrl imageUrl = new TiUrl((String) url);
+	// TiFileHelper tfh = new TiFileHelper(TiApplication.getInstance());
+	// return tfh.loadDrawable(imageUrl.resolve(), false);
 	// }
-	
+
 }
