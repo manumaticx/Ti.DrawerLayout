@@ -45,9 +45,6 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_LEFT_VIEW = "leftView";
 	public static final String PROPERTY_CENTER_VIEW = "centerView";
 	public static final String PROPERTY_RIGHT_VIEW = "rightView";
-	public static final String PROPERTY_LEFT_WINDOW = "leftWindow";
-	public static final String PROPERTY_CENTER_WINDOW = "centerWindow";
-	public static final String PROPERTY_RIGHT_WINDOW = "rightWindow";
 	public static final String PROPERTY_LEFT_VIEW_WIDTH = "leftDrawerWidth";
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
 	public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
@@ -314,20 +311,6 @@ public class Drawer extends TiUIView {
 				Log.e(TAG, "[ERROR] Invalid type for leftView");
 			}
 		}
-		if (d.containsKey(PROPERTY_LEFT_WINDOW)) {
-			Object leftView = d.get(PROPERTY_LEFT_WINDOW);
-			if (leftView != null && leftView instanceof TiViewProxy) {
-				if (leftView instanceof WindowProxy)
-					throw new IllegalStateException(
-							"[ERROR] Cannot add window as a child view of other window");
-				//
-				this.leftView = (TiViewProxy) leftView;
-				this.initLeftDrawer();
-				this.menu.addView(getNativeView(this.leftView));
-			} else {
-				Log.e(TAG, "[ERROR] Invalid type for leftView");
-			}
-		}
 		if (d.containsKey(PROPERTY_RIGHT_VIEW)) {
 			Object rightView = d.get(PROPERTY_RIGHT_VIEW);
 			if (rightView != null && rightView instanceof TiViewProxy) {
@@ -342,34 +325,8 @@ public class Drawer extends TiUIView {
 				Log.e(TAG, "[ERROR] Invalid type for rightView");
 			}
 		}
-		if (d.containsKey(PROPERTY_RIGHT_WINDOW)) {
-			Object rightView = d.get(PROPERTY_RIGHT_WINDOW);
-			if (rightView != null && rightView instanceof TiViewProxy) {
-				if (rightView instanceof WindowProxy)
-					throw new IllegalStateException(
-							"[ERROR] Cannot add window as a child view of other window");
-				//
-				this.rightView = (TiViewProxy) rightView;
-				this.initRightDrawer();
-				this.filter.addView(getNativeView(this.rightView));
-			} else {
-				Log.e(TAG, "[ERROR] Invalid type for rightView");
-			}
-		}
 		if (d.containsKey(PROPERTY_CENTER_VIEW)) {
 			Object centerView = d.get(PROPERTY_CENTER_VIEW);
-			if (centerView != null && centerView instanceof TiViewProxy) {
-				if (centerView instanceof WindowProxy)
-					throw new IllegalStateException(
-							"[ERROR] Cannot use window as a child view of other window");
-				//
-				replaceCenterView((TiViewProxy) centerView);
-			} else {
-				Log.e(TAG, "[ERROR] Invalid type for centerView");
-			}
-		}
-		if (d.containsKey(PROPERTY_CENTER_WINDOW)) {
-			Object centerView = d.get(PROPERTY_CENTER_WINDOW);
 			if (centerView != null && centerView instanceof TiViewProxy) {
 				if (centerView instanceof WindowProxy)
 					throw new IllegalStateException(
@@ -415,7 +372,7 @@ public class Drawer extends TiUIView {
 		Log.d(TAG, "propertyChanged  Property: " + key + " old: " + oldValue
 				+ " new: " + newValue);
 
-		if (key.equals(PROPERTY_LEFT_VIEW) || key.equals(PROPERTY_LEFT_WINDOW)) {
+		if (key.equals(PROPERTY_LEFT_VIEW)) {
 			if (newValue == this.leftView)
 				return;
 			TiViewProxy newProxy = null;
@@ -440,8 +397,7 @@ public class Drawer extends TiUIView {
 						.getNativeView());
 			}
 			this.leftView = newProxy;
-		} else if (key.equals(PROPERTY_RIGHT_VIEW)
-				|| key.equals(PROPERTY_RIGHT_WINDOW)) {
+		} else if (key.equals(PROPERTY_RIGHT_VIEW)) {
 			if (newValue == this.rightView)
 				return;
 			TiViewProxy newProxy = null;
@@ -466,8 +422,7 @@ public class Drawer extends TiUIView {
 						.getNativeView());
 			}
 			this.rightView = newProxy;
-		} else if (key.equals(PROPERTY_CENTER_VIEW)
-				|| key.equals(PROPERTY_CENTER_WINDOW)) {
+		} else if (key.equals(PROPERTY_CENTER_VIEW)) {
 			TiViewProxy newProxy = (TiViewProxy) newValue;
 			replaceCenterView(newProxy);
 		} else if (key.equals(PROPERTY_LEFT_VIEW_WIDTH)) {
@@ -518,12 +473,5 @@ public class Drawer extends TiUIView {
 		}
 		return nativeView;
 	}
-
-	// private Drawable getDrawableFromUrl(String url)
-	// {
-	// TiUrl imageUrl = new TiUrl((String) url);
-	// TiFileHelper tfh = new TiFileHelper(TiApplication.getInstance());
-	// return tfh.loadDrawable(imageUrl.resolve(), false);
-	// }
 
 }

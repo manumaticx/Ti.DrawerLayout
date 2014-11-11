@@ -191,12 +191,6 @@ public class DrawerProxy extends TiViewProxy {
 
 	@Kroll.method
 	@Kroll.setProperty
-	public void setLeftWindow(Object arg) {
-		setPropertyAndFire(Drawer.PROPERTY_LEFT_WINDOW, arg);
-	}
-
-	@Kroll.method
-	@Kroll.setProperty
 	public void setRightDrawerWidth(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_RIGHT_VIEW_WIDTH, arg);
 	}
@@ -209,20 +203,8 @@ public class DrawerProxy extends TiViewProxy {
 
 	@Kroll.method
 	@Kroll.setProperty
-	public void setRightWindow(Object arg) {
-		setPropertyAndFire(Drawer.PROPERTY_RIGHT_WINDOW, arg);
-	}
-
-	@Kroll.method
-	@Kroll.setProperty
 	public void setCenterView(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_CENTER_VIEW, arg);
-	}
-
-	@Kroll.method
-	@Kroll.setProperty
-	public void setCenterWindow(Object arg) {
-		setPropertyAndFire(Drawer.PROPERTY_CENTER_WINDOW, arg);
 	}
 
 	@Kroll.method
