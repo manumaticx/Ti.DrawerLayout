@@ -87,7 +87,7 @@ public class Drawer extends TiUIView {
 	 * Open/Close/Toggle drawers
 	 */
 	public void toggleLeftDrawer() {
-		if (layout.isDrawerOpen(Gravity.LEFT)) {
+		if (layout.isDrawerOpen(Gravity.START)) {
 			closeLeftDrawer();
 		} else {
 			openLeftDrawer();
@@ -95,15 +95,15 @@ public class Drawer extends TiUIView {
 	}
 
 	public void openLeftDrawer() {
-		layout.openDrawer(Gravity.LEFT);
+		layout.openDrawer(Gravity.START);
 	}
 
 	public void closeLeftDrawer() {
-		layout.closeDrawer(Gravity.LEFT);
+		layout.closeDrawer(Gravity.START);
 	}
 
 	public void toggleRightDrawer() {
-		if (layout.isDrawerOpen(Gravity.RIGHT)) {
+		if (layout.isDrawerOpen(Gravity.END)) {
 			closeRightDrawer();
 		} else {
 			openRightDrawer();
@@ -111,27 +111,27 @@ public class Drawer extends TiUIView {
 	}
 
 	public void openRightDrawer() {
-		layout.openDrawer(Gravity.RIGHT);
+		layout.openDrawer(Gravity.END);
 	}
 
 	public void closeRightDrawer() {
-		layout.closeDrawer(Gravity.RIGHT);
+		layout.closeDrawer(Gravity.END);
 	}
 
 	public boolean isLeftDrawerOpen() {
-		return layout.isDrawerOpen(Gravity.LEFT);
+		return layout.isDrawerOpen(Gravity.START);
 	}
 
 	public boolean isRightDrawerOpen() {
-		return layout.isDrawerOpen(Gravity.RIGHT);
+		return layout.isDrawerOpen(Gravity.END);
 	}
 
 	public boolean isLeftDrawerVisible() {
-		return layout.isDrawerVisible(Gravity.LEFT);
+		return layout.isDrawerVisible(Gravity.START);
 	}
 
 	public boolean isRightDrawerVisible() {
-		return layout.isDrawerVisible(Gravity.RIGHT);
+		return layout.isDrawerVisible(Gravity.END);
 	}
 
 	private void initDrawerToggle() {
@@ -234,7 +234,7 @@ public class Drawer extends TiUIView {
 		menu = new FrameLayout(proxy.getActivity());
 		LayoutParams menuLayout = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.MATCH_PARENT);
-		menuLayout.gravity = Gravity.LEFT;
+		menuLayout.gravity = Gravity.START;
 		menu.setLayoutParams(menuLayout);
 
 		layout.addView(menu);
@@ -254,7 +254,7 @@ public class Drawer extends TiUIView {
 		filter = new FrameLayout(proxy.getActivity());
 		LayoutParams filterLayout = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.MATCH_PARENT);
-		filterLayout.gravity = Gravity.RIGHT;
+		filterLayout.gravity = Gravity.END;
 		filter.setLayoutParams(filterLayout);
 
 		layout.addView(filter);
@@ -435,7 +435,7 @@ public class Drawer extends TiUIView {
 
 			LayoutParams menuLayout = new LayoutParams(menuWidth,
 					LayoutParams.MATCH_PARENT);
-			menuLayout.gravity = Gravity.LEFT;
+			menuLayout.gravity = Gravity.START;
 			this.menu.setLayoutParams(menuLayout);
 		} else if (key.equals(PROPERTY_RIGHT_VIEW_WIDTH)) {
 			filterWidth = getDevicePixels(newValue);
@@ -447,7 +447,7 @@ public class Drawer extends TiUIView {
 
 			LayoutParams filterLayout = new LayoutParams(filterWidth,
 					LayoutParams.MATCH_PARENT);
-			filterLayout.gravity = Gravity.RIGHT;
+			filterLayout.gravity = Gravity.END;
 			this.filter.setLayoutParams(filterLayout);
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
