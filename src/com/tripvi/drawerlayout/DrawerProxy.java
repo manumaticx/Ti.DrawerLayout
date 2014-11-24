@@ -212,6 +212,12 @@ public class DrawerProxy extends TiViewProxy {
 	public void setDrawerIndicatorEnabled(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_DRAWER_INDICATOR_ENABLED, arg);
 	}
+    
+    @Kroll.method
+    @Kroll.setProperty
+    public void setDrawerLockMode(Object arg) {
+        setPropertyAndFire(Drawer.PROPERTY_DRAWER_LOCK_MODE, arg);
+    }
 
 	@Kroll.method
 	@Kroll.setProperty
