@@ -48,7 +48,8 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_LEFT_VIEW_WIDTH = "leftDrawerWidth";
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
 	public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
-	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
+    public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
+    public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
 
 	private static final String TAG = "TripviDrawer";
 
@@ -289,14 +290,14 @@ public class Drawer extends TiUIView {
 
 	@Override
 	public void processProperties(KrollDict d) {
-		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
-			String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
-			drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(
-					null, imageUrl));
-			if (drawable_custom_drawer != 0) {
-				useCustomDrawer = true;
-			}
-		}
+        if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
+            String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
+            drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(
+                                                                               null, imageUrl));
+            if (drawable_custom_drawer != 0) {
+                useCustomDrawer = true;
+            }
+        }
 		if (d.containsKey(PROPERTY_LEFT_VIEW)) {
 			Object leftView = d.get(PROPERTY_LEFT_VIEW);
 			if (leftView != null && leftView instanceof TiViewProxy) {
@@ -361,6 +362,9 @@ public class Drawer extends TiUIView {
 				mDrawerToggle.setDrawerIndicatorEnabled(b);
 			}
 		}
+        if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
+            layout.setDrawerLockMode(TiConvert.toInt(d.get(PROPERTY_DRAWER_LOCK_MODE)));
+        }
 
 		super.processProperties(d);
 	}
@@ -449,6 +453,8 @@ public class Drawer extends TiUIView {
 					LayoutParams.MATCH_PARENT);
 			filterLayout.gravity = Gravity.END;
 			this.filter.setLayoutParams(filterLayout);
+        } else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
+            layout.setDrawerLockMode(TiConvert.toInt(newValue));
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
 			mDrawerToggle.setDrawerIndicatorEnabled(b);

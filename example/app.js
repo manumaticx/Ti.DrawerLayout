@@ -134,7 +134,8 @@ var drawer = TiDrawerLayout.createDrawer({
 	leftDrawerWidth: "280dp",
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
-    // drawerIndicatorEnabled: false
+	drawerLockMode:TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, // prevents user from swiping. manual use of toggleLeftWindow() still works
+    // drawerIndicatorEnabled: false,
 });
 drawer.addEventListener('draweropen', function(e) {
 	win.title = "open " + e.drawer;
