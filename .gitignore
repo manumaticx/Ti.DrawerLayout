@@ -9,3 +9,4 @@ build
 libs
 build.properties
 *.apk
+.idea
