@@ -161,38 +161,44 @@ public class Drawer extends TiUIView {
 				drawer_drawable, string_drawer_open, string_drawer_close) {
 			@Override
 			public void onDrawerClosed(View drawerView) {
-				if (drawerView.equals(menu)) {
-					super.onDrawerClosed(drawerView);
-					if (proxy.hasListeners("drawerclose")) {
-						KrollDict options = new KrollDict();
-						options.put("drawer", "left");
-						proxy.fireEvent("drawerclose", options);
+				super.onDrawerClosed(drawerView);
+				if (proxy.hasListeners("drawerclose")) {
+					KrollDict options = new KrollDict();
+					if (drawerView.equals(menu)) {
+						options.put("drawer", "left");					
+					} else if (drawerView.equals(filter)) {
+						options.put("drawer", "right");
 					}
+					proxy.fireEvent("drawerclose", options);
 				}
 			}
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
-				if (drawerView.equals(menu)) {
-					super.onDrawerOpened(drawerView);
-					if (proxy.hasListeners("draweropen")) {
-						KrollDict options = new KrollDict();
-						options.put("drawer", "left");
-						proxy.fireEvent("draweropen", options);
+				super.onDrawerOpened(drawerView);
+				if (proxy.hasListeners("draweropen")) {
+					KrollDict options = new KrollDict();
+					if (drawerView.equals(menu)) {
+						options.put("drawer", "left");					
+					} else if (drawerView.equals(filter)) {
+						options.put("drawer", "right");
 					}
+					proxy.fireEvent("draweropen", options);
 				}
 			}
 
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset) {
-				if (drawerView.equals(menu)) {
-					super.onDrawerSlide(drawerView, slideOffset);
-					if (proxy.hasListeners("drawerslide")) {
-						KrollDict options = new KrollDict();
-						options.put("offset", slideOffset);
-						options.put("drawer", "left");
-						proxy.fireEvent("drawerslide", options);
+				super.onDrawerSlide(drawerView, slideOffset);
+				if (proxy.hasListeners("drawerslide")) {
+					KrollDict options = new KrollDict();
+					options.put("offset", slideOffset);
+					if (drawerView.equals(menu)) {
+						options.put("drawer", "left");					
+					} else if (drawerView.equals(filter)) {
+						options.put("drawer", "right");
 					}
+					proxy.fireEvent("drawerslide", options);
 				}
 			}
 
