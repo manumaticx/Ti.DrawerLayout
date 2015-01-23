@@ -224,5 +224,10 @@ public class DrawerProxy extends TiViewProxy {
 	public void setDrawerIndicatorImage(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_DRAWER_INDICATOR_IMAGE, arg);
 	}
+	
+	@Kroll.method
+	public void interceptTouchEvent (TiViewProxy view, Boolean disallowIntercept){
+		view.getOrCreateView().getOuterView().getParent().requestDisallowInterceptTouchEvent(disallowIntercept);
+	}
 
 }
