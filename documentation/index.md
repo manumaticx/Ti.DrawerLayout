@@ -20,7 +20,7 @@ And this is how you'd do it in Alloy:
 ```xml
 <Alloy>
   <Window>
-		<Module id="drawer" module="com.tripvi.drawerlayout" method="createDrawer" />
+		<Drawer id="drawer" module="com.tripvi.drawerlayout" />
   </Window>
 </Alloy>
 ```
