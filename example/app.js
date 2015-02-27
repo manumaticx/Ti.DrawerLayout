@@ -129,13 +129,13 @@ contentView.add(enableRightDrawerButton);
 
 
 var drawer = TiDrawerLayout.createDrawer({
-	leftWindow: menuTable,
-	centerWindow: contentView,
+	leftView: menuTable,
+	centerView: contentView,
 	leftDrawerWidth: "280dp",
 	width: Ti.UI.FILL,
 	height: Ti.UI.FILL,
-	drawerLockMode:TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, // prevents user from swiping. manual use of toggleLeftWindow() still works
-    // drawerIndicatorEnabled: false,
+	//drawerLockMode:TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, // prevents user from swiping. manual use of toggleLeftWindow() still works
+	//drawerIndicatorEnabled: false
 });
 drawer.addEventListener('draweropen', function(e) {
 	win.title = "open " + e.drawer;
