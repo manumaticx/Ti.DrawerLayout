@@ -182,7 +182,9 @@ public class DrawerProxy extends TiViewProxy {
 	public void setLeftDrawerWidth(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_LEFT_VIEW_WIDTH, arg);
 	}
+	
 
+	
 	@Kroll.method
 	@Kroll.setProperty
 	public void setLeftView(Object arg) {
@@ -228,6 +230,12 @@ public class DrawerProxy extends TiViewProxy {
 	@Kroll.method
 	public void interceptTouchEvent (TiViewProxy view, Boolean disallowIntercept){
 		view.getOrCreateView().getOuterView().getParent().requestDisallowInterceptTouchEvent(disallowIntercept);
+	}
+	
+	@Kroll.method
+	@Kroll.setProperty
+	public void setDrawerArrowIcon(boolean arg) {
+		setPropertyAndFire(Drawer.PROPERTY_DRAWER_ARROW_ICON, arg);
 	}
 
 }
