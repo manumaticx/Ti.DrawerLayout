@@ -4,7 +4,7 @@ description: TiUIView adaptor for DrawerLayout
 author: metacortex
 license: MIT license
 copyright: Copyright (c) 2013 by Tripvi Inc.
-
+architectures: armeabi armeabi-v7a x86
 
 # these should not be edited
 name: drawerlayout
