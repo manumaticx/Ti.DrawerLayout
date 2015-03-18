@@ -22,7 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
+import android.graphics.Color;
 import android.content.res.Resources;
 
 public class Drawer extends TiUIView {
@@ -41,6 +41,7 @@ public class Drawer extends TiUIView {
 	private boolean hasToggle = true;
 	private int drawable_custom_drawer;
 	private boolean useArrowAnimationDrawer = false;
+	private boolean useArrowAnimationDrawerCustomColor = false;
 
 	private TiViewProxy leftView;
 	private TiViewProxy rightView;
@@ -56,15 +57,17 @@ public class Drawer extends TiUIView {
     public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
     public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
     public static final String PROPERTY_DRAWER_ARROW_ICON = "drawerArrowIcon";
+    public static final String PROPERTY_DRAWER_ARROW_ICON_COLOR = "drawerArrowIconColor";
 
-	private static final String TAG = "TripviDrawer";
+    private static final String TAG = "TripviDrawer";
 
 	int drawable_ic_drawer = 0;
 	int string_drawer_open = 0;
 	int string_drawer_close = 0;
 	int layout_drawer_main = 0;
 	int id_content_frame = 0;
-
+	int arrowAnimationDrawerCustomColor = 0;
+	
 	public Drawer(final DrawerProxy proxy) {
 		super(proxy);
 
@@ -213,13 +216,26 @@ public class Drawer extends TiUIView {
 		} else {
 			drawer_drawable = drawable_ic_drawer;
 		}
-
 		if(useArrowAnimationDrawer){
-			Resources resources = activity.getResources(); // Ajout Géraud.
-			drawerArrowDrawable = new DrawerArrowDrawable(resources); // Ajout Géraud.
+			Resources resources = activity.getResources();
+			drawerArrowDrawable = new DrawerArrowDrawable(resources);
+			if(useArrowAnimationDrawerCustomColor){
+				drawerArrowDrawable.setStrokeColor(arrowAnimationDrawerCustomColor);
+			}
 		    activity.getSupportActionBar().setIcon(drawerArrowDrawable);
 		    layout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
 		    	  @Override public void onDrawerSlide(View drawerView, float slideOffset) {
+		    		  if (proxy.hasListeners("drawerslide")) {
+							KrollDict options = new KrollDict();
+							options.put("offset", slideOffset);
+							if (drawerView.equals(menu)) {
+								options.put("drawer", "left");					
+							} else if (drawerView.equals(filter)) {
+								options.put("drawer", "right");
+							}
+							proxy.fireEvent("drawerslide", options);
+						}
+		    		  
 		    	    // Sometimes slideOffset ends up so close to but not quite 1 or 0.
 		    	    if (slideOffset >= .995) {
 		    	      drawerArrowDrawable.setFlip(true);
@@ -228,6 +244,47 @@ public class Drawer extends TiUIView {
 		    	    }
 		    	    drawerArrowDrawable.setParameter(slideOffset);
 		    	  }
+		    	  @Override
+					public void onDrawerClosed(View drawerView) {
+						super.onDrawerClosed(drawerView);
+						if (proxy.hasListeners("drawerclose")) {
+							KrollDict options = new KrollDict();
+							if (drawerView.equals(menu)) {
+								options.put("drawer", "left");					
+							} else if (drawerView.equals(filter)) {
+								options.put("drawer", "right");
+							}
+							proxy.fireEvent("drawerclose", options);
+						}
+					}
+		
+					@Override
+					public void onDrawerOpened(View drawerView) {
+						super.onDrawerOpened(drawerView);
+						if (proxy.hasListeners("draweropen")) {
+							KrollDict options = new KrollDict();
+							if (drawerView.equals(menu)) {
+								options.put("drawer", "left");					
+							} else if (drawerView.equals(filter)) {
+								options.put("drawer", "right");
+							}
+							proxy.fireEvent("draweropen", options);
+						}
+					}
+
+					@Override
+					public void onDrawerStateChanged(int newState) {
+						super.onDrawerStateChanged(newState);
+		
+						if (proxy.hasListeners("change")) {
+							KrollDict options = new KrollDict();
+							options.put("state", newState);
+							options.put("idle", (newState == 0 ? 1 : 0));
+							options.put("dragging", (newState == 1 ? 1 : 0));
+							options.put("settling", (newState == 2 ? 1 : 0));
+							proxy.fireEvent("change", options);
+						}
+					}
 		    	});
 		}else{		
 		
@@ -379,6 +436,7 @@ public class Drawer extends TiUIView {
 		this.centerView = viewProxy;
 	}
 
+
 	@Override
 	public void processProperties(KrollDict d) {
         if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
@@ -394,7 +452,13 @@ public class Drawer extends TiUIView {
 					PROPERTY_DRAWER_INDICATOR_ENABLED);
 		}
         
-
+        if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON)) {
+        	useArrowAnimationDrawer = TiConvert.toBoolean(d.get(PROPERTY_DRAWER_ARROW_ICON));
+        	if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON_COLOR)) {
+				 useArrowAnimationDrawerCustomColor = true;
+				 arrowAnimationDrawerCustomColor = Color.parseColor(d.getString(PROPERTY_DRAWER_ARROW_ICON_COLOR));
+			 }
+        }
         
 		if (d.containsKey(PROPERTY_LEFT_VIEW)) {
 			Object leftView = d.get(PROPERTY_LEFT_VIEW);
@@ -454,11 +518,6 @@ public class Drawer extends TiUIView {
 		}
         if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
             layout.setDrawerLockMode(TiConvert.toInt(d.get(PROPERTY_DRAWER_LOCK_MODE)));
-        }
-        
-        if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON)) {
-        	useArrowAnimationDrawer = TiConvert.toBoolean(d,
-        			PROPERTY_DRAWER_ARROW_ICON);
         }
 
 		super.processProperties(d);
@@ -553,6 +612,11 @@ public class Drawer extends TiUIView {
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
 			mDrawerToggle.setDrawerIndicatorEnabled(b);
+		} else if(key.equals(PROPERTY_DRAWER_ARROW_ICON_COLOR)){
+			useArrowAnimationDrawerCustomColor = true;
+			String color = (String) newValue;
+			arrowAnimationDrawerCustomColor = Color.parseColor(color);
+			drawerArrowDrawable.setStrokeColor(arrowAnimationDrawerCustomColor);
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}

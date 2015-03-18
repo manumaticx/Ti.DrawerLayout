@@ -7,6 +7,7 @@ import org.appcelerator.titanium.view.TiUIView;
 
 import android.app.Activity;
 import android.os.Message;
+import android.util.Log;
 
 @Kroll.proxy(creatableInModule = DrawerlayoutModule.class)
 public class DrawerProxy extends TiViewProxy {
@@ -21,7 +22,9 @@ public class DrawerProxy extends TiViewProxy {
 	private static final int MSG_CLOSE_RIGHT_VIEW = MSG_FIRST_ID + 105;
 
 	protected static final int MSG_LAST_ID = MSG_FIRST_ID + 999;
-
+	
+	private static final String TAG = "TripviDrawer";
+	
 	private Drawer drawer;
 
 	public DrawerProxy() {
@@ -183,7 +186,18 @@ public class DrawerProxy extends TiViewProxy {
 		setPropertyAndFire(Drawer.PROPERTY_LEFT_VIEW_WIDTH, arg);
 	}
 	
-
+	
+	@Kroll.method
+	@Kroll.setProperty
+	public void setDrawerArrowIcon(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_DRAWER_ARROW_ICON, arg);
+	}
+	
+	@Kroll.method
+	@Kroll.setProperty
+	public void setDrawerArrowIconColor(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_DRAWER_ARROW_ICON_COLOR, arg);
+	}
 	
 	@Kroll.method
 	@Kroll.setProperty
@@ -231,11 +245,6 @@ public class DrawerProxy extends TiViewProxy {
 	public void interceptTouchEvent (TiViewProxy view, Boolean disallowIntercept){
 		view.getOrCreateView().getOuterView().getParent().requestDisallowInterceptTouchEvent(disallowIntercept);
 	}
-	
-	@Kroll.method
-	@Kroll.setProperty
-	public void setDrawerArrowIcon(boolean arg) {
-		setPropertyAndFire(Drawer.PROPERTY_DRAWER_ARROW_ICON, arg);
-	}
+
 
 }
