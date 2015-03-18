@@ -164,7 +164,9 @@ public class DrawerArrowDrawable extends Drawable {
     linePaint.setStrokeWidth(strokeWidthPixel);
 
     int dimen = (int) (DIMEN_DP * density);
-    bounds = new Rect(0, 0, dimen, dimen);
+    int padding = (int) (12.25f * density);
+    bounds = new Rect(padding, 0, dimen, dimen);
+    bounds.inset( 0 - padding, 0);
 
     Path first, second;
     JoinedPath joinedA, joinedB;
