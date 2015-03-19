@@ -50,7 +50,7 @@ public class DrawerArrowDrawable extends Drawable {
     private final PathMeasure measureSecond;
     private final float lengthFirst;
     private final float lengthSecond;
-
+    
     private JoinedPath(Path pathFirst, Path pathSecond) {
       measureFirst = new PathMeasure(pathFirst, false);
       measureSecond = new PathMeasure(pathSecond, false);
@@ -164,10 +164,12 @@ public class DrawerArrowDrawable extends Drawable {
     linePaint.setStrokeWidth(strokeWidthPixel);
 
     int dimen = (int) (DIMEN_DP * density);
-    int padding = (int) (12.25f * density);
-    bounds = new Rect(padding, 0, dimen, dimen);
-    bounds.inset( 0 - padding, 0);
-
+    
+    int paddingLeft  = (int) (6.12f * density);
+    int paddingRight = (int) (6.12f * density);
+    
+    bounds = new Rect(0-paddingLeft, 0, dimen+paddingRight, dimen);
+    
     Path first, second;
     JoinedPath joinedA, joinedB;
 
@@ -178,8 +180,8 @@ public class DrawerArrowDrawable extends Drawable {
     second = new Path();
     second.moveTo(60.531f, 17.235f);
     second.rCubicTo(11.301f, 18.015f, -3.699f, 46.083f, -23.725f, 43.456f);
-    scalePath(first, density);
-    scalePath(second, density);
+    scalePath(first, density, paddingLeft);
+    scalePath(second, density, paddingLeft);
     joinedA = new JoinedPath(first, second);
 
     first = new Path();
@@ -188,8 +190,8 @@ public class DrawerArrowDrawable extends Drawable {
     second = new Path();
     second.moveTo(42.402f, 62.699f);
     second.cubicTo(18.333f, 67.418f, 8.807f, 45.646f, 8.807f, 32.823f);
-    scalePath(first, density);
-    scalePath(second, density);
+    scalePath(first, density, paddingLeft);
+    scalePath(second, density, paddingLeft);
     joinedB = new JoinedPath(first, second);
     topLine = new BridgingLine(joinedA, joinedB);
 
@@ -200,8 +202,8 @@ public class DrawerArrowDrawable extends Drawable {
     second = new Path();
     second.moveTo(35f, 6.791f);
     second.rCubicTo(16.083f, 0f, 26.853f, 16.702f, 26.853f, 28.209f);
-    scalePath(first, density);
-    scalePath(second, density);
+    scalePath(first, density, paddingLeft);
+    scalePath(second, density, paddingLeft);
     joinedA = new JoinedPath(first, second);
 
     first = new Path();
@@ -210,8 +212,8 @@ public class DrawerArrowDrawable extends Drawable {
     second = new Path();
     second.moveTo(35f, 61.416f);
     second.rCubicTo(-7.5f, 0f, -23.946f, -8.211f, -23.946f, -26.416f);
-    scalePath(first, density);
-    scalePath(second, density);
+    scalePath(first, density, paddingLeft);
+    scalePath(second, density, paddingLeft);
     joinedB = new JoinedPath(first, second);
     middleLine = new BridgingLine(joinedA, joinedB);
 
@@ -222,8 +224,8 @@ public class DrawerArrowDrawable extends Drawable {
     second = new Path();
     second.moveTo(9.475f, 17.346f);
     second.rCubicTo(9.462f, -9.2f, 24.188f, -10.353f, 27.326f, -8.245f);
-    scalePath(first, density);
-    scalePath(second, density);
+    scalePath(first, density, paddingLeft);
+    scalePath(second, density, paddingLeft);
     joinedA = new JoinedPath(first, second);
 
     first = new Path();
@@ -232,8 +234,8 @@ public class DrawerArrowDrawable extends Drawable {
     second = new Path();
     second.moveTo(27.598f, 62.699f);
     second.rCubicTo(-15.723f, -6.521f, -18.8f, -23.543f, -18.8f, -25.642f);
-    scalePath(first, density);
-    scalePath(second, density);
+    scalePath(first, density, paddingLeft);
+    scalePath(second, density, paddingLeft);
     joinedB = new JoinedPath(first, second);
     bottomLine = new BridgingLine(joinedA, joinedB);
   }
@@ -255,7 +257,6 @@ public class DrawerArrowDrawable extends Drawable {
     topLine.draw(canvas);
     middleLine.draw(canvas);
     bottomLine.draw(canvas);
-
     if (flip) canvas.restore();
   }
 
@@ -303,7 +304,8 @@ public class DrawerArrowDrawable extends Drawable {
    * Scales the paths to the given screen density. If the density matches the
    * {@link DrawerArrowDrawable#PATH_GEN_DENSITY}, no scaling needs to be done.
    */
-  private static void scalePath(Path path, float density) {
+  private static void scalePath(Path path, float density, int paddingLeft) {
+	path.offset(paddingLeft, 0);
     if (density == PATH_GEN_DENSITY) return;
     Matrix scaleMatrix = new Matrix();
     scaleMatrix.setScale(density / PATH_GEN_DENSITY, density / PATH_GEN_DENSITY, 0, 0);
