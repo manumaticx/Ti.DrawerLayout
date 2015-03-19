@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.graphics.Color;
 import android.content.res.Resources;
 
@@ -222,7 +223,8 @@ public class Drawer extends TiUIView {
 			if(useArrowAnimationDrawerCustomColor){
 				drawerArrowDrawable.setStrokeColor(arrowAnimationDrawerCustomColor);
 			}
-		    activity.getSupportActionBar().setIcon(drawerArrowDrawable);
+			
+		    activity.getSupportActionBar().setHomeAsUpIndicator(drawerArrowDrawable);
 		    layout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
 		    	  @Override public void onDrawerSlide(View drawerView, float slideOffset) {
 		    		  if (proxy.hasListeners("drawerslide")) {
@@ -456,7 +458,7 @@ public class Drawer extends TiUIView {
         	useArrowAnimationDrawer = TiConvert.toBoolean(d.get(PROPERTY_DRAWER_ARROW_ICON));
         	if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON_COLOR)) {
 				 useArrowAnimationDrawerCustomColor = true;
-				 arrowAnimationDrawerCustomColor = Color.parseColor(d.getString(PROPERTY_DRAWER_ARROW_ICON_COLOR));
+				 arrowAnimationDrawerCustomColor = TiConvert.toColor(d.getString(PROPERTY_DRAWER_ARROW_ICON_COLOR));
 			 }
         }
         
@@ -615,7 +617,7 @@ public class Drawer extends TiUIView {
 		} else if(key.equals(PROPERTY_DRAWER_ARROW_ICON_COLOR)){
 			useArrowAnimationDrawerCustomColor = true;
 			String color = (String) newValue;
-			arrowAnimationDrawerCustomColor = Color.parseColor(color);
+			arrowAnimationDrawerCustomColor = TiConvert.toColor(color);
 			drawerArrowDrawable.setStrokeColor(arrowAnimationDrawerCustomColor);
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
