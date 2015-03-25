@@ -15,6 +15,7 @@ import org.appcelerator.titanium.view.TiUIFragment;
 import ti.modules.titanium.ui.WindowProxy;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.support.v7.app.ActionBarActivity;
@@ -418,7 +419,7 @@ public class Drawer extends TiUIView {
 	/**
 	 * centerView 변경
 	 */
-	private void replaceCenterView(TiViewProxy viewProxy) {
+	public void replaceCenterView(TiViewProxy viewProxy, boolean backstack) {
 		if (viewProxy == this.centerView) {
 			Log.d(TAG, "centerView was not changed");
 			return;
@@ -440,14 +441,24 @@ public class Drawer extends TiUIView {
 		// since only map uses TiUIFragment, here we check if view is a map,
 		// then we add the fragment directly.
 		if (contentView instanceof TiUIFragment) {
-			fragmentManager.beginTransaction().replace(id_content_frame, ((TiUIFragment)contentView).getFragment())
-			.commit();
+			FragmentTransaction ft = fragmentManager.beginTransaction();
+			ft.replace(id_content_frame, ((TiUIFragment)contentView).getFragment());
+			if (backstack){
+				Log.d(TAG, "adding Fragment to backstack");
+				ft.addToBackStack(name);
+			}
+			ft.commit();
 		} else {
 			View view = contentView.getOuterView();
 			ContentWrapperFragment fragment = new ContentWrapperFragment();
 			fragment.setContentView(view);
-			fragmentManager.beginTransaction().replace(id_content_frame, fragment)
-			.commit();
+			FragmentTransaction ft = fragmentManager.beginTransaction();
+			ft.replace(id_content_frame, fragment);
+			if (backstack){
+				Log.d(TAG, "adding Fragment to backstack");
+				ft.addToBackStack(name);
+			}
+			ft.commit();
 		}
 
 		this.centerView = viewProxy;
@@ -497,7 +508,6 @@ public class Drawer extends TiUIView {
 				if (rightView instanceof WindowProxy)
 					throw new IllegalStateException(
 							"[ERROR] Cannot add window as a child view of other window");
-				//
 				this.rightView = (TiViewProxy) rightView;
 				this.initRightDrawer();
 				this.filter.addView(getNativeView(this.rightView));
@@ -511,8 +521,7 @@ public class Drawer extends TiUIView {
 				if (centerView instanceof WindowProxy)
 					throw new IllegalStateException(
 							"[ERROR] Cannot use window as a child view of other window");
-				//
-				replaceCenterView((TiViewProxy) centerView);
+				replaceCenterView((TiViewProxy) centerView, false);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for centerView");
 			}
@@ -599,7 +608,7 @@ public class Drawer extends TiUIView {
 			this.rightView = newProxy;
 		} else if (key.equals(PROPERTY_CENTER_VIEW)) {
 			TiViewProxy newProxy = (TiViewProxy) newValue;
-			replaceCenterView(newProxy);
+			replaceCenterView(newProxy, false);
 		} else if (key.equals(PROPERTY_LEFT_VIEW_WIDTH)) {
 			menuWidth = getDevicePixels(newValue);
 

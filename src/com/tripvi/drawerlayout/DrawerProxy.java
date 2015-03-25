@@ -222,6 +222,11 @@ public class DrawerProxy extends TiViewProxy {
 	public void setCenterView(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_CENTER_VIEW, arg);
 	}
+	
+	@Kroll.method
+	public void replaceCenterView(Object arg, boolean backstack) {
+		drawer.replaceCenterView((TiViewProxy) arg, backstack);
+	}
 
 	@Kroll.method
 	@Kroll.setProperty
