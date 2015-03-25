@@ -70,7 +70,7 @@ if (OS_ANDROID) {
 
 ## Known Issues
 
-* MapView is not working with centerView
+* ~~MapView is not working with centerView~~
 * TabGroup is not working with Drawer
 * ActionBar SearchView seems to make problems too
 

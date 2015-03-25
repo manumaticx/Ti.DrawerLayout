@@ -48,13 +48,17 @@ $.drawer.setContentView( main.getView() );
 * `drawerIndicatorEnabled` _(Boolean)_ - wether it should use the ActionBarDrawerToggle or not
 * `drawerIndicatorImage` _(String)_ - path to a custom drawer indicator image
 * `drawerLockMode` _(int)_ - sets the lock mode constant. TiDrawerLayout.LOCK_MODE_UNLOCKED (default), TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, TiDrawerLayout.LOCK_MODE_LOCKED_OPEN
-
+* `drawerArrowIcon` _(Boolean)_ - set this to `true` to get that fancy animation
+* `drawerArrowIconColor` _(String)_ - sets the color of the drawerIcon animation
 
 ## Methods
 
 * `setLeftView()` - sets the value for the `leftView` property
 * `setRightView()` - sets the value for the `rightView` property
 * `setCenterView()` - sets the value for the `centerView` property
+* `replaceCenterView(view, backstack)` - same as `setCenterView` but with second parameter
+	* `view` _(Ti.UI.View)_ - the new centerView
+	* `backstack` _(Boolean)_ - set this to `true` if you want to add this to the backstack
 * `toggleLeftWindow()` - opens or closes the left drawer
 * `openLeftWindow()` - opens the left drawer
 * `closeLeftWindow()` - closes the left drawer
@@ -70,6 +74,8 @@ $.drawer.setContentView( main.getView() );
 * `setDrawerIndicatorEnabled()` - sets the value for the `drawerIndicatorEnabled` property
 * `setDrawerIndicatorImage()` - sets the value for the `drawerIndicatorImage` property
 * `setDrawerLockMode()` - sets the value for the `drawerLockMode` property
+* `setDrawerArrowIcon()` - sets the value for the `drawerArrowIcon` property
+* `setDrawerArrowIconColor()` - sets the value for the `drawerArrowIconColor` property
 
 ## Events
 
