@@ -9,6 +9,7 @@ import org.appcelerator.titanium.util.TiRHelper;
 import org.appcelerator.titanium.util.TiRHelper.ResourceNotFoundException;
 import org.appcelerator.titanium.util.TiUIHelper;
 import org.appcelerator.titanium.view.TiUIView;
+import org.appcelerator.titanium.view.TiUIFragment;
 
 import ti.modules.titanium.ui.WindowProxy;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -425,15 +426,28 @@ public class Drawer extends TiUIView {
 			return;
 		}
 
-		// update the main content by replacing fragments
-		View contentView = viewProxy.getOrCreateView().getOuterView();
-		ContentWrapperFragment fragment = new ContentWrapperFragment();
-		fragment.setContentView(contentView);
-
+		String name = viewProxy.getApiName();
+		// If view is map, we need to create a standalone fragment. This
+		// can be done by set the property here before creating the view
+		// or set it when you create the map in Javascript.
+		if (name == "Ti.Map") {
+			viewProxy.setProperty(TiC.PROPERTY_FRAGMENT_ONLY, true);
+		}
+		TiUIView contentView = viewProxy.getOrCreateView();
 		FragmentManager fragmentManager = ((ActionBarActivity) proxy
 				.getActivity()).getSupportFragmentManager();
-		fragmentManager.beginTransaction().replace(id_content_frame, fragment)
-				.commit();
+		// since only map uses TiUIFragment, here we check if view is a map,
+		// then we add the fragment directly.
+		if (contentView instanceof TiUIFragment) {
+			fragmentManager.beginTransaction().replace(id_content_frame, ((TiUIFragment)contentView).getFragment())
+			.commit();
+		} else {
+			View view = contentView.getOuterView();
+			ContentWrapperFragment fragment = new ContentWrapperFragment();
+			fragment.setContentView(view);
+			fragmentManager.beginTransaction().replace(id_content_frame, fragment)
+			.commit();
+		}
 
 		this.centerView = viewProxy;
 	}
