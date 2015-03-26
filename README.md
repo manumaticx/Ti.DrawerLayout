@@ -1,5 +1,7 @@
 # Ti.DrawerLayout [![Titanium](http://www-static.appcelerator.com/badges/titanium-git-badge-sq.png)](http://www.appcelerator.com/titanium/)
 
+[![Join the chat at https://gitter.im/manumaticx/Ti.DrawerLayout](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/manumaticx/Ti.DrawerLayout?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > Native Android [Navigation Drawer](http://developer.android.com/design/patterns/navigation-drawer.html) for [Titanium](http://www.appcelerator.com/titanium/)
 
 _This is a fork of [Tripvi/Ti.DrawerLayout](https://github.com/Tripvi/Ti.DrawerLayout). I temporarily picked it up since the author is busy these days. I've activated issues and pull requests here, so feel free to contribute._
