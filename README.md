@@ -27,44 +27,49 @@ To expand the drawer the user can either touch the app icon or swipe from the le
 Here's an example of how to use the module. Please note the links for Demo App and API Docs below.
 
 ```javascript
-if (OS_ANDROID) {
+// Load module
+var TiDrawerLayout = require('com.tripvi.drawerlayout');
 
-    // Load module
-    var TiDrawerLayout = require('com.tripvi.drawerlayout');
+// define menu and main content view
+var menuTable = Ti.UI.createTableView();
+var contentView = Ti.UI.createView();
 
-    // define menu and main content view
-    var menuTable = Alloy.createController('menu').getView();
-    var contentView = Alloy.createController('main').getView();
+// create the Drawer
+var drawer = TiDrawerLayout.createDrawer({
+    leftView: menuTable,
+    centerView: contentView,
+    leftDrawerWidth: "240dp",
+    width: Ti.UI.FILL,
+    height: Ti.UI.FILL
+});
 
-    // create the Drawer
-    var drawer = TiDrawerLayout.createDrawer({
-            leftView: menuTable,
-            centerView: contentView,
-            leftDrawerWidth: "240dp",
-            width: Ti.UI.FILL,
-            height: Ti.UI.FILL
-    });
+// create a window
+var win = Ti.UI.createWindow();
 
-    // add some listeners
-    drawer.addEventListener('draweropen', function(e) {
-            // drawer is open
-    });
+// add the drawer to the window
+win.add(drawer);
 
-    drawer.addEventListener('drawerclose', function(e) {
-            // drawer is closed
-    });
+// listen for the open event...
+win.addEventListener('open', function(){
+    
+    // ...to access activity and action bar
+    var activity = win.getActivity();
+    var actionbar = activity.getActionBar();
+    
+    if (actionbar){
+    
+        // this makes the drawer indicator visible in the action bar
+        actionBar.displayHomeAsUp = true;
+        
+        // open and close with the app icon
+        actionBar.onHomeIconItemSelected = function() {
+            drawer.toggleLeftWindow();
+        };
+    }
+});
 
-    drawer.addEventListener('drawerslide', function(e) {
-            // drawer is sliding
-            // slide offset: e.offset
-    });
-
-    // add the drawer to your root window
-    $.index.add(drawer);
-
-    // open the window
-    $.index.open();
-}
+// open the window
+win.open();
 ```
 
 #### [API Documentation](documentation/index.md)
