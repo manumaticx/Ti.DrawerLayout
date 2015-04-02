@@ -34,7 +34,7 @@ public class Drawer extends TiUIView {
 	private DrawerLayout layout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerArrowDrawable drawerArrowDrawable;
-	
+
 	private FrameLayout menu; /* left drawer */
 	private FrameLayout filter; /* right drawer */
 	private int menuWidth;
@@ -58,12 +58,12 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_LEFT_VIEW_WIDTH = "leftDrawerWidth";
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
 	public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
-    public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
-    public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
-    public static final String PROPERTY_DRAWER_ARROW_ICON = "drawerArrowIcon";
-    public static final String PROPERTY_DRAWER_ARROW_ICON_COLOR = "drawerArrowIconColor";
+	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
+	public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
+	public static final String PROPERTY_DRAWER_ARROW_ICON = "drawerArrowIcon";
+	public static final String PROPERTY_DRAWER_ARROW_ICON_COLOR = "drawerArrowIconColor";
 
-    private static final String TAG = "TripviDrawer";
+	private static final String TAG = "TripviDrawer";
 
 	int drawable_ic_drawer = 0;
 	int string_drawer_open = 0;
@@ -71,7 +71,7 @@ public class Drawer extends TiUIView {
 	int layout_drawer_main = 0;
 	int id_content_frame = 0;
 	int arrowAnimationDrawerCustomColor = 0;
-	
+
 	public Drawer(final DrawerProxy proxy) {
 		super(proxy);
 
@@ -91,22 +91,22 @@ public class Drawer extends TiUIView {
 		LayoutInflater inflater = LayoutInflater.from(activity);
 		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
 				false);
-		
+
 		layout.setDrawerListener(new DrawerListener());
 
 		// TiUIView
 		setNativeView(layout);
 
 	}
-	
-	private class DrawerListener implements DrawerLayout.DrawerListener{
+
+	private class DrawerListener implements DrawerLayout.DrawerListener {
 
 		@Override
 		public void onDrawerClosed(View drawerView) {
 			if (proxy.hasListeners("drawerclose")) {
 				KrollDict options = new KrollDict();
 				if (drawerView.equals(menu)) {
-					options.put("drawer", "left");					
+					options.put("drawer", "left");
 				} else if (drawerView.equals(filter)) {
 					options.put("drawer", "right");
 				}
@@ -119,7 +119,7 @@ public class Drawer extends TiUIView {
 			if (proxy.hasListeners("draweropen")) {
 				KrollDict options = new KrollDict();
 				if (drawerView.equals(menu)) {
-					options.put("drawer", "left");					
+					options.put("drawer", "left");
 				} else if (drawerView.equals(filter)) {
 					options.put("drawer", "right");
 				}
@@ -133,21 +133,22 @@ public class Drawer extends TiUIView {
 				KrollDict options = new KrollDict();
 				options.put("offset", slideOffset);
 				if (drawerView.equals(menu)) {
-					options.put("drawer", "left");					
+					options.put("drawer", "left");
 				} else if (drawerView.equals(filter)) {
 					options.put("drawer", "right");
 				}
 				proxy.fireEvent("drawerslide", options);
 			}
-			
-			if (useArrowAnimationDrawer && drawerView.equals(menu)){
-				// Sometimes slideOffset ends up so close to but not quite 1 or 0.
-	    	    if (slideOffset >= .995) {
-	    	      drawerArrowDrawable.setFlip(true);
-	    	    } else if (slideOffset <= .005) {
-	    	      drawerArrowDrawable.setFlip(false);
-	    	    }
-	    	    drawerArrowDrawable.setParameter(slideOffset);
+
+			if (useArrowAnimationDrawer && drawerView.equals(menu)) {
+				// Sometimes slideOffset ends up so close to but not quite 1 or
+				// 0.
+				if (slideOffset >= .995) {
+					drawerArrowDrawable.setFlip(true);
+				} else if (slideOffset <= .005) {
+					drawerArrowDrawable.setFlip(false);
+				}
+				drawerArrowDrawable.setParameter(slideOffset);
 			}
 		}
 
@@ -230,20 +231,23 @@ public class Drawer extends TiUIView {
 		} else {
 			drawer_drawable = drawable_ic_drawer;
 		}
-		if(useArrowAnimationDrawer){
+		if (useArrowAnimationDrawer) {
 			Resources resources = activity.getResources();
 			drawerArrowDrawable = new DrawerArrowDrawable(resources);
-			if(useArrowAnimationDrawerCustomColor){
-				drawerArrowDrawable.setStrokeColor(arrowAnimationDrawerCustomColor);
+			if (useArrowAnimationDrawerCustomColor) {
+				drawerArrowDrawable
+						.setStrokeColor(arrowAnimationDrawerCustomColor);
 			}
-			
-		    activity.getSupportActionBar().setHomeAsUpIndicator(drawerArrowDrawable);
-		}else{		
-		
-			// enable ActionBar app icon to behave as action to toggle nav drawer
+
+			activity.getSupportActionBar().setHomeAsUpIndicator(
+					drawerArrowDrawable);
+		} else {
+
+			// enable ActionBar app icon to behave as action to toggle nav
+			// drawer
 			activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			activity.getSupportActionBar().setHomeButtonEnabled(true);
-	
+
 			// ActionBarDrawerToggle ties together the the proper interactions
 			// between the sliding drawer and the action bar app icon
 			mDrawerToggle = new ActionBarDrawerToggle(activity, layout,
@@ -254,28 +258,28 @@ public class Drawer extends TiUIView {
 					if (proxy.hasListeners("drawerclose")) {
 						KrollDict options = new KrollDict();
 						if (drawerView.equals(menu)) {
-							options.put("drawer", "left");					
+							options.put("drawer", "left");
 						} else if (drawerView.equals(filter)) {
 							options.put("drawer", "right");
 						}
 						proxy.fireEvent("drawerclose", options);
 					}
 				}
-	
+
 				@Override
 				public void onDrawerOpened(View drawerView) {
 					super.onDrawerOpened(drawerView);
 					if (proxy.hasListeners("draweropen")) {
 						KrollDict options = new KrollDict();
 						if (drawerView.equals(menu)) {
-							options.put("drawer", "left");					
+							options.put("drawer", "left");
 						} else if (drawerView.equals(filter)) {
 							options.put("drawer", "right");
 						}
 						proxy.fireEvent("draweropen", options);
 					}
 				}
-	
+
 				@Override
 				public void onDrawerSlide(View drawerView, float slideOffset) {
 					super.onDrawerSlide(drawerView, slideOffset);
@@ -283,18 +287,18 @@ public class Drawer extends TiUIView {
 						KrollDict options = new KrollDict();
 						options.put("offset", slideOffset);
 						if (drawerView.equals(menu)) {
-							options.put("drawer", "left");					
+							options.put("drawer", "left");
 						} else if (drawerView.equals(filter)) {
 							options.put("drawer", "right");
 						}
 						proxy.fireEvent("drawerslide", options);
 					}
 				}
-	
+
 				@Override
 				public void onDrawerStateChanged(int newState) {
 					super.onDrawerStateChanged(newState);
-	
+
 					if (proxy.hasListeners("change")) {
 						KrollDict options = new KrollDict();
 						options.put("state", newState);
@@ -307,7 +311,7 @@ public class Drawer extends TiUIView {
 			};
 			// Set the drawer toggle as the DrawerListener
 			layout.setDrawerListener(mDrawerToggle);
-	
+
 			// onPostCreate 대신에
 			layout.post(new Runnable() {
 				@Override
@@ -338,7 +342,7 @@ public class Drawer extends TiUIView {
 		layout.addView(menu);
 
 		hasMenu = true;
-		
+
 		if (hasToggle) {
 			initDrawerToggle();
 		}
@@ -389,8 +393,9 @@ public class Drawer extends TiUIView {
 		// then we add the fragment directly.
 		if (contentView instanceof TiUIFragment) {
 			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.replace(id_content_frame, ((TiUIFragment)contentView).getFragment());
-			if (backstack){
+			ft.replace(id_content_frame,
+					((TiUIFragment) contentView).getFragment());
+			if (backstack) {
 				Log.d(TAG, "adding Fragment to backstack");
 				ft.addToBackStack(name);
 			}
@@ -401,7 +406,7 @@ public class Drawer extends TiUIView {
 			fragment.setContentView(view);
 			FragmentTransaction ft = fragmentManager.beginTransaction();
 			ft.replace(id_content_frame, fragment);
-			if (backstack){
+			if (backstack) {
 				Log.d(TAG, "adding Fragment to backstack");
 				ft.addToBackStack(name);
 			}
@@ -411,30 +416,31 @@ public class Drawer extends TiUIView {
 		this.centerView = viewProxy;
 	}
 
-
 	@Override
 	public void processProperties(KrollDict d) {
-        if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
-            String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
-            drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(
-                                                                               null, imageUrl));
-            if (drawable_custom_drawer != 0) {
-                useCustomDrawer = true;
-            }
-        }
-        if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
+		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
+			String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
+			drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(
+					null, imageUrl));
+			if (drawable_custom_drawer != 0) {
+				useCustomDrawer = true;
+			}
+		}
+		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			hasToggle = TiConvert.toBoolean(d,
 					PROPERTY_DRAWER_INDICATOR_ENABLED);
 		}
-        
-        if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON)) {
-        	useArrowAnimationDrawer = TiConvert.toBoolean(d.get(PROPERTY_DRAWER_ARROW_ICON));
-        	if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON_COLOR)) {
-				 useArrowAnimationDrawerCustomColor = true;
-				 arrowAnimationDrawerCustomColor = TiConvert.toColor(d.getString(PROPERTY_DRAWER_ARROW_ICON_COLOR));
-			 }
-        }
-        
+
+		if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON)) {
+			useArrowAnimationDrawer = TiConvert.toBoolean(d
+					.get(PROPERTY_DRAWER_ARROW_ICON));
+			if (d.containsKey(PROPERTY_DRAWER_ARROW_ICON_COLOR)) {
+				useArrowAnimationDrawerCustomColor = true;
+				arrowAnimationDrawerCustomColor = TiConvert.toColor(d
+						.getString(PROPERTY_DRAWER_ARROW_ICON_COLOR));
+			}
+		}
+
 		if (d.containsKey(PROPERTY_LEFT_VIEW)) {
 			Object leftView = d.get(PROPERTY_LEFT_VIEW);
 			if (leftView != null && leftView instanceof TiViewProxy) {
@@ -489,9 +495,10 @@ public class Drawer extends TiUIView {
 
 			filter.getLayoutParams().width = filterWidth;
 		}
-        if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
-            layout.setDrawerLockMode(TiConvert.toInt(d.get(PROPERTY_DRAWER_LOCK_MODE)));
-        }
+		if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
+			layout.setDrawerLockMode(TiConvert.toInt(d
+					.get(PROPERTY_DRAWER_LOCK_MODE)));
+		}
 
 		super.processProperties(d);
 	}
@@ -580,12 +587,12 @@ public class Drawer extends TiUIView {
 					LayoutParams.MATCH_PARENT);
 			filterLayout.gravity = Gravity.END;
 			this.filter.setLayoutParams(filterLayout);
-        } else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
-            layout.setDrawerLockMode(TiConvert.toInt(newValue));
+		} else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
+			layout.setDrawerLockMode(TiConvert.toInt(newValue));
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
 			mDrawerToggle.setDrawerIndicatorEnabled(b);
-		} else if(key.equals(PROPERTY_DRAWER_ARROW_ICON_COLOR)){
+		} else if (key.equals(PROPERTY_DRAWER_ARROW_ICON_COLOR)) {
 			useArrowAnimationDrawerCustomColor = true;
 			String color = (String) newValue;
 			arrowAnimationDrawerCustomColor = TiConvert.toColor(color);
