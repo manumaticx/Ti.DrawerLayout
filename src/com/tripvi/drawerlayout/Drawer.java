@@ -139,6 +139,16 @@ public class Drawer extends TiUIView {
 				}
 				proxy.fireEvent("drawerslide", options);
 			}
+			
+			if (useArrowAnimationDrawer && drawerView.equals(menu)){
+				// Sometimes slideOffset ends up so close to but not quite 1 or 0.
+	    	    if (slideOffset >= .995) {
+	    	      drawerArrowDrawable.setFlip(true);
+	    	    } else if (slideOffset <= .005) {
+	    	      drawerArrowDrawable.setFlip(false);
+	    	    }
+	    	    drawerArrowDrawable.setParameter(slideOffset);
+			}
 		}
 
 		@Override
@@ -228,69 +238,6 @@ public class Drawer extends TiUIView {
 			}
 			
 		    activity.getSupportActionBar().setHomeAsUpIndicator(drawerArrowDrawable);
-		    layout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-		    	  @Override public void onDrawerSlide(View drawerView, float slideOffset) {
-		    		  if (proxy.hasListeners("drawerslide")) {
-							KrollDict options = new KrollDict();
-							options.put("offset", slideOffset);
-							if (drawerView.equals(menu)) {
-								options.put("drawer", "left");					
-							} else if (drawerView.equals(filter)) {
-								options.put("drawer", "right");
-							}
-							proxy.fireEvent("drawerslide", options);
-						}
-		    		  
-		    	    // Sometimes slideOffset ends up so close to but not quite 1 or 0.
-		    	    if (slideOffset >= .995) {
-		    	      drawerArrowDrawable.setFlip(true);
-		    	    } else if (slideOffset <= .005) {
-		    	      drawerArrowDrawable.setFlip(false);
-		    	    }
-		    	    drawerArrowDrawable.setParameter(slideOffset);
-		    	  }
-		    	  @Override
-					public void onDrawerClosed(View drawerView) {
-						super.onDrawerClosed(drawerView);
-						if (proxy.hasListeners("drawerclose")) {
-							KrollDict options = new KrollDict();
-							if (drawerView.equals(menu)) {
-								options.put("drawer", "left");					
-							} else if (drawerView.equals(filter)) {
-								options.put("drawer", "right");
-							}
-							proxy.fireEvent("drawerclose", options);
-						}
-					}
-		
-					@Override
-					public void onDrawerOpened(View drawerView) {
-						super.onDrawerOpened(drawerView);
-						if (proxy.hasListeners("draweropen")) {
-							KrollDict options = new KrollDict();
-							if (drawerView.equals(menu)) {
-								options.put("drawer", "left");					
-							} else if (drawerView.equals(filter)) {
-								options.put("drawer", "right");
-							}
-							proxy.fireEvent("draweropen", options);
-						}
-					}
-
-					@Override
-					public void onDrawerStateChanged(int newState) {
-						super.onDrawerStateChanged(newState);
-		
-						if (proxy.hasListeners("change")) {
-							KrollDict options = new KrollDict();
-							options.put("state", newState);
-							options.put("idle", (newState == 0 ? 1 : 0));
-							options.put("dragging", (newState == 1 ? 1 : 0));
-							options.put("settling", (newState == 2 ? 1 : 0));
-							proxy.fireEvent("change", options);
-						}
-					}
-		    	});
 		}else{		
 		
 			// enable ActionBar app icon to behave as action to toggle nav drawer
