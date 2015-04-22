@@ -10,7 +10,7 @@ var contentView = Ti.UI.createView();
 var leftView = Ti.UI.createTableView({ backgroundColor: '#ccc' });
 
 var drawer = TiDrawerLayout.createDrawer({
-	contentView: contentView,
+	centerView: contentView,
 	leftView: leftView
 });
 ```
