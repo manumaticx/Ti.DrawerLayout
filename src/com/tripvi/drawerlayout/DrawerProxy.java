@@ -3,6 +3,7 @@ package com.tripvi.drawerlayout;
 import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.proxy.TiViewProxy;
+import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.view.TiUIView;
 
 import android.app.Activity;
@@ -20,6 +21,7 @@ public class DrawerProxy extends TiViewProxy {
 	private static final int MSG_OPEN_RIGHT_VIEW = MSG_FIRST_ID + 103;
 	private static final int MSG_CLOSE_LEFT_VIEW = MSG_FIRST_ID + 104;
 	private static final int MSG_CLOSE_RIGHT_VIEW = MSG_FIRST_ID + 105;
+	private static final int MSG_ARROW_STATE = MSG_FIRST_ID + 106;
 
 	protected static final int MSG_LAST_ID = MSG_FIRST_ID + 999;
 	
@@ -66,6 +68,10 @@ public class DrawerProxy extends TiViewProxy {
 			handleCloseRightView();
 			return true;
 		}
+		case MSG_ARROW_STATE: {
+			handleArrowState((Float) msg.obj);
+			return true;
+		}
 		default: {
 			return super.handleMessage(msg);
 		}
@@ -94,6 +100,10 @@ public class DrawerProxy extends TiViewProxy {
 
 	private void handleCloseRightView() {
 		drawer.closeRightDrawer();
+	}
+	
+	private void handleArrowState(Float state){
+		drawer.setArrowState(state);
 	}
 
 	@Kroll.method
@@ -250,6 +260,11 @@ public class DrawerProxy extends TiViewProxy {
 	public void interceptTouchEvent (TiViewProxy view, Boolean disallowIntercept){
 		view.getOrCreateView().getOuterView().getParent().requestDisallowInterceptTouchEvent(disallowIntercept);
 	}
-
+	
+	@Kroll.method
+	public void setArrowState (Integer state){
+		Message message = getMainHandler().obtainMessage(MSG_ARROW_STATE, TiConvert.toFloat(state, 0));
+		message.sendToTarget();
+	}
 
 }

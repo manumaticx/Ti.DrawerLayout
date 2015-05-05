@@ -415,6 +415,12 @@ public class Drawer extends TiUIView {
 
 		this.centerView = viewProxy;
 	}
+	
+	public void setArrowState (Float state){
+		if (drawerArrowDrawable != null){
+			drawerArrowDrawable.setParameter(state);
+		}
+	}
 
 	@Override
 	public void processProperties(KrollDict d) {

@@ -76,6 +76,8 @@ $.drawer.setContentView( main.getView() );
 * `setDrawerLockMode()` - sets the value for the `drawerLockMode` property
 * `setDrawerArrowIcon()` - sets the value for the `drawerArrowIcon` property
 * `setDrawerArrowIconColor()` - sets the value for the `drawerArrowIconColor` property
+* `setArrowState(value)`	-	sets the state of the drawerArrowIcon
+	* `value` _(Number)_	- state (1 is arrow, 0 is hamburger, but you can set everything between)
 
 ## Events
 
