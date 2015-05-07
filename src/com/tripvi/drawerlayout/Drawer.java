@@ -597,7 +597,9 @@ public class Drawer extends TiUIView {
 			layout.setDrawerLockMode(TiConvert.toInt(newValue));
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
-			mDrawerToggle.setDrawerIndicatorEnabled(b);
+			if (mDrawerToggle != null){
+				mDrawerToggle.setDrawerIndicatorEnabled(b);
+			}
 		} else if (key.equals(PROPERTY_DRAWER_ARROW_ICON_COLOR)) {
 			useArrowAnimationDrawerCustomColor = true;
 			String color = (String) newValue;
