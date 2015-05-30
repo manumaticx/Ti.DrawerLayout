@@ -30,14 +30,14 @@ Here's an example of how to use the module. Please note the links for Demo App a
 // Load module
 var TiDrawerLayout = require('com.tripvi.drawerlayout');
 
-// define menu and main content view
-var menuTable = Ti.UI.createTableView();
-var contentView = Ti.UI.createView();
+// define left and center view
+var leftView = Ti.UI.createView({backgroundColor:'red'});
+var centerView = Ti.UI.createView({backgroundColor:'green'});
 
 // create the Drawer
 var drawer = TiDrawerLayout.createDrawer({
-    leftView: menuTable,
-    centerView: contentView,
+    leftView: leftView,
+    centerView: centerView,
     leftDrawerWidth: "240dp",
     width: Ti.UI.FILL,
     height: Ti.UI.FILL
@@ -59,10 +59,10 @@ win.addEventListener('open', function(){
     if (actionbar){
     
         // this makes the drawer indicator visible in the action bar
-        actionBar.displayHomeAsUp = true;
+        actionbar.displayHomeAsUp = true;
         
         // open and close with the app icon
-        actionBar.onHomeIconItemSelected = function() {
+        actionbar.onHomeIconItemSelected = function() {
             drawer.toggleLeftWindow();
         };
     }
