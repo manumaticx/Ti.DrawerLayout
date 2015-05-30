@@ -59,10 +59,10 @@ win.addEventListener('open', function(){
     if (actionbar){
     
         // this makes the drawer indicator visible in the action bar
-        actionBar.displayHomeAsUp = true;
+        actionbar.displayHomeAsUp = true;
         
         // open and close with the app icon
-        actionBar.onHomeIconItemSelected = function() {
+        actionbar.onHomeIconItemSelected = function() {
             drawer.toggleLeftWindow();
         };
     }
