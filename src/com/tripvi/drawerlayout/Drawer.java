@@ -10,6 +10,7 @@ import org.appcelerator.titanium.util.TiRHelper;
 import org.appcelerator.titanium.util.TiRHelper.ResourceNotFoundException;
 import org.appcelerator.titanium.util.TiUIHelper;
 import org.appcelerator.titanium.view.TiUIView;
+import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiUIFragment;
 
 import ti.modules.titanium.ui.WindowProxy;
@@ -24,6 +25,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.graphics.Color;
@@ -69,7 +72,7 @@ public class Drawer extends TiUIView {
 	int string_drawer_open = 0;
 	int string_drawer_close = 0;
 	int layout_drawer_main = 0;
-	int id_content_frame = 0;
+	public static int id_content_frame = 0;
 	int arrowAnimationDrawerCustomColor = 0;
 
 	public Drawer(final DrawerProxy proxy) {
@@ -91,6 +94,12 @@ public class Drawer extends TiUIView {
 		LayoutInflater inflater = LayoutInflater.from(activity);
 		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
 				false);
+
+		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
+		TiCompositeLayout.LayoutParams params = new TiCompositeLayout.LayoutParams();
+		params.autoFillsWidth = true;
+		params.autoFillsHeight = true;
+		fL.setLayoutParams(params);
 
 		layout.setDrawerListener(new DrawerListener());
 
@@ -379,38 +388,19 @@ public class Drawer extends TiUIView {
 			return;
 		}
 
-		String name = viewProxy.getApiName();
-		// If view is map, we need to create a standalone fragment. This
-		// can be done by set the property here before creating the view
-		// or set it when you create the map in Javascript.
-		if (name == "Ti.Map") {
-			viewProxy.setProperty(TiC.PROPERTY_FRAGMENT_ONLY, true);
-		}
+		viewProxy.setActivity(proxy.getActivity());
 		TiUIView contentView = viewProxy.getOrCreateView();
-		FragmentManager fragmentManager = ((ActionBarActivity) proxy
-				.getActivity()).getSupportFragmentManager();
-		// since only map uses TiUIFragment, here we check if view is a map,
-		// then we add the fragment directly.
-		if (contentView instanceof TiUIFragment) {
-			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.replace(id_content_frame,
-					((TiUIFragment) contentView).getFragment());
-			if (backstack) {
-				Log.d(TAG, "adding Fragment to backstack");
-				ft.addToBackStack(name);
-			}
-			ft.commit();
-		} else {
-			View view = contentView.getOuterView();
-			ContentWrapperFragment fragment = new ContentWrapperFragment();
-			fragment.setContentView(view);
-			FragmentTransaction ft = fragmentManager.beginTransaction();
-			ft.replace(id_content_frame, fragment);
-			if (backstack) {
-				Log.d(TAG, "adding Fragment to backstack");
-				ft.addToBackStack(name);
-			}
-			ft.commit();
+
+		View view = contentView.getOuterView();
+		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
+		ViewParent viewParent = view.getParent();
+		if (viewParent == null) {
+			fL.addView(view, contentView.getLayoutParams());
+		}
+		if (viewParent instanceof ViewGroup && viewParent != fL) {
+			((ViewGroup)viewParent).removeView(view);
+			fL.addView(view, contentView.getLayoutParams());
+
 		}
 
 		this.centerView = viewProxy;
