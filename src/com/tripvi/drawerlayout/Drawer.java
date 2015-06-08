@@ -400,9 +400,10 @@ public class Drawer extends TiUIView {
 		if (viewParent instanceof ViewGroup && viewParent != fL) {
 			((ViewGroup)viewParent).removeView(view);
 			fL.addView(view, contentView.getLayoutParams());
-
 		}
-
+		if (this.centerView != null) {
+			fL.removeView(this.centerView.getOrCreateView().getNativeView());
+		}
 		this.centerView = viewProxy;
 	}
 	
