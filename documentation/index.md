@@ -48,8 +48,6 @@ $.drawer.setContentView( main.getView() );
 * `drawerIndicatorEnabled` _(Boolean)_ - wether it should use the ActionBarDrawerToggle or not
 * `drawerIndicatorImage` _(String)_ - path to a custom drawer indicator image
 * `drawerLockMode` _(int)_ - sets the lock mode constant. TiDrawerLayout.LOCK_MODE_UNLOCKED (default), TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, TiDrawerLayout.LOCK_MODE_LOCKED_OPEN
-* `drawerArrowIcon` _(Boolean)_ - set this to `true` to get that fancy animation
-* `drawerArrowIconColor` _(String)_ - sets the color of the drawerIcon animation
 
 ## Methods
 
@@ -74,9 +72,7 @@ $.drawer.setContentView( main.getView() );
 * `setDrawerIndicatorEnabled()` - sets the value for the `drawerIndicatorEnabled` property
 * `setDrawerIndicatorImage()` - sets the value for the `drawerIndicatorImage` property
 * `setDrawerLockMode()` - sets the value for the `drawerLockMode` property
-* `setDrawerArrowIcon()` - sets the value for the `drawerArrowIcon` property
-* `setDrawerArrowIconColor()` - sets the value for the `drawerArrowIconColor` property
-* `setArrowState(value)`	-	sets the state of the drawerArrowIcon
+* ~~`setArrowState(value)`~~	- **(DEPRECATED)**	sets the state of the drawerArrowIcon
 	* `value` _(Number)_	- state (1 is arrow, 0 is hamburger, but you can set everything between)
 
 ## Events

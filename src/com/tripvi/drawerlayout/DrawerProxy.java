@@ -196,19 +196,6 @@ public class DrawerProxy extends TiViewProxy {
 		setPropertyAndFire(Drawer.PROPERTY_LEFT_VIEW_WIDTH, arg);
 	}
 	
-	
-	@Kroll.method
-	@Kroll.setProperty
-	public void setDrawerArrowIcon(Object arg) {
-		setPropertyAndFire(Drawer.PROPERTY_DRAWER_ARROW_ICON, arg);
-	}
-	
-	@Kroll.method
-	@Kroll.setProperty
-	public void setDrawerArrowIconColor(Object arg) {
-		setPropertyAndFire(Drawer.PROPERTY_DRAWER_ARROW_ICON_COLOR, arg);
-	}
-	
 	@Kroll.method
 	@Kroll.setProperty
 	public void setLeftView(Object arg) {
