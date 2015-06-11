@@ -54,7 +54,7 @@ $.drawer.setContentView( main.getView() );
 * `setLeftView()` - sets the value for the `leftView` property
 * `setRightView()` - sets the value for the `rightView` property
 * `setCenterView()` - sets the value for the `centerView` property
-* `replaceCenterView(view, backstack)` - same as `setCenterView` but with second parameter
+* ~~`replaceCenterView(view, backstack)`~~ - **(DEPRECATED)** same as `setCenterView` but with second parameter
 	* `view` _(Ti.UI.View)_ - the new centerView
 	* `backstack` _(Boolean)_ - set this to `true` if you want to add this to the backstack
 * `toggleLeftWindow()` - opens or closes the left drawer

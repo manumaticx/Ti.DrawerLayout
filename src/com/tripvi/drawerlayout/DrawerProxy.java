@@ -222,7 +222,8 @@ public class DrawerProxy extends TiViewProxy {
 	
 	@Kroll.method
 	public void replaceCenterView(Object arg, boolean backstack) {
-		drawer.replaceCenterView((TiViewProxy) arg, backstack);
+		Log.w(TAG, "replaceCenterView is deprecated. Please use setCenterView instead.");
+		setPropertyAndFire(Drawer.PROPERTY_CENTER_VIEW, arg);
 	}
 
 	@Kroll.method
