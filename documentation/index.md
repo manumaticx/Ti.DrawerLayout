@@ -46,7 +46,7 @@ $.drawer.setContentView( main.getView() );
 * `leftDrawerWidth` _(Number/String)_ - sets the width of the left drawer
 * `rightDrawerWidth` _(Number/String)_ - sets the width of the right drawer
 * `drawerIndicatorEnabled` _(Boolean)_ - wether it should use the ActionBarDrawerToggle or not
-* `drawerIndicatorImage` _(String)_ - path to a custom drawer indicator image
+* ~~`drawerIndicatorImage`~~ _(String)_ - **(DEPRECATED)** path to a custom drawer indicator image
 * `drawerLockMode` _(int)_ - sets the lock mode constant. TiDrawerLayout.LOCK_MODE_UNLOCKED (default), TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, TiDrawerLayout.LOCK_MODE_LOCKED_OPEN
 
 ## Methods
@@ -70,7 +70,7 @@ $.drawer.setContentView( main.getView() );
 * `setLeftDrawerWidth()` - sets the value for the `leftDrawerWidth` property
 * `setRightDrawerWidth()` - sets the value for the `rightDrawerWidth` property
 * `setDrawerIndicatorEnabled()` - sets the value for the `drawerIndicatorEnabled` property
-* `setDrawerIndicatorImage()` - sets the value for the `drawerIndicatorImage` property
+* ~~`setDrawerIndicatorImage()`~~ - **(DEPRECATED)** sets the value for the `drawerIndicatorImage` property
 * `setDrawerLockMode()` - sets the value for the `drawerLockMode` property
 * ~~`setArrowState(value)`~~	- **(DEPRECATED)**	sets the state of the drawerArrowIcon
 	* `value` _(Number)_	- state (1 is arrow, 0 is hamburger, but you can set everything between)

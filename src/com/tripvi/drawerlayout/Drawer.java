@@ -7,7 +7,6 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.util.TiRHelper;
 import org.appcelerator.titanium.util.TiRHelper.ResourceNotFoundException;
-import org.appcelerator.titanium.util.TiUIHelper;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiUIView;
 
@@ -35,9 +34,7 @@ public class Drawer extends TiUIView {
 	private int filterWidth;
 	private boolean hasMenu = false;
 	private boolean hasFilter = false;
-	private boolean useCustomDrawer = false;
 	private boolean hasToggle = true;
-	private int drawable_custom_drawer;
 
 	private TiViewProxy leftView;
 	private TiViewProxy rightView;
@@ -368,14 +365,6 @@ public class Drawer extends TiUIView {
 
 	@Override
 	public void processProperties(KrollDict d) {
-		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_IMAGE)) {
-			String imageUrl = d.getString(PROPERTY_DRAWER_INDICATOR_IMAGE);
-			drawable_custom_drawer = TiUIHelper.getResourceId(proxy.resolveUrl(
-					null, imageUrl));
-			if (drawable_custom_drawer != 0) {
-				useCustomDrawer = true;
-			}
-		}
 		if (d.containsKey(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			hasToggle = TiConvert.toBoolean(d,
 					PROPERTY_DRAWER_INDICATOR_ENABLED);
