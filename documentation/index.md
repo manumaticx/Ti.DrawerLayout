@@ -92,3 +92,28 @@ $.drawer.setContentView( main.getView() );
 
 * `drawerclose` - fires when the drawer motion state changes
 	* `drawer` _(String)_ - left or right
+	
+## Tricks & Pitfalls
+
+* Using Drawer for Navigation
+	* Please check out the [Demo App](https://github.com/manumaticx/Ti.DrawerLayout-Demo-Alloy-App)
+	
+
+* Customizing the drawerArrowToggle
+	* This is done in your ActionBar theme like this:
+	
+	```xml
+	<style name="AppTheme" parent="Theme.AppCompat.Light">
+		<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+	</style>
+
+	<style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+		<item name="spinBars">true</item>
+		<item name="color">@android:color/white</item>
+	</style>
+	```
+	
+	Android Docs: http://developer.android.com/reference/android/support/v7/appcompat/R.styleable.html#DrawerArrowToggle
+	
+* TabGroup & Drawer
+	* Please refer to my answer [here](https://github.com/manumaticx/Ti.DrawerLayout/issues/32#issuecomment-111413941)
