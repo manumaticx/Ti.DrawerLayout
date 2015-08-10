@@ -40,6 +40,12 @@ public class DrawerProxy extends TiViewProxy {
 		drawer.getLayoutParams().autoFillsWidth = true;
 		return drawer;
 	}
+	
+	@Override
+    public void onDestroy(Activity activity) {
+        Log.d(TAG, "onDestroy called");
+        drawer.onDestroy();
+    }
 
 	@Override
 	public boolean handleMessage(Message msg) {

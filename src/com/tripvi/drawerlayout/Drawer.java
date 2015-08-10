@@ -107,6 +107,16 @@ public class Drawer extends TiUIView {
 		setNativeView(layout);
 
 	}
+	
+	public void onDestroy(){
+		if (leftView != null){
+			menu.removeView(getNativeView(leftView));
+		}
+		
+		if (rightView != null){
+			filter.removeView(getNativeView(rightView));
+		}
+	}
 
 	private class DrawerListener implements DrawerLayout.DrawerListener {
 
