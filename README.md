@@ -21,6 +21,7 @@ To expand the drawer the user can either touch the app icon or swipe from the le
 
 * Grab the latest package from the [dist](dist) folder
 * Install it following [this guide](http://docs.appcelerator.com/titanium/latest/#!/guide/Using_a_Module)
+* with [gittio](http://gitt.io/): `$ gittio install -g https://github.com/manumaticx/Ti.DrawerLayout/blob/master/dist/com.tripvi.drawerlayout-android-1.3.4.zip?raw=true`
 
 ## Usage
 
