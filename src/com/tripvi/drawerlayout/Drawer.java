@@ -216,6 +216,9 @@ public class Drawer extends TiUIView {
 				string_drawer_open, string_drawer_close) {
 			@Override
 			public void onDrawerClosed(View drawerView) {
+				if(!drawerView.equals(menu)){
+					return;
+				}
 				super.onDrawerClosed(drawerView);
 				if (proxy.hasListeners("drawerclose")) {
 					KrollDict options = new KrollDict();
@@ -230,6 +233,9 @@ public class Drawer extends TiUIView {
 
 			@Override
 			public void onDrawerOpened(View drawerView) {
+				if(!drawerView.equals(menu)){
+					return;
+				}
 				super.onDrawerOpened(drawerView);
 				if (proxy.hasListeners("draweropen")) {
 					KrollDict options = new KrollDict();
@@ -244,6 +250,11 @@ public class Drawer extends TiUIView {
 
 			@Override
 			public void onDrawerSlide(View drawerView, float slideOffset) {
+				
+				if(!drawerView.equals(menu)){
+					return;
+				}
+				
 				super.onDrawerSlide(drawerView, slideOffset);
 				if (proxy.hasListeners("drawerslide")) {
 					KrollDict options = new KrollDict();
