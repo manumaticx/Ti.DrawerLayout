@@ -18,11 +18,6 @@ import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.FrameLayout;
 
 public class Drawer extends TiUIView {
@@ -37,10 +32,12 @@ public class Drawer extends TiUIView {
 	private boolean hasMenu = false;
 	private boolean hasFilter = false;
 	private boolean hasToggle = true;
+	private boolean hideToolbar = false;
 
 	private TiViewProxy leftView;
 	private TiViewProxy rightView;
 	private TiViewProxy centerView;
+	private Toolbar toolbar;
 
 	// Static Properties
 	public static final String PROPERTY_LEFT_VIEW = "leftView";
@@ -51,6 +48,7 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
 	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
 	public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
+	public static final String PROPERTY_HIDE_TOOLBAR = "hideToolbar";
 
 	private static final String TAG = "TripviDrawer";
 
@@ -84,6 +82,11 @@ public class Drawer extends TiUIView {
 		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
 				false);
 
+		/**
+		 * Had to comment out this section. Results in:
+		 * java.lang.ClassCastException: org.appcelerator.titanium.view.TiCompositeLayout$LayoutParams cannot be cast to android.widget.RelativeLayout$LayoutParams
+		 * Very disturbing that these params should be affecting the parent views of this view.
+		 */
 //		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
 //		TiCompositeLayout.LayoutParams params = new TiCompositeLayout.LayoutParams();
 //		params.autoFillsWidth = true;
@@ -92,20 +95,26 @@ public class Drawer extends TiUIView {
 
 		layout.setDrawerListener(new DrawerListener());
 
-		// Really crazy shit here...
-		Toolbar toolbar = (Toolbar)layout.findViewById(id_toolbar);
-		if (activity.getSupportActionBar() != null) {
-			Log.e(TAG, "getSupportActionbar already exists!!!");
-		}
-		else if (activity.getActionBar() != null) {
-			Log.e(TAG, "getActionBar already exists!!!");
-		} else {
+		toolbar = (Toolbar)layout.findViewById(id_toolbar);
+		// If no actionbar exists,
+		if (activity.getSupportActionBar() == null && activity.getActionBar() == null) {
 			activity.setSupportActionBar(toolbar);
+			if (!hideToolbar) {
+				setToolbarVisible(true);
+			}
 		}
 
 		// TiUIView
 		setNativeView(layout);
 
+	}
+
+	private void setToolbarVisible(boolean isVisible) {
+		if (isVisible) {
+			toolbar.setVisibility(View.VISIBLE);
+		} else {
+			toolbar.setVisibility(View.GONE);
+		}
 	}
 
 	private class DrawerListener implements DrawerLayout.DrawerListener {
@@ -456,6 +465,14 @@ public class Drawer extends TiUIView {
 			layout.setDrawerLockMode(TiConvert.toInt(d
 					.get(PROPERTY_DRAWER_LOCK_MODE)));
 		}
+		if (d.containsKey(PROPERTY_HIDE_TOOLBAR)) {
+			hideToolbar = (TiConvert.toBoolean(d.get(PROPERTY_HIDE_TOOLBAR)));
+			if (hideToolbar) {
+				setToolbarVisible(false);
+			} else {
+				setToolbarVisible(true);
+			}
+		}
 
 		super.processProperties(d);
 	}
@@ -550,6 +567,13 @@ public class Drawer extends TiUIView {
 			boolean b = (Boolean) newValue;
 			if (mDrawerToggle != null){
 				mDrawerToggle.setDrawerIndicatorEnabled(b);
+			}
+		} else if (key.equals(PROPERTY_HIDE_TOOLBAR)) {
+			hideToolbar = (TiConvert.toBoolean(newValue));
+			if (hideToolbar) {
+				setToolbarVisible(false);
+			} else {
+				setToolbarVisible(true);
 			}
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
