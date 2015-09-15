@@ -5,7 +5,8 @@
     android:layout_height="match_parent">
 
     <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
+         space available using match_parent in both dimensions.
+          ActionBar size is normally 56dp -->
     <RelativeLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
@@ -14,6 +15,7 @@
            <android.support.v7.widget.Toolbar
                xmlns:app="http://schemas.android.com/apk/res-auto"
                android:id="@+id/toolbar"
+               android:visibility="gone"
                android:layout_width="match_parent"
                android:layout_height="?attr/actionBarSize"
                android:background="#222299"
