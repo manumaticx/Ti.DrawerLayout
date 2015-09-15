@@ -1,5 +1,7 @@
 package com.tripvi.drawerlayout;
 
+import android.support.v7.widget.Toolbar;
+import android.view.*;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.titanium.TiDimension;
@@ -57,6 +59,8 @@ public class Drawer extends TiUIView {
 	int string_drawer_close = 0;
 	int layout_drawer_main = 0;
 	public static int id_content_frame = 0;
+	public static int id_main_container = 0;
+	public static int id_toolbar = 0;
 
 	public Drawer(final DrawerProxy proxy) {
 		super(proxy);
@@ -67,6 +71,8 @@ public class Drawer extends TiUIView {
 			string_drawer_close = TiRHelper.getResource("string.drawer_close");
 			layout_drawer_main = TiRHelper.getResource("layout.drawer_main");
 			id_content_frame = TiRHelper.getResource("id.content_frame");
+			id_main_container = TiRHelper.getResource("id.main_container");
+			id_toolbar = TiRHelper.getResource("id.toolbar");
 		} catch (ResourceNotFoundException e) {
 			Log.e(TAG, "XML resources could not be found!!!");
 		}
@@ -78,13 +84,24 @@ public class Drawer extends TiUIView {
 		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
 				false);
 
-		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
-		TiCompositeLayout.LayoutParams params = new TiCompositeLayout.LayoutParams();
-		params.autoFillsWidth = true;
-		params.autoFillsHeight = true;
-		fL.setLayoutParams(params);
+//		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
+//		TiCompositeLayout.LayoutParams params = new TiCompositeLayout.LayoutParams();
+//		params.autoFillsWidth = true;
+//		params.autoFillsHeight = true;
+//		fL.setLayoutParams(params);
 
 		layout.setDrawerListener(new DrawerListener());
+
+		// Really crazy shit here...
+		Toolbar toolbar = (Toolbar)layout.findViewById(id_toolbar);
+		if (activity.getSupportActionBar() != null) {
+			Log.e(TAG, "getSupportActionbar already exists!!!");
+		}
+		else if (activity.getActionBar() != null) {
+			Log.e(TAG, "getActionBar already exists!!!");
+		} else {
+			activity.setSupportActionBar(toolbar);
+		}
 
 		// TiUIView
 		setNativeView(layout);
