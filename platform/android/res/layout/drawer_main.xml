@@ -5,16 +5,30 @@
     android:layout_height="match_parent">
 
     <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
-    <org.appcelerator.titanium.view.TiCompositeLayout
+         space available using match_parent in both dimensions.
+          ActionBar size is normally 56dp -->
+    <RelativeLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-         <com.tripvi.drawerlayout.ContentFrame
-            android:id="@+id/content_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"> 
-         </com.tripvi.drawerlayout.ContentFrame>
-     </org.appcelerator.titanium.view.TiCompositeLayout>
+           <android.support.v7.widget.Toolbar
+               xmlns:app="http://schemas.android.com/apk/res-auto"
+               android:id="@+id/toolbar"
+               android:visibility="gone"
+               android:layout_width="match_parent"
+               android:layout_height="?attr/actionBarSize"
+               android:background="#222299"
+               android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+               app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+               android:elevation="4dp"/>
+
+           <com.tripvi.drawerlayout.ContentFrame
+               android:id="@+id/content_frame"
+               android:layout_below="@id/toolbar"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
+
+     </RelativeLayout>
 
 </android.support.v4.widget.DrawerLayout>

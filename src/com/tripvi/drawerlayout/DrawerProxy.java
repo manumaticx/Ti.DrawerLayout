@@ -232,11 +232,11 @@ public class DrawerProxy extends TiViewProxy {
 		setPropertyAndFire(Drawer.PROPERTY_DRAWER_INDICATOR_ENABLED, arg);
 	}
     
-    @Kroll.method
-    @Kroll.setProperty
-    public void setDrawerLockMode(Object arg) {
-        setPropertyAndFire(Drawer.PROPERTY_DRAWER_LOCK_MODE, arg);
-    }
+    	@Kroll.method
+    	@Kroll.setProperty
+    	public void setDrawerLockMode(Object arg) {
+	        setPropertyAndFire(Drawer.PROPERTY_DRAWER_LOCK_MODE, arg);
+    	}
 
 	@Kroll.method
 	@Kroll.setProperty
@@ -253,6 +253,12 @@ public class DrawerProxy extends TiViewProxy {
 	public void setArrowState (Integer state){
 		Message message = getMainHandler().obtainMessage(MSG_ARROW_STATE, TiConvert.toFloat(state, 0));
 		message.sendToTarget();
+	}
+	
+	@Kroll.method
+	@Kroll.setProperty
+	public void setToolbarHidden(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_HIDE_TOOLBAR, arg);
 	}
 
 }
