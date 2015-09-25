@@ -15,7 +15,7 @@ import org.appcelerator.titanium.view.TiUIView;
 import ti.modules.titanium.ui.WindowProxy;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -75,7 +75,7 @@ public class Drawer extends TiUIView {
 			Log.e(TAG, "XML resources could not be found!!!");
 		}
 
-		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
+		AppCompatActivity activity = (AppCompatActivity) proxy.getActivity();
 
 		// DrawerLayout을 생성한다.
 		LayoutInflater inflater = LayoutInflater.from(activity);
@@ -225,7 +225,7 @@ public class Drawer extends TiUIView {
 
 	private void initDrawerToggle() {
 
-		ActionBarActivity activity = (ActionBarActivity) proxy.getActivity();
+		AppCompatActivity activity = (AppCompatActivity) proxy.getActivity();
 
 		if (activity.getSupportActionBar() == null) {
 			return;
