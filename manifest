@@ -1,4 +1,4 @@
-version: 1.3.5
+version: 1.3.6
 apiversion: 2
 description: TiUIView adaptor for DrawerLayout
 author: metacortex
@@ -11,4 +11,4 @@ name: drawerlayout
 moduleid: com.tripvi.drawerlayout
 guid: f0a61bb9-3c4d-457f-84c7-3980a13e3dd2
 platform: android
-minsdk: 3.4.1
+minsdk: 4.0.0.GA
