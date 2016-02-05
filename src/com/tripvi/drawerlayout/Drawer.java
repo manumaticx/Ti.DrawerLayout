@@ -52,7 +52,6 @@ public class Drawer extends TiUIView {
 
 	private static final String TAG = "TripviDrawer";
 
-	int drawable_ic_drawer = 0;
 	int string_drawer_open = 0;
 	int string_drawer_close = 0;
 	int layout_drawer_main = 0;
@@ -64,7 +63,6 @@ public class Drawer extends TiUIView {
 		super(proxy);
 
 		try {
-			drawable_ic_drawer = TiRHelper.getResource("drawable.ic_drawer");
 			string_drawer_open = TiRHelper.getResource("string.drawer_open");
 			string_drawer_close = TiRHelper.getResource("string.drawer_close");
 			layout_drawer_main = TiRHelper.getResource("layout.drawer_main");
