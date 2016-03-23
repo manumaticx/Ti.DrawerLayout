@@ -74,7 +74,7 @@ win.open();
 ```
 
 #### [API Documentation](documentation/index.md)
-#### [Demo App](https://github.com/manumaticx/Ti.DrawerLayout-Demo-Alloy-App)
+#### [Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
 
 ## Known Issues
 
