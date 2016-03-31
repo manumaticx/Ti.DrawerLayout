@@ -1,14 +1,11 @@
-# Ti.DrawerLayout [![Titanium](http://www-static.appcelerator.com/badges/titanium-git-badge-sq.png)](http://www.appcelerator.com/titanium/)
+# Ti.DrawerLayout
+Native Android [Navigation Drawer](http://developer.android.com/design/patterns/navigation-drawer.html) for [Titanium](http://www.appcelerator.com/titanium/)
 
-[![Join the chat at https://gitter.im/manumaticx/Ti.DrawerLayout](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/manumaticx/Ti.DrawerLayout?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-> Native Android [Navigation Drawer](http://developer.android.com/design/patterns/navigation-drawer.html) for [Titanium](http://www.appcelerator.com/titanium/)
-
-_This is a fork of [Tripvi/Ti.DrawerLayout](https://github.com/Tripvi/Ti.DrawerLayout). I temporarily picked it up since the author is busy these days. I've activated issues and pull requests here, so feel free to contribute._
+_This is a fork of [Tripvi/Ti.DrawerLayout](https://github.com/Tripvi/Ti.DrawerLayout)_
 
 ## Overview
 
-![](https://developer.android.com/design/media/navigation_drawer_holo_dark_light.png)
+<a href="https://www.google.com/design/spec/patterns/navigation-drawer.html"><img src="https://material-design.storage.googleapis.com/publish/material_v_4/material_ext_publish/0Bzhp5Z4wHba3WUpVTktSZWk1YjQ/patterns_navdrawer_behavior_temporary2.png" width="480"></a>
 
 This module adds support for using the [DrawerLayout](http://developer.android.com/reference/android/support/v4/widget/DrawerLayout.html) in Titanium Apps.
 
@@ -16,6 +13,8 @@ The Drawer Layout is a view that can be pulled from the edge of a window. This c
 
 To expand the drawer the user can either touch the app icon or swipe from the left edge. The navigation drawer overlays the content but not the action bar.
 
+#### [API Documentation](documentation/index.md)
+#### [Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
 
 ## Installation
 
@@ -73,17 +72,4 @@ win.addEventListener('open', function(){
 win.open();
 ```
 
-#### [API Documentation](documentation/index.md)
-#### [Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
 
-## Known Issues
-
-* ~~MapView is not working with centerView~~
-* TabGroup is not working with Drawer
-* ActionBar SearchView seems to make problems too
-
-If you are facing other issues please add them to the issues. If you can solve one of them, please send a pull request.
-
-## License
-
-_[MIT](LICENSE), Copyright 2013 Tripvi.Inc_
