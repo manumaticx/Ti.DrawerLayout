@@ -1,0 +1,10 @@
+{
+  "name": "drawerlayout",
+  "id": "com.tripvi.drawerlayout",
+  "version": "1.3.6",
+  "description": "Android Drawer for Titanium ",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.5"
+  }
+}

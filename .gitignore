@@ -10,3 +10,4 @@ libs
 build.properties
 *.apk
 .idea
+node_modules

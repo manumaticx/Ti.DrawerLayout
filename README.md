@@ -1,4 +1,4 @@
-# Ti.DrawerLayout
+# Ti.DrawerLayout [![gittio](http://img.shields.io/badge/gittio-1.3.6-00B4CC.svg)](http://gitt.io/component/com.tripvi.drawerlayout)
 Native Android [Navigation Drawer](http://developer.android.com/design/patterns/navigation-drawer.html) for [Titanium](http://www.appcelerator.com/titanium/)
 
 _This is a fork of [Tripvi/Ti.DrawerLayout](https://github.com/Tripvi/Ti.DrawerLayout)_
