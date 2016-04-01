@@ -1,0 +1,5 @@
+
+<resources>
+    <!-- used as default but can be overridden in users values -->
+    <color name="primary">#222299</color>
+</resources>
