@@ -47,7 +47,8 @@ $.drawer.setContentView( main.getView() );
 * `rightDrawerWidth` _(Number/String)_ - sets the width of the right drawer
 * `drawerIndicatorEnabled` _(Boolean)_ - wether it should use the ActionBarDrawerToggle or not
 * ~~`drawerIndicatorImage`~~ _(String)_ - **(DEPRECATED)** path to a custom drawer indicator image
-* `drawerLockMode` _(int)_ - sets the lock mode constant. TiDrawerLayout.LOCK_MODE_UNLOCKED (default), TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, TiDrawerLayout.LOCK_MODE_LOCKED_OPEN
+* `drawerLockMode` _(Number)_ - sets the lock mode constant. TiDrawerLayout.LOCK_MODE_UNLOCKED (default), TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, TiDrawerLayout.LOCK_MODE_LOCKED_OPEN
+* `dragMargin` _(Number)_ - defines the width of the area the user can swipe the drawer in
 
 ## Methods
 

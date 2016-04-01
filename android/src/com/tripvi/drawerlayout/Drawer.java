@@ -16,10 +16,12 @@ import org.appcelerator.titanium.view.TiUIView;
 import ti.modules.titanium.ui.WindowProxy;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.LayoutParams;
+import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.widget.FrameLayout;
+import java.lang.reflect.Field;
 
 public class Drawer extends TiUIView {
 
@@ -50,6 +52,7 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
 	public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
 	public static final String PROPERTY_HIDE_TOOLBAR = "hideToolbar";
+	public static final String PROPERTY_SWIPE_AREA_WIDTH = "dragMargin";
 
 	private static final String TAG = "TripviDrawer";
 
@@ -387,6 +390,21 @@ public class Drawer extends TiUIView {
 	public void setArrowState (Float state){
 		// leaving this here for now, maybe replace it later
 	}
+	
+	private void setSwipeArea (Integer width){
+		try{
+			Field mDragger = layout.getClass().getDeclaredField("mLeftDragger");
+			mDragger.setAccessible(true);
+			ViewDragHelper draggerObj = (ViewDragHelper) mDragger.get(layout);
+			Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
+			mEdgeSize.setAccessible(true);
+			mEdgeSize.setInt(draggerObj, width);
+		}catch(NoSuchFieldException e){
+			Log.e(TAG, e.toString());
+		}catch(IllegalAccessException e){
+			Log.e(TAG, e.toString());
+		}
+	}
 
 	@Override
 	public void processProperties(KrollDict d) {
@@ -475,6 +493,9 @@ public class Drawer extends TiUIView {
 			} else {
 				setToolbarVisible(true);
 			}
+		}
+		if (d.containsKey(PROPERTY_SWIPE_AREA_WIDTH)){
+			setSwipeArea(getDevicePixels(d.get(PROPERTY_SWIPE_AREA_WIDTH)));
 		}
 
 		super.processProperties(d);
@@ -596,6 +617,8 @@ public class Drawer extends TiUIView {
 			} else {
 				setToolbarVisible(true);
 			}
+		} else if (key.equals(PROPERTY_SWIPE_AREA_WIDTH)){
+			setSwipeArea(getDevicePixels(newValue));
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
