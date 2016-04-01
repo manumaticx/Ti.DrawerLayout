@@ -49,6 +49,7 @@ $.drawer.setContentView( main.getView() );
 * ~~`drawerIndicatorImage`~~ _(String)_ - **(DEPRECATED)** path to a custom drawer indicator image
 * `drawerLockMode` _(Number)_ - sets the lock mode constant. TiDrawerLayout.LOCK_MODE_UNLOCKED (default), TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, TiDrawerLayout.LOCK_MODE_LOCKED_OPEN
 * `dragMargin` _(Number)_ - defines the width of the area the user can swipe the drawer in
+* `hideToolbar` _(Boolean)_ - hides the toolbar
 
 ## Methods
 
@@ -75,6 +76,7 @@ $.drawer.setContentView( main.getView() );
 * `setDrawerLockMode()` - sets the value for the `drawerLockMode` property
 * ~~`setArrowState(value)`~~	- **(DEPRECATED)**	sets the state of the drawerArrowIcon
 	* `value` _(Number)_	- state (1 is arrow, 0 is hamburger, but you can set everything between)
+* `setToolbarHidden` - sets the value for `hideToolbar` property
 
 ## Events
 
@@ -96,8 +98,14 @@ $.drawer.setContentView( main.getView() );
 	
 ## Tricks & Pitfalls
 
+* Theming
+	* The DrawerLayout requires a NoActionBar Theme since it adds a Toolbar within its layout. Please provide a Theme like `Theme.AppCompat.Light.NoActionBar` for the window that contains the drawer. It has not to be the default Theme of your App, so I suggest you use the `theme` property of Ti.UI.Window for the drawer window.
+	* To define the color of the Toolbar you have to define it as `@color/primary` in your _app/platform/android/res/values/colors.xml_
+	* For an example, please have a look at [Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
+	
 * Using Drawer for Navigation
-	* Please check out the [Demo App](https://github.com/manumaticx/Ti.DrawerLayout-Demo-Alloy-App)
+	* This module only provides the layout itself. The Navigation logic must be done in your own code.
+	* I've put together an example app to demonstrate this here: [NavigationDrawer Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
 	
 
 * Customizing the drawerArrowToggle
