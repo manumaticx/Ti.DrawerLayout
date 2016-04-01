@@ -123,17 +123,13 @@ enableRightDrawerButton.addEventListener("click", function(e) {
 	rv.add(caption);
 	
 	drawer.rightView = rv;
-	drawer.rightDrawerWidth = "80dp";
 });
 contentView.add(enableRightDrawerButton);
 
 
 var drawer = TiDrawerLayout.createDrawer({
 	leftView: menuTable,
-	centerView: contentView,
-	leftDrawerWidth: "280dp",
-	width: Ti.UI.FILL,
-	height: Ti.UI.FILL,
+	centerView: contentView
 	//drawerLockMode:TiDrawerLayout.LOCK_MODE_LOCKED_CLOSED, // prevents user from swiping. manual use of toggleLeftWindow() still works
 	//drawerIndicatorEnabled: false
 });

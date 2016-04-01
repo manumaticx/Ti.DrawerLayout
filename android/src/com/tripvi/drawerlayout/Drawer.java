@@ -5,6 +5,7 @@ import android.view.*;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.titanium.TiDimension;
+import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.util.TiConvert;
 import org.appcelerator.titanium.util.TiRHelper;
@@ -75,21 +76,10 @@ public class Drawer extends TiUIView {
 
 		AppCompatActivity activity = (AppCompatActivity) proxy.getActivity();
 
-		// DrawerLayout을 생성한다.
+		// DrawerLayout
 		LayoutInflater inflater = LayoutInflater.from(activity);
 		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
 				false);
-
-		/**
-		 * Had to comment out this section. Results in:
-		 * java.lang.ClassCastException: org.appcelerator.titanium.view.TiCompositeLayout$LayoutParams cannot be cast to android.widget.RelativeLayout$LayoutParams
-		 * Very disturbing that these params should be affecting the parent views of this view.
-		 */
-//		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
-//		TiCompositeLayout.LayoutParams params = new TiCompositeLayout.LayoutParams();
-//		params.autoFillsWidth = true;
-//		params.autoFillsHeight = true;
-//		fL.setLayoutParams(params);
 
 		layout.setDrawerListener(new DrawerListener());
 
@@ -309,7 +299,7 @@ public class Drawer extends TiUIView {
 		// Set the drawer toggle as the DrawerListener
 		layout.setDrawerListener(mDrawerToggle);
 
-		// onPostCreate 대신에
+		// onPostCreate
 		layout.post(new Runnable() {
 			@Override
 			public void run() {
@@ -319,7 +309,7 @@ public class Drawer extends TiUIView {
 	}
 
 	/**
-	 * drawer가 필요할때 그때그때 추가
+	 * drawer
 	 */
 	private void initLeftDrawer() {
 		if (hasMenu) {
@@ -364,9 +354,9 @@ public class Drawer extends TiUIView {
 	}
 
 	/**
-	 * centerView 변경
+	 * centerView
 	 */
-	public void replaceCenterView(TiViewProxy viewProxy, boolean backstack) {
+	public void replaceCenterView(TiViewProxy viewProxy) {
 		if (viewProxy == this.centerView) {
 			Log.d(TAG, "centerView was not changed");
 			return;
@@ -438,26 +428,41 @@ public class Drawer extends TiUIView {
 				if (centerView instanceof WindowProxy)
 					throw new IllegalStateException(
 							"[ERROR] Cannot use window as a child view of other window");
-				replaceCenterView((TiViewProxy) centerView, false);
+				replaceCenterView((TiViewProxy) centerView);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for centerView");
 			}
 		}
 		if (d.containsKey(PROPERTY_LEFT_VIEW_WIDTH)) {
-			menuWidth = getDevicePixels(d.get(PROPERTY_LEFT_VIEW_WIDTH));
-
-			Log.d(TAG, "set menuWidth = " + d.get(PROPERTY_LEFT_VIEW_WIDTH)
-					+ " in pixel: " + menuWidth);
-
-			menu.getLayoutParams().width = menuWidth;
+			
+			if (menu == null){
+				return;
+			}
+			
+			if (d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.LAYOUT_SIZE)) {
+				menu.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+			} else if (d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.LAYOUT_FILL)) {
+				menu.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+			} else if (!d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.SIZE_AUTO)) {
+				menuWidth = getDevicePixels(d.get(PROPERTY_LEFT_VIEW_WIDTH));
+				menu.getLayoutParams().width = menuWidth;
+			}
+			
 		}
 		if (d.containsKey(PROPERTY_RIGHT_VIEW_WIDTH)) {
-			filterWidth = getDevicePixels(d.get(PROPERTY_RIGHT_VIEW_WIDTH));
-
-			Log.d(TAG, "set filterWidth = " + d.get(PROPERTY_RIGHT_VIEW_WIDTH)
-					+ " in pixel: " + filterWidth);
-
-			filter.getLayoutParams().width = filterWidth;
+			
+			if (filter == null){
+				return;
+			}
+			
+			if (d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.LAYOUT_SIZE)) {
+				filter.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+			} else if (d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.LAYOUT_FILL)) {
+				filter.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+			} else if (!d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.SIZE_AUTO)) {
+				filterWidth = getDevicePixels(d.get(PROPERTY_RIGHT_VIEW_WIDTH));
+				filter.getLayoutParams().width = filterWidth;
+			}
 		}
 		if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
 			layout.setDrawerLockMode(TiConvert.toInt(d
@@ -534,31 +539,49 @@ public class Drawer extends TiUIView {
 			this.rightView = newProxy;
 		} else if (key.equals(PROPERTY_CENTER_VIEW)) {
 			TiViewProxy newProxy = (TiViewProxy) newValue;
-			replaceCenterView(newProxy, false);
+			replaceCenterView(newProxy);
 		} else if (key.equals(PROPERTY_LEFT_VIEW_WIDTH)) {
-			menuWidth = getDevicePixels(newValue);
-
-			Log.d(TAG, "change menuWidth = " + newValue + " in pixel: "
-					+ menuWidth);
-
+			
+			if (menu == null){
+				return;
+			}
+			
 			initLeftDrawer();
+			
+			if (newValue.equals(TiC.LAYOUT_SIZE)) {
+				menuWidth = LayoutParams.WRAP_CONTENT;
+			} else if (newValue.equals(TiC.LAYOUT_FILL)) {
+				menuWidth = LayoutParams.MATCH_PARENT;
+			} else if (!newValue.equals(TiC.SIZE_AUTO)) {
+				menuWidth = getDevicePixels(newValue);
+			}
 
 			LayoutParams menuLayout = new LayoutParams(menuWidth,
 					LayoutParams.MATCH_PARENT);
 			menuLayout.gravity = Gravity.START;
 			this.menu.setLayoutParams(menuLayout);
+			
 		} else if (key.equals(PROPERTY_RIGHT_VIEW_WIDTH)) {
-			filterWidth = getDevicePixels(newValue);
-
-			Log.d(TAG, "change filterWidth = " + newValue + " in pixel: "
-					+ filterWidth);
-
+			
+			if (filter == null){
+				return;
+			}
+			
 			initRightDrawer();
+			
+			if (newValue.equals(TiC.LAYOUT_SIZE)) {
+				filterWidth = LayoutParams.WRAP_CONTENT;
+			} else if (newValue.equals(TiC.LAYOUT_FILL)) {
+				filterWidth = LayoutParams.MATCH_PARENT;
+			} else if (!newValue.equals(TiC.SIZE_AUTO)) {
+				filterWidth = getDevicePixels(newValue);
+			}
 
 			LayoutParams filterLayout = new LayoutParams(filterWidth,
 					LayoutParams.MATCH_PARENT);
-			filterLayout.gravity = Gravity.END;
+			filterLayout.gravity = Gravity.START;
 			this.filter.setLayoutParams(filterLayout);
+			
 		} else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
 			layout.setDrawerLockMode(TiConvert.toInt(newValue));
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
@@ -582,8 +605,8 @@ public class Drawer extends TiUIView {
 	 * Helpers
 	 */
 	public int getDevicePixels(Object value) {
-		return TiConvert.toTiDimension(TiConvert.toString(value),
-				TiDimension.TYPE_WIDTH).getAsPixels(layout);
+		TiDimension nativeSize = TiConvert.toTiDimension(TiConvert.toString(value), TiDimension.TYPE_WIDTH);
+		return nativeSize.getAsPixels(layout);
 	}
 
 	private View getNativeView(TiViewProxy viewProxy) {
