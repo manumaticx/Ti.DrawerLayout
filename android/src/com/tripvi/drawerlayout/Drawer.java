@@ -453,33 +453,32 @@ public class Drawer extends TiUIView {
 		}
 		if (d.containsKey(PROPERTY_LEFT_VIEW_WIDTH)) {
 			
-			if (menu == null){
-				return;
+			if (menu != null){
+				if (d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.LAYOUT_SIZE)) {
+					menu.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+				} else if (d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.LAYOUT_FILL)) {
+					menu.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+				} else if (!d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.SIZE_AUTO)) {
+					menuWidth = getDevicePixels(d.get(PROPERTY_LEFT_VIEW_WIDTH));
+					menu.getLayoutParams().width = menuWidth;
+				}	
 			}
-			
-			if (d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.LAYOUT_SIZE)) {
-				menu.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
-			} else if (d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.LAYOUT_FILL)) {
+		} else {
+			if (menu != null){
 				menu.getLayoutParams().width = LayoutParams.MATCH_PARENT;
-			} else if (!d.get(PROPERTY_LEFT_VIEW_WIDTH).equals(TiC.SIZE_AUTO)) {
-				menuWidth = getDevicePixels(d.get(PROPERTY_LEFT_VIEW_WIDTH));
-				menu.getLayoutParams().width = menuWidth;
 			}
-			
 		}
 		if (d.containsKey(PROPERTY_RIGHT_VIEW_WIDTH)) {
 			
-			if (filter == null){
-				return;
-			}
-			
-			if (d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.LAYOUT_SIZE)) {
-				filter.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
-			} else if (d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.LAYOUT_FILL)) {
-				filter.getLayoutParams().width = LayoutParams.MATCH_PARENT;
-			} else if (!d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.SIZE_AUTO)) {
-				filterWidth = getDevicePixels(d.get(PROPERTY_RIGHT_VIEW_WIDTH));
-				filter.getLayoutParams().width = filterWidth;
+			if (filter != null){
+				if (d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.LAYOUT_SIZE)) {
+					filter.getLayoutParams().width = LayoutParams.WRAP_CONTENT;
+				} else if (d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.LAYOUT_FILL)) {
+					filter.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+				} else if (!d.get(PROPERTY_RIGHT_VIEW_WIDTH).equals(TiC.SIZE_AUTO)) {
+					filterWidth = getDevicePixels(d.get(PROPERTY_RIGHT_VIEW_WIDTH));
+					filter.getLayoutParams().width = filterWidth;
+				}
 			}
 		}
 		if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
