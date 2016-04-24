@@ -95,22 +95,26 @@ $.drawer.setContentView( main.getView() );
 
 * `drawerclose` - fires when the drawer motion state changes
 	* `drawer` _(String)_ - left or right
-	
+
 ## Tricks & Pitfalls
 
-* Theming
-	* The DrawerLayout requires a NoActionBar Theme since it adds a Toolbar within its layout. Please provide a Theme like `Theme.AppCompat.Light.NoActionBar` for the window that contains the drawer. It has not to be the default Theme of your App, so I suggest you use the `theme` property of Ti.UI.Window for the drawer window.
-	* To define the color of the Toolbar you have to define it as `@color/primary` in your _app/platform/android/res/values/colors.xml_
-	* For an example, please have a look at [Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
-	
+* Themes: Actionbar vs. Toolbar
+	* There are two ways to setup the drawer module according to the App bar:
+		1. Traditional: Drawer *below* App bar (using the Actionbar)
+			* use default `Theme.AppCompat` or `Theme.AppCompat.Light`
+		2. Material: Drawer *covers* App bar (using the Toolbar)
+			* use `Theme.AppCompat.NoActionBar` or `Theme.AppCompat.Light.NoActionBar`
+			* add toolbar padding
+
+
 * Using Drawer for Navigation
 	* This module only provides the layout itself. The Navigation logic must be done in your own code.
 	* I've put together an example app to demonstrate this here: [NavigationDrawer Demo App](https://github.com/manumaticx/NavigationDrawer-Demo)
-	
+
 
 * Customizing the drawerArrowToggle
 	* This is done in your ActionBar theme like this:
-	
+
 	```xml
 	<style name="AppTheme" parent="Theme.AppCompat.Light">
 		<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
@@ -121,8 +125,8 @@ $.drawer.setContentView( main.getView() );
 		<item name="color">@android:color/white</item>
 	</style>
 	```
-	
+
 	Android Docs: http://developer.android.com/reference/android/support/v7/appcompat/R.styleable.html#DrawerArrowToggle
-	
+
 * TabGroup & Drawer
 	* Please refer to my answer [here](https://github.com/manumaticx/Ti.DrawerLayout/issues/32#issuecomment-111413941)
