@@ -480,6 +480,10 @@ public class Drawer extends TiUIView {
 					filter.getLayoutParams().width = filterWidth;
 				}
 			}
+		} else {
+			if (filter != null){
+				filter.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+			}
 		}
 		if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
 			layout.setDrawerLockMode(TiConvert.toInt(d
@@ -599,7 +603,7 @@ public class Drawer extends TiUIView {
 
 			LayoutParams filterLayout = new LayoutParams(filterWidth,
 					LayoutParams.MATCH_PARENT);
-			filterLayout.gravity = Gravity.START;
+			filterLayout.gravity = Gravity.END;
 			this.filter.setLayoutParams(filterLayout);
 			
 		} else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
