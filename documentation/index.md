@@ -30,7 +30,7 @@ var menu = Alloy.createController('menu');
 var main = Alloy.createController('main');
 
 $.drawer.setLeftView( menu.getView() );
-$.drawer.setContentView( main.getView() );
+$.drawer.setCenterView( main.getView() );
 
 ```
 
