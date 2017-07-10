@@ -25,7 +25,6 @@ import java.lang.reflect.Field;
 
 public class Drawer extends TiUIView {
 
-	private DrawerLayout layout;
 	private ActionBarDrawerToggle mDrawerToggle;
 
 	private FrameLayout menu; /* left drawer */
@@ -34,6 +33,7 @@ public class Drawer extends TiUIView {
 	private int filterWidth;
 	private boolean hasMenu = false;
 	private boolean hasFilter = false;
+	private boolean setToolbar = false;
 	private boolean hasToggle = true;
 	private boolean hideToolbar = false;
 
@@ -81,7 +81,7 @@ public class Drawer extends TiUIView {
 
 		// DrawerLayout
 		LayoutInflater inflater = LayoutInflater.from(activity);
-		layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
+		DrawerLayout layout = (DrawerLayout) inflater.inflate(layout_drawer_main, null,
 				false);
 
 		layout.setDrawerListener(new DrawerListener());
@@ -89,6 +89,7 @@ public class Drawer extends TiUIView {
 		toolbar = (Toolbar)layout.findViewById(id_toolbar);
 		// If no actionbar exists,
 		if (activity.getSupportActionBar() == null && activity.getActionBar() == null) {
+			setToolbar = true;
 			activity.setSupportActionBar(toolbar);
 			if (!hideToolbar) {
 				setToolbarVisible(true);
@@ -167,7 +168,7 @@ public class Drawer extends TiUIView {
 	 * Open/Close/Toggle drawers
 	 */
 	public void toggleLeftDrawer() {
-		if (layout.isDrawerOpen(Gravity.START)) {
+		if (((DrawerLayout)getNativeView()).isDrawerOpen(Gravity.START)) {
 			closeLeftDrawer();
 		} else {
 			openLeftDrawer();
@@ -175,15 +176,15 @@ public class Drawer extends TiUIView {
 	}
 
 	public void openLeftDrawer() {
-		layout.openDrawer(Gravity.START);
+		((DrawerLayout) getNativeView()).openDrawer(Gravity.START);
 	}
 
 	public void closeLeftDrawer() {
-		layout.closeDrawer(Gravity.START);
+		((DrawerLayout) getNativeView()).closeDrawer(Gravity.START);
 	}
 
 	public void toggleRightDrawer() {
-		if (layout.isDrawerOpen(Gravity.END)) {
+		if (((DrawerLayout)getNativeView()).isDrawerOpen(Gravity.END)) {
 			closeRightDrawer();
 		} else {
 			openRightDrawer();
@@ -191,27 +192,27 @@ public class Drawer extends TiUIView {
 	}
 
 	public void openRightDrawer() {
-		layout.openDrawer(Gravity.END);
+		((DrawerLayout) getNativeView()).openDrawer(Gravity.END);
 	}
 
 	public void closeRightDrawer() {
-		layout.closeDrawer(Gravity.END);
+		((DrawerLayout) getNativeView()).closeDrawer(Gravity.END);
 	}
 
 	public boolean isLeftDrawerOpen() {
-		return layout.isDrawerOpen(Gravity.START);
+		return ((DrawerLayout) getNativeView()).isDrawerOpen(Gravity.START);
 	}
 
 	public boolean isRightDrawerOpen() {
-		return layout.isDrawerOpen(Gravity.END);
+		return ((DrawerLayout) getNativeView()).isDrawerOpen(Gravity.END);
 	}
 
 	public boolean isLeftDrawerVisible() {
-		return layout.isDrawerVisible(Gravity.START);
+		return ((DrawerLayout) getNativeView()).isDrawerVisible(Gravity.START);
 	}
 
 	public boolean isRightDrawerVisible() {
-		return layout.isDrawerVisible(Gravity.END);
+		return ((DrawerLayout) getNativeView()).isDrawerVisible(Gravity.END);
 	}
 
 	private void initDrawerToggle() {
@@ -229,7 +230,7 @@ public class Drawer extends TiUIView {
 
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(activity, layout,
+		mDrawerToggle = new ActionBarDrawerToggle(activity, ((DrawerLayout) getNativeView()),
 				string_drawer_open, string_drawer_close) {
 			@Override
 			public void onDrawerClosed(View drawerView) {
@@ -300,10 +301,10 @@ public class Drawer extends TiUIView {
 			}
 		};
 		// Set the drawer toggle as the DrawerListener
-		layout.setDrawerListener(mDrawerToggle);
+		((DrawerLayout) getNativeView()).setDrawerListener(mDrawerToggle);
 
 		// onPostCreate
-		layout.post(new Runnable() {
+		((DrawerLayout) getNativeView()).post(new Runnable() {
 			@Override
 			public void run() {
 				mDrawerToggle.syncState();
@@ -328,7 +329,7 @@ public class Drawer extends TiUIView {
 		menuLayout.gravity = Gravity.START;
 		menu.setLayoutParams(menuLayout);
 
-		layout.addView(menu);
+		((DrawerLayout) getNativeView()).addView(menu);
 
 		hasMenu = true;
 
@@ -351,7 +352,7 @@ public class Drawer extends TiUIView {
 		filterLayout.gravity = Gravity.END;
 		filter.setLayoutParams(filterLayout);
 
-		layout.addView(filter);
+		((DrawerLayout) getNativeView()).addView(filter);
 
 		hasFilter = true;
 	}
@@ -372,7 +373,7 @@ public class Drawer extends TiUIView {
 		TiUIView contentView = viewProxy.getOrCreateView();
 
 		View view = contentView.getOuterView();
-		TiCompositeLayout fL = (TiCompositeLayout)layout.findViewById(id_content_frame);
+		TiCompositeLayout fL = (TiCompositeLayout)getNativeView().findViewById(id_content_frame);
 		ViewParent viewParent = view.getParent();
 		if (viewParent == null) {
 			fL.addView(view, contentView.getLayoutParams());
@@ -393,9 +394,9 @@ public class Drawer extends TiUIView {
 	
 	private void setSwipeArea (Integer width){
 		try{
-			Field mDragger = layout.getClass().getDeclaredField("mLeftDragger");
+			Field mDragger = getNativeView().getClass().getDeclaredField("mLeftDragger");
 			mDragger.setAccessible(true);
-			ViewDragHelper draggerObj = (ViewDragHelper) mDragger.get(layout);
+			ViewDragHelper draggerObj = (ViewDragHelper) mDragger.get(getNativeView());
 			Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
 			mEdgeSize.setAccessible(true);
 			mEdgeSize.setInt(draggerObj, width);
@@ -486,7 +487,7 @@ public class Drawer extends TiUIView {
 			}
 		}
 		if (d.containsKey(PROPERTY_DRAWER_LOCK_MODE)) {
-			layout.setDrawerLockMode(TiConvert.toInt(d
+			((DrawerLayout) getNativeView()).setDrawerLockMode(TiConvert.toInt(d
 					.get(PROPERTY_DRAWER_LOCK_MODE)));
 		}
 		if (d.containsKey(PROPERTY_HIDE_TOOLBAR)) {
@@ -607,7 +608,7 @@ public class Drawer extends TiUIView {
 			this.filter.setLayoutParams(filterLayout);
 			
 		} else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
-			layout.setDrawerLockMode(TiConvert.toInt(newValue));
+			((DrawerLayout) getNativeView()).setDrawerLockMode(TiConvert.toInt(newValue));
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
 			if (mDrawerToggle != null){
@@ -627,12 +628,53 @@ public class Drawer extends TiUIView {
 		}
 	}
 
+	@Override
+	public void release() {
+		Log.d(TAG, "release");
+		DrawerLayout layout = (DrawerLayout) getNativeView();
+		if (layout != null) {
+			layout.removeAllViews();
+			layout.setDrawerListener(null);
+		}
+		if (menu != null) {
+			menu.removeAllViews();
+			menu = null;
+		}
+		if (filter != null) {
+			filter.removeAllViews();
+			filter = null;
+		}
+		if (leftView != null) {
+			leftView.releaseViews();
+			leftView.release();
+			leftView = null;
+		}
+		if (rightView != null) {
+			rightView.releaseViews();
+			rightView.release();
+			rightView = null;
+		}
+		if (centerView != null) {
+			centerView.releaseViews();
+			centerView.release();
+			centerView = null;
+		}
+		if (setToolbar) {
+			AppCompatActivity activity = (AppCompatActivity) proxy.getActivity();
+			activity.setSupportActionBar(null);
+			toolbar.removeAllViews();
+			toolbar = null;
+		}
+		super.release();
+		proxy = null;
+	}
+
 	/**
 	 * Helpers
 	 */
 	public int getDevicePixels(Object value) {
 		TiDimension nativeSize = TiConvert.toTiDimension(TiConvert.toString(value), TiDimension.TYPE_WIDTH);
-		return nativeSize.getAsPixels(layout);
+		return nativeSize.getAsPixels(getNativeView());
 	}
 
 	private View getNativeView(TiViewProxy viewProxy) {
