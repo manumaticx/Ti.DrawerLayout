@@ -646,17 +646,14 @@ public class Drawer extends TiUIView {
 		}
 		if (leftView != null) {
 			leftView.releaseViews();
-			leftView.release();
 			leftView = null;
 		}
 		if (rightView != null) {
 			rightView.releaseViews();
-			rightView.release();
 			rightView = null;
 		}
 		if (centerView != null) {
 			centerView.releaseViews();
-			centerView.release();
 			centerView = null;
 		}
 		if (setToolbar) {
