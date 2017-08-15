@@ -658,7 +658,6 @@ public class Drawer extends TiUIView {
 		}
 		if (setToolbar) {
 			AppCompatActivity activity = (AppCompatActivity) proxy.getActivity();
-			activity.setSupportActionBar(null);
 			toolbar.removeAllViews();
 			toolbar = null;
 		}
