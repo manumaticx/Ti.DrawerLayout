@@ -74,6 +74,8 @@ $.drawer.setCenterView( main.getView() );
 * `setDrawerIndicatorEnabled()` - sets the value for the `drawerIndicatorEnabled` property
 * ~~`setDrawerIndicatorImage()`~~ - **(DEPRECATED)** sets the value for the `drawerIndicatorImage` property
 * `setDrawerLockMode()` - sets the value for the `drawerLockMode` property
+* `setLeftDrawerLockMode()` - sets the value for the `drawerLockMode` property for the left drawer
+* `setRightDrawerLockMode()` - sets the value for the `drawerLockMode` property for the right drawer
 * ~~`setArrowState(value)`~~	- **(DEPRECATED)**	sets the state of the drawerArrowIcon
 	* `value` _(Number)_	- state (1 is arrow, 0 is hamburger, but you can set everything between)
 * `setToolbarHidden` - sets the value for `hideToolbar` property

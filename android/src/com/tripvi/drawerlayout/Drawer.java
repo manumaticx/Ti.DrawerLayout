@@ -52,6 +52,8 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_RIGHT_VIEW_WIDTH = "rightDrawerWidth";
 	public static final String PROPERTY_DRAWER_INDICATOR_ENABLED = "drawerIndicatorEnabled";
 	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
+	public static final String PROPERTY_RIGHT_DRAWER_LOCK_MODE = "rightDrawerLockMode";
+	public static final String PROPERTY_LEFT_DRAWER_LOCK_MODE = "leftDrawerLockMode";
 	public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
 	public static final String PROPERTY_HIDE_TOOLBAR = "hideToolbar";
 	public static final String PROPERTY_SWIPE_AREA_WIDTH = "dragMargin";
@@ -493,6 +495,14 @@ public class Drawer extends TiUIView {
 			((DrawerLayout) getNativeView()).setDrawerLockMode(TiConvert.toInt(d
 					.get(PROPERTY_DRAWER_LOCK_MODE)));
 		}
+		if (d.containsKey(PROPERTY_LEFT_DRAWER_LOCK_MODE)) {
+			setLeftDrawerLockMode(TiConvert.toInt(d
+					.get(PROPERTY_LEFT_DRAWER_LOCK_MODE)));
+		}
+		if (d.containsKey(PROPERTY_RIGHT_DRAWER_LOCK_MODE)) {
+			setRightDrawerLockMode(TiConvert.toInt(d
+							.get(PROPERTY_RIGHT_DRAWER_LOCK_MODE)));
+		}
 		if (d.containsKey(PROPERTY_HIDE_TOOLBAR)) {
 			hideToolbar = (TiConvert.toBoolean(d.get(PROPERTY_HIDE_TOOLBAR)));
 			if (hideToolbar) {
@@ -612,6 +622,10 @@ public class Drawer extends TiUIView {
 			
 		} else if (key.equals(PROPERTY_DRAWER_LOCK_MODE)) {
 			((DrawerLayout) getNativeView()).setDrawerLockMode(TiConvert.toInt(newValue));
+		} else if (key.equals(PROPERTY_LEFT_DRAWER_LOCK_MODE)) {
+			this.setLeftDrawerLockMode(TiConvert.toInt(newValue));
+		} else if (key.equals(PROPERTY_RIGHT_DRAWER_LOCK_MODE)) {
+			this.setRightDrawerLockMode(TiConvert.toInt(newValue));
 		} else if (key.equals(PROPERTY_DRAWER_INDICATOR_ENABLED)) {
 			boolean b = (Boolean) newValue;
 			if (mDrawerToggle != null){
@@ -629,6 +643,18 @@ public class Drawer extends TiUIView {
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
+	}
+
+	public void setLeftDrawerLockMode(int mode) {
+		setDrawerLockMode(mode, Gravity.START);
+	}
+
+	public void setRightDrawerLockMode(int mode) {
+		setDrawerLockMode(mode, Gravity.END);
+	}
+
+	private void setDrawerLockMode(int mode, int gravity) {
+		((DrawerLayout) getNativeView()).setDrawerLockMode(mode, gravity);
 	}
 
 	@Override
