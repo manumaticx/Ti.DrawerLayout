@@ -384,6 +384,7 @@ public class Drawer extends TiUIView {
 		}
 		if (this.centerView != null) {
 			fL.removeView(this.centerView.getOrCreateView().getNativeView());
+			this.centerView.releaseViews();
 		}
 		this.centerView = viewProxy;
 	}
