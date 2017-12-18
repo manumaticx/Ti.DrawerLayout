@@ -25,9 +25,7 @@ public class DrawerProxy extends TiViewProxy {
 
 	protected static final int MSG_LAST_ID = MSG_FIRST_ID + 999;
 	
-	private static final String TAG = "TripviDrawer";
-	
-	private Drawer drawer;
+	private static final String TAG = "TripviDrawerProxy";
 
 	public DrawerProxy() {
 		super();
@@ -35,7 +33,7 @@ public class DrawerProxy extends TiViewProxy {
 
 	@Override
 	public TiUIView createView(Activity activity) {
-		drawer = new Drawer(this);
+		Drawer drawer = new Drawer(this);
 		drawer.getLayoutParams().autoFillsHeight = true;
 		drawer.getLayoutParams().autoFillsWidth = true;
 		return drawer;
@@ -78,32 +76,66 @@ public class DrawerProxy extends TiViewProxy {
 		}
 	}
 
+	@Override
+	public void releaseViews()
+	{
+		Log.d(TAG, "DrawerProxy releaseViews");
+		super.releaseViews();
+	}
+
+	@Override
+	public void release() {
+		Log.d(TAG, "DrawerProxy release");
+		super.release();
+	}
+
 	private void handleToggleLeftView() {
-		drawer.toggleLeftDrawer();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.toggleLeftDrawer();
+		}
 	}
 
 	private void handleOpenLeftView() {
-		drawer.openLeftDrawer();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.openLeftDrawer();
+		}
 	}
 
 	private void handleCloseLeftView() {
-		drawer.closeLeftDrawer();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.closeLeftDrawer();
+		}
 	}
 
 	private void handleToggleRightView() {
-		drawer.toggleRightDrawer();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.toggleRightDrawer();
+		}
 	}
 
 	private void handleOpenRightView() {
-		drawer.openRightDrawer();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.openRightDrawer();
+		}
 	}
 
 	private void handleCloseRightView() {
-		drawer.closeRightDrawer();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.closeRightDrawer();
+		}
 	}
 	
 	private void handleArrowState(Float state){
-		drawer.setArrowState(state);
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			v.setArrowState(state);
+		}
 	}
 
 	@Kroll.method
@@ -169,25 +201,45 @@ public class DrawerProxy extends TiViewProxy {
 	@Kroll.method
 	@Kroll.getProperty
 	public boolean getIsLeftDrawerOpen() {
-		return drawer.isLeftDrawerOpen();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			return v.isLeftDrawerOpen();
+		} else {
+			return false;
+		}
 	}
 
 	@Kroll.method
 	@Kroll.getProperty
 	public boolean getIsRightDrawerOpen() {
-		return drawer.isRightDrawerOpen();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			return v.isRightDrawerOpen();
+		} else {
+			return false;
+		}
 	}
 
 	@Kroll.method
 	@Kroll.getProperty
 	public boolean getIsLeftDrawerVisible() {
-		return drawer.isLeftDrawerVisible();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			return v.isLeftDrawerVisible();
+		} else {
+			return false;
+		}
 	}
 
 	@Kroll.method
 	@Kroll.getProperty
 	public boolean getIsRightDrawerVisible() {
-		return drawer.isRightDrawerVisible();
+		Drawer v = (Drawer) peekView();
+		if (v != null) {
+			return v.isRightDrawerVisible();
+		} else {
+			return false;
+		}
 	}
 
 	@Kroll.method
