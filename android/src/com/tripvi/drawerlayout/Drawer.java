@@ -1,9 +1,11 @@
 package com.tripvi.drawerlayout;
 
+import android.app.Activity;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
+import org.appcelerator.titanium.TiBaseActivity;
 import org.appcelerator.titanium.TiDimension;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.proxy.TiViewProxy;
@@ -370,7 +372,7 @@ public class Drawer extends TiUIView {
 		}
 
 		viewProxy.setActivity(proxy.getActivity());
-		TiUIView contentView = viewProxy.getOrCreateView();
+		TiUIView contentView = getOrCreateView(viewProxy);
 
 		View view = contentView.getOuterView();
 		TiCompositeLayout fL = (TiCompositeLayout)getNativeView().findViewById(id_content_frame);
@@ -383,7 +385,7 @@ public class Drawer extends TiUIView {
 			fL.addView(view, contentView.getLayoutParams());
 		}
 		if (this.centerView != null) {
-			fL.removeView(this.centerView.getOrCreateView().getNativeView());
+			fL.removeView(getOrCreateView(this.centerView).getNativeView());
 			this.centerView.releaseViews();
 		}
 		this.centerView = viewProxy;
@@ -519,7 +521,7 @@ public class Drawer extends TiUIView {
 			TiViewProxy newProxy = null;
 			int index = 0;
 			if (this.leftView != null) {
-				index = this.menu.indexOfChild(this.leftView.getOrCreateView()
+			index = this.menu.indexOfChild(getOrCreateView(this.leftView)
 						.getNativeView());
 			}
 			if (newValue != null && newValue instanceof TiViewProxy) {
@@ -528,13 +530,13 @@ public class Drawer extends TiUIView {
 							"[ERROR] Cannot add window as a child view of other window");
 				newProxy = (TiViewProxy) newValue;
 				initLeftDrawer();
-				this.menu.addView(newProxy.getOrCreateView().getOuterView(),
+				this.menu.addView(getOrCreateView(newProxy).getOuterView(),
 						index);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for leftView");
 			}
 			if (this.leftView != null) {
-				this.menu.removeView(this.leftView.getOrCreateView()
+				this.menu.removeView(getOrCreateView(this.leftView)
 						.getNativeView());
 			}
 			this.leftView = newProxy;
@@ -544,8 +546,8 @@ public class Drawer extends TiUIView {
 			TiViewProxy newProxy = null;
 			int index = 0;
 			if (this.rightView != null) {
-				index = this.filter.indexOfChild(this.rightView
-						.getOrCreateView().getNativeView());
+				index = this.filter.indexOfChild(
+                        getOrCreateView(this.rightView).getNativeView());
 			}
 			if (newValue != null && newValue instanceof TiViewProxy) {
 				if (newValue instanceof WindowProxy)
@@ -553,13 +555,13 @@ public class Drawer extends TiUIView {
 							"[ERROR] Cannot add window as a child view of other window");
 				newProxy = (TiViewProxy) newValue;
 				initRightDrawer();
-				this.filter.addView(newProxy.getOrCreateView().getOuterView(),
+				this.filter.addView(getOrCreateView(newProxy).getOuterView(),
 						index);
 			} else {
 				Log.e(TAG, "[ERROR] Invalid type for rightView");
 			}
 			if (this.rightView != null) {
-				this.filter.removeView(this.rightView.getOrCreateView()
+				this.filter.removeView(getOrCreateView(this.rightView)
 						.getNativeView());
 			}
 			this.rightView = newProxy;
@@ -675,7 +677,7 @@ public class Drawer extends TiUIView {
 	}
 
 	private View getNativeView(TiViewProxy viewProxy) {
-		View nativeView = viewProxy.getOrCreateView().getOuterView();
+		View nativeView = getOrCreateView(viewProxy).getOuterView();
 		ViewGroup parentViewGroup = (ViewGroup) nativeView.getParent();
 		if (parentViewGroup != null) {
 			parentViewGroup.removeAllViews();
@@ -683,4 +685,23 @@ public class Drawer extends TiUIView {
 		return nativeView;
 	}
 
+	private TiUIView getOrCreateView(TiViewProxy viewProxy) {
+		if (viewProxy == null) {
+			return null;
+		}
+		TiUIView view = viewProxy.getOrCreateView();
+		if (view != null) {
+			return view;
+		}
+		Log.w(TAG, "getOrCreateView failed. Returned value is null");
+		TiBaseActivity originalActivity = (TiBaseActivity) viewProxy.getActivity();
+		if (originalActivity.isDestroyed()) {
+			Log.w(TAG, "Original viewProxy activity is destroyed.");
+		}
+		Activity thisActivity = this.proxy.getActivity();
+		if (thisActivity != originalActivity) {
+				viewProxy.attachActivityLifecycle(thisActivity);
+		}
+		return viewProxy.getOrCreateView();
+	}
 }
