@@ -81,7 +81,7 @@ win.open();
 
 ## Development
 
-Contributions are very welcome. If you are able to fix bugs or want to add features to the module, please refer to the [official module development guide](http://docs.appcelerator.com/platform/latest/#!/guide/Android_Module_Development_Guide). You can build the module with `ant` as described there. You can also use `grunt build` here. For distribution a new version, please update the version number in `package.json` and run `grunt`. It will update the version number in manifest and readme. The it builds the new version and installs it globally with `gittio`.
+Contributions are very welcome. If you are able to fix bugs or want to add features to the module, please refer to the [official module development guide](http://docs.appcelerator.com/platform/latest/#!/guide/Android_Module_Development_Guide). You can build the module with `appc` as described there. You can also use `grunt build` here. For distribution a new version, please update the version number in `package.json` and run `grunt`. It will update the version number in manifest and readme. Then it builds the new version and installs it globally with `gittio`.
 
 ## License
 

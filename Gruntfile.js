@@ -6,9 +6,10 @@ module.exports = function(grunt) {
 
     var done = this.async();
 
-    // runt ant to build the module
-    var ant = grunt.util.spawn({
-      cmd: 'ant',
+    // runt titanium script to build the module
+    var ti = grunt.util.spawn({
+      cmd: 'ti',
+      args: ['build', '-p', 'android', '--build-only'],
       opts: {
         cwd: 'android'
       }
@@ -20,8 +21,8 @@ module.exports = function(grunt) {
       }
       done(error, result);
     });
-    ant.stdout.on('data', grunt.log.write);
-    ant.stderr.on('data', grunt.log.error);
+    ti.stdout.on('data', grunt.log.write);
+    ti.stderr.on('data', grunt.log.error);
 
   });
   
