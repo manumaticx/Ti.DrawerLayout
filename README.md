@@ -1,3 +1,9 @@
+⚠️ 
+
+*THIS REPO IS DEPRECATED SINCE THE DRAWER LAYOUT WAS INTEGRATED INTO THE TITANIUM CORE. CONSIDER USING: https://docs.appcelerator.com/platform/latest/#!/api/Titanium.UI.Android.DrawerLayout*
+
+___
+
 # Ti.DrawerLayout [![gittio](http://img.shields.io/badge/gittio-3.0.1-00B4CC.svg)](http://gitt.io/component/com.tripvi.drawerlayout)
 Native Android [Navigation Drawer](http://developer.android.com/design/patterns/navigation-drawer.html) for [Titanium](http://www.appcelerator.com/titanium/)
 
