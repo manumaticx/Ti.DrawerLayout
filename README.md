@@ -4,7 +4,7 @@
 
 ___
 
-# DEPRECATED (Ti.DrawerLayout) [![gittio](http://img.shields.io/badge/gittio-3.0.1-00B4CC.svg)](http://gitt.io/component/com.tripvi.drawerlayout)
+# DEPRECATED (Ti.DrawerLayout) [![gittio](http://img.shields.io/badge/gittio-3.0.1-00B4CC.svg)](http://gitt.io/component/com.tripvi.drawerlayout) [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 Native Android [Navigation Drawer](http://developer.android.com/design/patterns/navigation-drawer.html) for [Titanium](http://www.appcelerator.com/titanium/)
 
 - [Overview](#overview)
